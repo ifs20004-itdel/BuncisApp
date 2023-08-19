@@ -1,10 +1,12 @@
 package com.example.buncisapp.views.auth
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.buncisapp.R
 import com.example.buncisapp.databinding.ActivityLoginBinding
 import com.example.buncisapp.databinding.ActivitySplashScreenBinding
+import com.example.buncisapp.views.inputData.InputDataActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -14,5 +16,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(this@LoginActivity, InputDataActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

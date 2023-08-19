@@ -7,7 +7,26 @@
     tools:context=".views.auth.LoginActivity"
     >
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/login_bg"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mv_login_form"
+        android:src="@drawable/app_logo"
+        android:layout_marginHorizontal="42dp"
+        android:contentDescription="@string/logo_description" />
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mv_login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
@@ -83,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login"
                 android:backgroundTint="@color/blue"
-                android:layout_marginVertical="16dp"
+                android:layout_marginVertical="32dp"
                 />
         </LinearLayout>
 
