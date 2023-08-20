@@ -1,11 +1,12 @@
-package com.example.buncisapp
+package com.example.buncisapp.views.history
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.buncisapp.R
 
-class MainActivity : AppCompatActivity() {
+class HistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_history)
     }
 }

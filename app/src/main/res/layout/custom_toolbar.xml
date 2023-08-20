@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/lv_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/blue"
+        >
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:src="@drawable/app_logo"
+            android:contentDescription="@string/logo_description"
+            android:layout_margin="16dp"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end|center_vertical"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_marginEnd="16dp"
+            >
+
+            <ImageButton
+                android:id="@+id/btn_history"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_history_24"
+                android:background="@drawable/btn_rounded_corner"
+                android:contentDescription="@string/button_history_description"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                app:icon="@drawable/ic_account_24"
+                app:iconSize="28dp"
+                app:iconTint="@color/black"
+                android:text="@string/user"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:backgroundTint="@color/white"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
