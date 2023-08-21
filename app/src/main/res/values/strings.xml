@@ -12,4 +12,11 @@
     <string name="aktivitas">Aktivitas</string>
     <string name="tanggal">Tanggal</string>
     <string name="bahan_bakar">Bahan Bakar</string>
+    <string name="waktu">Waktu</string>
+    <string name="timer">00 : 00</string>
+    <string name="draft">Draft</string>
+    <string name="depan">Depan</string>
+    <string name="tengah">Tengah</string>
+    <string name="belakang">Belakang</string>
+    <string name="next">Selanjutnya</string>
 </resources>

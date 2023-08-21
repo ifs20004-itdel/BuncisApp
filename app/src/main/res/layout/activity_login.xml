@@ -74,6 +74,8 @@
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/ic_account_24"
                     android:drawableTint="@color/black_50"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -97,6 +99,8 @@
                     android:inputType="textPassword"
                     android:drawableStart="@drawable/ic_password_24"
                     android:drawableTint="@color/black_50"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>

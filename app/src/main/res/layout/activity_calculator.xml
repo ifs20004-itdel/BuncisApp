@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".views.calculator.CalculatorActivity">
 
+    <include
+        android:id="@+id/lv_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/custom_toolbar"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Dalam Pengembangan"
+        app:layout_constraintTop_toBottomOf="@+id/lv_toolbar"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
