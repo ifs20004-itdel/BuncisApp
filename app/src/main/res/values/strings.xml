@@ -25,6 +25,7 @@
     <string name="zero">0.0</string>
     <string name="sounding">Sounding</string>
     <string name="hasil">Hasil</string>
+    <string name="hitung">Hitung</string>
     <string name="nomor_surat">No. Surat</string>
     <string name="nama_kapal">Nama Kapal</string>
 </resources>
