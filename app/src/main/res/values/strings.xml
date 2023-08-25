@@ -20,9 +20,11 @@
     <string name="belakang">Belakang</string>
     <string name="next">Selanjutnya</string>
     <string name="kalkulator">Kalkulator</string>
-    <string name="nomor_tangki">Nomor Tangki</string>
+    <string name="nomor_tangki">Nomor Tanki</string>
     <string name="trim">Trim</string>
     <string name="zero">0.0</string>
     <string name="sounding">Sounding</string>
     <string name="hasil">Hasil</string>
+    <string name="nomor_surat">No. Surat</string>
+    <string name="nama_kapal">Nama Kapal</string>
 </resources>

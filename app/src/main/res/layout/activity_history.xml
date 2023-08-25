@@ -6,4 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".views.history.HistoryActivity">
 
+    <include
+        android:id="@+id/lv_toolbar"
+        layout="@layout/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="637dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lv_toolbar"
+        tools:listitem="@layout/item_history"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
