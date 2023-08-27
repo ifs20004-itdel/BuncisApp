@@ -7,8 +7,8 @@ import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import com.example.buncisapp.R
+import com.example.buncisapp.data.DataDummy
 import com.example.buncisapp.databinding.ActivityInputDataBinding
 import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.example.buncisapp.views.history.HistoryActivity
@@ -26,9 +26,8 @@ class InputDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // mock items
-        val items = listOf("MFO 180", "MFO 380", "Biosolar (HSD)", "LSFO")
-        val adapter = ArrayAdapter(this, R.layout.dropdown_items, items)
+
+        val adapter = ArrayAdapter(this, R.layout.dropdown_items, DataDummy.bahanBakar)
         binding.edBahanBakar.setAdapter(adapter)
 
         binding.mvTimer.setOnClickListener {

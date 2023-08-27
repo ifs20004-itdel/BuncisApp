@@ -1,15 +1,21 @@
 package com.example.buncisapp.views.calculator
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.example.buncisapp.R
+import com.example.buncisapp.data.DataDummy
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.history.HistoryActivity
 import com.example.buncisapp.views.record.RecordActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class CalculatorActivity : AppCompatActivity() {
 
@@ -28,10 +34,7 @@ class CalculatorActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // This is still data mock
-        val items = listOf("DB(S)", "DB(P)", "AFT")
-
-        val adapter = ArrayAdapter(this, R.layout.dropdown_items, items)
+        val adapter = ArrayAdapter(this, R.layout.dropdown_items, DataDummy.tankiMinyak)
         binding.edNomorTangki.setAdapter(adapter)
 
         binding.edNomorTangki.setOnItemClickListener { adapterView, _, i, _ ->
@@ -49,13 +52,16 @@ class CalculatorActivity : AppCompatActivity() {
         }
 
         binding.btnNext.setOnClickListener {
-            if(listOfTank.size == items.size){
+            if(listOfTank.size == DataDummy.tankiMinyak.size){
+
+                requestRuntimePermission()
+
                 val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
                 startActivity(intent)
             }else{
                 // mock method
                 val temp = ArrayList<String>()
-                for (i in items){
+                for (i in DataDummy.tankiMinyak){
                     if(i !in listOfTank ){
                         temp.add(i)
                     }
@@ -73,10 +79,10 @@ class CalculatorActivity : AppCompatActivity() {
             stringFormat += "$i \n"
         }
 
-        val builder = AlertDialog.Builder(this@CalculatorActivity)
+        val builder = MaterialAlertDialogBuilder(this@CalculatorActivity)
         builder
             .setTitle("Peringatan!")
-            .setMessage("List Tangki yang belum terisi: \n $stringFormat ")
+            .setMessage("List Tangki yang belum terisi: \n$stringFormat ")
             .setPositiveButton("Lanjut"){
                     _,_->
                 val intent = Intent(
@@ -91,5 +97,26 @@ class CalculatorActivity : AppCompatActivity() {
             }
             .create()
         builder.show()
+    }
+
+    private fun checkPermission(permission: String):Boolean{
+        return ContextCompat.checkSelfPermission(
+            this, permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private val requestRuntimePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ){
+            permissions ->
+
+        }
+    private fun requestRuntimePermission(){
+        if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) && checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            Toast.makeText(this@CalculatorActivity, "Already permitted",Toast.LENGTH_SHORT).show()
+        }else{
+
+        }
     }
 }

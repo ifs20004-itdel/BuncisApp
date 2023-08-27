@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.record.RecordActivity">
-
+    tools:context=".views.record.RecordActivity"
+    android:background="@color/blue"
+    >
 </androidx.constraintlayout.widget.ConstraintLayout>
