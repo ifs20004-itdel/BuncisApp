@@ -48,7 +48,6 @@ dependencies {
 
     // pdf feature
     implementation 'com.itextpdf:itext7-core:7.1.12'
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
     // test
     testImplementation 'junit:junit:4.13.2'
