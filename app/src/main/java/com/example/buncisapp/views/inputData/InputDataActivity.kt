@@ -12,6 +12,7 @@ import com.example.buncisapp.R
 import com.example.buncisapp.databinding.ActivityInputDataBinding
 import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.example.buncisapp.views.history.HistoryActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -42,14 +43,23 @@ class InputDataActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnNext.setOnClickListener {
-            val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.lvToolbar.btnHistory.setOnClickListener {
             val intent = Intent(this@InputDataActivity, HistoryActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnNext.setOnClickListener{
+            MaterialAlertDialogBuilder(this@InputDataActivity)
+                .setTitle("Yakin untuk melanjutkan?")
+                .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
+                .setPositiveButton("Ya") { _, _ ->
+                    val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Batal") { _, _ ->
+                    // Do nothing if the user cancels
+                }
+                .show()
         }
     }
 
