@@ -2,13 +2,7 @@ package com.example.buncisapp.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Data(
-
-	@field:SerializedName("port")
-	val port: List<String?>? = null
-)
-
-data class PortResponse(
+data class ShipConditionResponse(
 
 	@field:SerializedName("data")
 	val data: Data? = null,
@@ -18,4 +12,10 @@ data class PortResponse(
 
 	@field:SerializedName("status")
 	val status: Int? = null
+)
+
+data class DataShipCondition(
+
+	@field:SerializedName("ship_condition")
+	val shipCondition: List<String?>? = null
 )

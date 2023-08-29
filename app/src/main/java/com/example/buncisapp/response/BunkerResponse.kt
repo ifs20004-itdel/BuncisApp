@@ -11,7 +11,7 @@ data class SoundingItem(
 	val nomorTanki: String? = null
 )
 
-data class ApiBunkerResponse(
+data class BunkerResponse(
 
 	@field:SerializedName("pelabuhan")
 	val pelabuhan: String? = null,

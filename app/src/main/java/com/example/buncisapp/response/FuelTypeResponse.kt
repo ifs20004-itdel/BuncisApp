@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class FuelTypeResponse(
 
-    @field:SerializedName("data")
-	val data: Data? = null,
+    @field:SerializedName("dataFuelType")
+	val data: DataFuelType? = null,
 
     @field:SerializedName("message")
 	val message: String? = null,
@@ -14,7 +14,7 @@ data class FuelTypeResponse(
 	val status: Int? = null
 )
 
-data class Data(
+data class DataFuelType(
 
 	@field:SerializedName("fuel_type")
 	val fuelType: List<String?>? = null

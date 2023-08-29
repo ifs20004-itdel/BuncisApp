@@ -2,20 +2,20 @@ package com.example.buncisapp.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ShipConditionResponse(
+data class DataFuelTank(
 
-	@field:SerializedName("data")
-	val data: Data? = null,
+	@field:SerializedName("fuel_tank")
+	val fuelTank: List<String?>? = null
+)
+
+data class FuelTankResponse(
+
+	@field:SerializedName("dataFuelTank")
+	val data: DataFuelTank? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
 
 	@field:SerializedName("status")
 	val status: Int? = null
-)
-
-data class Data(
-
-	@field:SerializedName("ship_condition")
-	val shipCondition: List<String?>? = null
 )
