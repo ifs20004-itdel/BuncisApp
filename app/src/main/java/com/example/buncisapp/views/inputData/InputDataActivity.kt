@@ -2,22 +2,32 @@ package com.example.buncisapp.views.inputData
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
 import com.example.buncisapp.data.DataDummy
+import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.databinding.ActivityInputDataBinding
+import com.example.buncisapp.views.ViewModelFactory
+import com.example.buncisapp.views.auth.LoginActivity
 import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.example.buncisapp.views.history.HistoryActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class InputDataActivity : AppCompatActivity() {
 
+    private lateinit var inputDataViewModel : InputDataViewModel
     private lateinit var binding : ActivityInputDataBinding
     private val calendar = Calendar.getInstance()
 
@@ -26,9 +36,20 @@ class InputDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        inputDataViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
+        )[InputDataViewModel::class.java]
 
-        val adapter = ArrayAdapter(this, R.layout.dropdown_items, DataDummy.bahanBakar)
-        binding.edBahanBakar.setAdapter(adapter)
+        inputDataViewModel.getShip().observe(this, { ship ->
+            if (ship.isLogin){
+                val adapter = ArrayAdapter(this, R.layout.dropdown_items, DataDummy.bahanBakar)
+                binding.edBahanBakar.setAdapter(adapter)
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        })
 
         binding.mvTimer.setOnClickListener {
             showTimePickerDialog()
@@ -60,6 +81,24 @@ class InputDataActivity : AppCompatActivity() {
                 }
                 .show()
         }
+    }
+
+
+    private fun setupViewModel() {
+        inputDataViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
+        )[InputDataViewModel::class.java]
+
+        inputDataViewModel.getUser().observe(this, { ship ->
+            if (ship.isLogin){
+                binding.tvName.text = getString(R.string.greeting, user.name)
+                getData(user.token)
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        })
     }
 
     private fun showTimePickerDialog(){
