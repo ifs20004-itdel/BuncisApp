@@ -16,7 +16,7 @@ import retrofit2.http.POST
 interface ApiService {
     @FormUrlEncoded
     @POST("auth/login")
-    fun register(
+    fun login(
         @Field("bunker_code") bunker_code: String,
         @Field("password") password: String
     ): Call<LoginResponse>
