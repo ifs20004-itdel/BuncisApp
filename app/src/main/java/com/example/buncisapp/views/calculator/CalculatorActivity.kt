@@ -6,11 +6,11 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.buncisapp.R
 import com.example.buncisapp.data.DataDummy
+import com.example.buncisapp.data.model.Biodata
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.history.HistoryActivity
 import com.example.buncisapp.views.record.RecordActivity
@@ -23,11 +23,13 @@ class CalculatorActivity : AppCompatActivity() {
     private var selectedItem = ""
 
     private lateinit var binding : ActivityCalculatorBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val data = intent.getParcelableExtra<Biodata>("data")
         binding.lvToolbar.btnHistory.setOnClickListener {
             val intent = Intent(this@CalculatorActivity, HistoryActivity::class.java)
             startActivity(intent)
@@ -102,13 +104,6 @@ class CalculatorActivity : AppCompatActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private val requestRuntimePermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ){
-            permissions ->
-
-        }
     private fun requestRuntimePermission(){
         if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) && checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
             Toast.makeText(this@CalculatorActivity, "Already permitted",Toast.LENGTH_SHORT).show()

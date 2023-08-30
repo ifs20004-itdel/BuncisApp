@@ -14,6 +14,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
 import com.example.buncisapp.data.ShipPreference
+import com.example.buncisapp.data.model.Biodata
 import com.example.buncisapp.databinding.ActivityInputDataBinding
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.auth.LoginActivity
@@ -86,11 +87,21 @@ class InputDataActivity : AppCompatActivity() {
         }
 
         binding.btnNext.setOnClickListener{
+            var trim = 0.0
+            if(binding.edDraftDepan.text != null && binding.edDraftBelakang.text != null ){
+                trim =  binding.edDraftBelakang.text.toString().toDouble() - binding.edDraftDepan.text.toString().toDouble()
+            }else if(binding.edDraftDepan.text ==null){
+                trim =  binding.edDraftBelakang.text.toString().toDouble() - binding.edDraftTengah.text.toString().toDouble()
+            }else if(binding.edDraftBelakang.text ==null){
+                trim =  binding.edDraftTengah.text.toString().toDouble() - binding.edDraftDepan.text.toString().toDouble()
+            }
+            val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString())
             MaterialAlertDialogBuilder(this@InputDataActivity)
                 .setTitle("Yakin untuk melanjutkan?")
                 .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
                 .setPositiveButton("Ya") { _, _ ->
                     val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
+                    intent.putExtra("data", data )
                     startActivity(intent)
                 }
                 .setNegativeButton("Batal") { dialog, _ ->

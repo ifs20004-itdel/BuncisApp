@@ -1,4 +1,4 @@
-package com.example.buncisapp.data
+package com.example.buncisapp.data.model
 
 data class ShipModel(
     val token: String,

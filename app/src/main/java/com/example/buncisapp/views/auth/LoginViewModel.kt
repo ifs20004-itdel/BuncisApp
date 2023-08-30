@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.buncisapp.data.ShipModel
 import com.example.buncisapp.data.ShipPreference
+import com.example.buncisapp.data.model.ShipModel
 import com.example.buncisapp.data.response.LoginResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.example.buncisapp.utils.AuthenticationCallback
@@ -56,7 +56,6 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
                         }
                     }
                 }else{
-                    Log.d("test","$bunkerCode,$password")
                     val errorMessage = "Username atau password salah"
                     stateCallback.onError(-1, errorMessage)
                 }
