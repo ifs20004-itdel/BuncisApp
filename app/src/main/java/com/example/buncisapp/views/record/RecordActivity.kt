@@ -80,18 +80,24 @@ class RecordActivity : AppCompatActivity() {
         document.finishPage(page)
 
         val downloadDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-        val fileName = "example.pdf"
-        val file = File(downloadDir, fileName)
+        val numberOfFilesToCreate = 1000
 
-        try {
-            val fos = FileOutputStream(file)
-            document.writeTo(fos)
-            document.close()
-            fos.close()
-            Log.e("iniii","$downloadDir")
-            Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
-        } catch (e: IOException) {
-            throw RuntimeException(e)
+        for (i in 1..numberOfFilesToCreate) {
+            val fileName = "doc_$i.pdf"
+            val file = File(downloadDir, fileName)
+
+            try {
+                val fos = FileOutputStream(file)
+                document.writeTo(fos)
+                document.close()
+                fos.close()
+                Log.e("iniii","$downloadDir")
+                Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
+            } catch (e: IOException) {
+                throw RuntimeException(e)
+            }
         }
+
+
     }
 }
