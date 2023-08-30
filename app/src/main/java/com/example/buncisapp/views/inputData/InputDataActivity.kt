@@ -2,45 +2,55 @@ package com.example.buncisapp.views.inputData
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
-import com.example.buncisapp.data.DataDummy
+import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.databinding.ActivityInputDataBinding
-import com.example.buncisapp.network.ApiConfig
-import com.example.buncisapp.network.ApiService
-import com.example.buncisapp.response.DataFuelType
-import com.example.buncisapp.response.FuelTypeResponse
-import com.example.buncisapp.response.ShipConditionResponse
+import com.example.buncisapp.views.ViewModelFactory
+import com.example.buncisapp.views.auth.LoginActivity
 import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.example.buncisapp.views.history.HistoryActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import retrofit2.Call
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Locale
-import javax.security.auth.callback.Callback
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class InputDataActivity : AppCompatActivity() {
 
     private lateinit var inputDataViewModel: InputDataViewModel
     private lateinit var binding : ActivityInputDataBinding
     private val calendar = Calendar.getInstance()
+    private var fuelTypeItems = mutableListOf<String>()
+    private var shipConditionItems = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInputDataBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupViewModel()
 
-        inputDataViewModel = ViewModelProvider(this).get(InputDataViewModel::class.java)
-        fetchFuelTypes()
-        fetchShipCondition()
+        inputDataViewModel.getShip().observe(this) { ship ->
+            binding.lvToolbar.btnAccount.text = intent.getStringExtra("username")
+            inputDataViewModel.fuelType(ship.token)
+            inputDataViewModel.shipCondition(ship.token)
+        }
+
+        val fuelTypeAdapter = ArrayAdapter(this, R.layout.dropdown_items, getFuelTypes())
+        binding.edBahanBakar.setAdapter(fuelTypeAdapter)
+
+        val shipConditionAdapter = ArrayAdapter(this, R.layout.dropdown_items, getShipCondition())
+        binding.edKondisiKapal.setAdapter(shipConditionAdapter)
+
         binding.mvTimer.setOnClickListener {
             showTimePickerDialog()
         }
@@ -58,6 +68,23 @@ class InputDataActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.lvToolbar.btnAccount.setOnClickListener {
+            MaterialAlertDialogBuilder(this@InputDataActivity)
+                .setTitle("Peringatan!")
+                .setMessage("Apakah anda yakin untuk keluar?")
+                .setPositiveButton("Ya") { _, _ ->
+                    inputDataViewModel.logout()
+                    val intent = Intent(this@InputDataActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                }
+                .setNegativeButton("Batal") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+
         binding.btnNext.setOnClickListener{
             MaterialAlertDialogBuilder(this@InputDataActivity)
                 .setTitle("Yakin untuk melanjutkan?")
@@ -66,61 +93,18 @@ class InputDataActivity : AppCompatActivity() {
                     val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
                     startActivity(intent)
                 }
-                .setNegativeButton("Batal") { _, _ ->
-                    // Do nothing if the user cancels
+                .setNegativeButton("Batal") { dialog, _ ->
+                    dialog.dismiss()
                 }
                 .show()
         }
     }
 
-    private fun fetchShipCondition() {
-        inputDataViewModel.getShip().observe(this) { type ->
-            val client = ApiConfig.getApiService().getShipCondition("Bearer ${type.token}")
-            client.enqueue(object : Callback<ShipConditionResponse> {
-                override fun onResponse(call: Call<ShipConditionResponse?>, response: Response<ShipConditionResponse?>) {
-                    if (response.isSuccessful) {
-                        val dataShipCondition = response.body()?.data
-                        val shipCondition = dataShipCondition?.shipCondition
-
-                        if (shipCondition != null) {
-                            val adapter = ArrayAdapter(this@InputDataActivity, R.layout.dropdown_items, shipCondition)
-                            binding.edKondisiKapal.setAdapter(adapter)
-                        }
-                    } else {
-                        Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<ShipConditionResponse?>, t: Throwable) {
-                    Log.e(ContentValues.TAG, "onFailure: ${t.message}")
-                }
-            })
-        }
-    }
-    private fun fetchFuelTypes() {
-        inputDataViewModel.getShip().observe(this) { type ->
-            val client = ApiConfig.getApiService().getFuelType("Bearer ${type.token}")
-
-            client.enqueue(object : Callback<FuelTypeResponse> {
-                override fun onResponse(call: Call<FuelTypeResponse?>, response: Response<FuelTypeResponse?>) {
-                    if (response.isSuccessful) {
-                        val dataFuelType = response.body()?.data
-                        val fuelTypes = dataFuelType?.fuelType
-
-                        if (fuelTypes != null) {
-                            val adapter = ArrayAdapter(this@InputDataActivity, R.layout.dropdown_items, fuelTypes)
-                            binding.edBahanBakar.setAdapter(adapter)
-                        }
-                    } else {
-                        Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<FuelTypeResponse?>, t: Throwable) {
-                    Log.e(ContentValues.TAG, "onFailure: ${t.message}")
-                }
-            })
-        }
+    private fun setupViewModel(){
+        inputDataViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
+        )[InputDataViewModel::class.java]
     }
 
     private fun showTimePickerDialog(){
@@ -167,4 +151,25 @@ class InputDataActivity : AppCompatActivity() {
         binding.edTanggal.setText(sdf.format(calendar.time))
     }
 
+    private fun getFuelTypes(): List<String> {
+        inputDataViewModel.fuelType.observe(this){items ->
+            for(i in items){
+                if(i != null){
+                    fuelTypeItems.add(i)
+                }
+            }
+        }
+        return fuelTypeItems
+    }
+
+    private fun getShipCondition(): List<String>{
+        inputDataViewModel.shipCondition.observe(this){ items ->
+            for(i in items){
+                if(i != null){
+                    shipConditionItems.add(i)
+                }
+            }
+        }
+        return shipConditionItems
+    }
 }

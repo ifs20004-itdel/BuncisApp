@@ -1,4 +1,4 @@
-package com.example.buncisapp.response
+package com.example.buncisapp.data.response
 
 import com.google.gson.annotations.SerializedName
 
@@ -13,33 +13,33 @@ data class SoundingItem(
 
 data class BunkerResponse(
 
-	@field:SerializedName("pelabuhan")
+    @field:SerializedName("pelabuhan")
 	val pelabuhan: String? = null,
 
-	@field:SerializedName("waktu_sounding")
+    @field:SerializedName("waktu_sounding")
 	val waktuSounding: String? = null,
 
-	@field:SerializedName("trim")
+    @field:SerializedName("trim")
 	val trim: Any? = null,
 
-	@field:SerializedName("draft_belakang")
+    @field:SerializedName("draft_belakang")
 	val draftBelakang: Int? = null,
 
-	@field:SerializedName("tanggal_sounding")
+    @field:SerializedName("tanggal_sounding")
 	val tanggalSounding: String? = null,
 
-	@field:SerializedName("jenis_BBM")
+    @field:SerializedName("jenis_BBM")
 	val jenisBBM: String? = null,
 
-	@field:SerializedName("sounding")
+    @field:SerializedName("sounding")
 	val sounding: List<SoundingItem?>? = null,
 
-	@field:SerializedName("draft_depan")
+    @field:SerializedName("draft_depan")
 	val draftDepan: Int? = null,
 
-	@field:SerializedName("draft_tengah")
+    @field:SerializedName("draft_tengah")
 	val draftTengah: Int? = null,
 
-	@field:SerializedName("heel_correction")
+    @field:SerializedName("heel_correction")
 	val heelCorrection: Int? = null
 )

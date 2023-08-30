@@ -1,4 +1,4 @@
-package com.example.buncisapp.response
+package com.example.buncisapp.data.response
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,12 +10,12 @@ data class DataFuelTank(
 
 data class FuelTankResponse(
 
-	@field:SerializedName("dataFuelTank")
+    @field:SerializedName("dataFuelTank")
 	val data: DataFuelTank? = null,
 
-	@field:SerializedName("message")
+    @field:SerializedName("message")
 	val message: String? = null,
 
-	@field:SerializedName("status")
+    @field:SerializedName("status")
 	val status: Int? = null
 )

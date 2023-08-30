@@ -2,10 +2,9 @@ package com.example.buncisapp.views
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.example.buncisapp.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.buncisapp.databinding.ActivitySplashScreenBinding
 import com.example.buncisapp.views.auth.LoginActivity
 

@@ -1,7 +1,10 @@
 package com.example.buncisapp.data
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -11,7 +14,7 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
         return dataStore.data.map { preferences ->
             ShipModel(
                 preferences[TOKEN_KEY] ?: "",
-                preferences[STATE_KEY] ?: false
+                preferences[STATE_KEY] ?: -1
             )
         }
     }
@@ -25,13 +28,13 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
 
     suspend fun login() {
         dataStore.edit { preferences ->
-            preferences[STATE_KEY] = true
+            preferences[STATE_KEY] = 1
         }
     }
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences[STATE_KEY] = false
+            preferences[STATE_KEY] = -1
         }
         dataStore.edit { preferences ->
             preferences [TOKEN_KEY] = ""
@@ -42,7 +45,7 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
         @Volatile
         private var INSTANCE: ShipPreference? = null
 
-        private val STATE_KEY = booleanPreferencesKey("state")
+        private val STATE_KEY = intPreferencesKey("state")
         private val TOKEN_KEY = stringPreferencesKey("token")
 
         fun getInstance(dataStore: DataStore<Preferences>): ShipPreference {

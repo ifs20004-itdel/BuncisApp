@@ -3,12 +3,11 @@ package com.example.buncisapp.views.calculator
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.buncisapp.R
 import com.example.buncisapp.data.DataDummy
@@ -53,9 +52,7 @@ class CalculatorActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if(listOfTank.size == DataDummy.tankiMinyak.size){
-
                 requestRuntimePermission()
-
                 val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
                 startActivity(intent)
             }else{

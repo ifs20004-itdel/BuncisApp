@@ -1,25 +1,22 @@
-package com.example.buncisapp.network
+package com.example.buncisapp.data.retrofit
 
-import com.example.buncisapp.response.BunkerResponse
-import com.example.buncisapp.response.DataFuelType
-import com.example.buncisapp.response.FuelTankResponse
-import com.example.buncisapp.response.FuelTypeResponse
-import com.example.buncisapp.response.LoginResponse
-import com.example.buncisapp.response.PortResponse
-import com.example.buncisapp.response.ShipConditionResponse
+import com.example.buncisapp.data.response.BunkerResponse
+import com.example.buncisapp.data.response.FuelTankResponse
+import com.example.buncisapp.data.response.FuelTypeResponse
+import com.example.buncisapp.data.response.LoginResponse
+import com.example.buncisapp.data.response.PortResponse
+import com.example.buncisapp.data.response.ShipConditionResponse
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
-    @FormUrlEncoded
-    @POST("auth/login")
+    @POST("api/login")
     fun login(
-        @Field("bunker_code") bunker_code: String,
-        @Field("password") password: String
+            @Body loginUser: RequestBody
     ): Call<LoginResponse>
 
     @GET("api/fuel-type")

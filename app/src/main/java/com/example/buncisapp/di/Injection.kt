@@ -1,7 +1,7 @@
 //package com.example.buncisapp.di
 //
 //import android.content.Context
-//import com.example.buncisapp.network.ApiConfig
+//import com.example.buncisapp.data.retrofit.ApiConfig
 //
 //object Injection {
 //    fun provideRepository(context: Context): ShipRepository {

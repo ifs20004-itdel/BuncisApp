@@ -2,5 +2,5 @@ package com.example.buncisapp.data
 
 data class ShipModel(
     val token: String,
-    val isLogin: Boolean
+    val isLogin: Int
 )
