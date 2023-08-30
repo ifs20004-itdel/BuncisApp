@@ -1,10 +1,12 @@
 package com.example.buncisapp.views.auth
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.datastore.core.DataStore
@@ -23,73 +25,68 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-    private lateinit var sharedPreferences: SharedPreferences
+class LoginActivity : AppCompatActivity(){
+
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding : ActivityLoginBinding
-
-    companion object{
-        const val SHARED_PREFERENCES="shared_preferences"
-        const val TOKEN = "token"
-        const val ISLOGGEDIN = "isloggedin"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
-        binding.btnLogin.setOnClickListener(this)
+        setupViewModel()
+        setupAction()
     }
 
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.btn_login -> {
-                login()
+    private fun setupViewModel() {
+        loginViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
+        )[LoginViewModel::class.java]
+
+        loginViewModel.getShip().observe(this, { user ->
+            if(user.isLogin){
+                startActivity(Intent(this@LoginActivity, InputDataActivity::class.java))
+            }
+        })
+    }
+
+    private fun setupAction() {
+        binding.btnLogin.setOnClickListener {
+            val username = binding.edLoginUsername.text.toString()
+            val password = binding.edLoginPassword.text.toString()
+            when {
+                username.isEmpty() -> {
+                    binding.edLoginUsername.error = "Masukkan username"
+                }
+                password.isEmpty() -> {
+                    binding.edLoginPassword.error = "Masukkan password"
+                }
+                else -> {
+                    val client = ApiConfig.getApiService().login(username, password)
+                    client.enqueue(object : Callback<LoginResponse> {
+                        override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                            if (response.isSuccessful) {
+                                loginViewModel.login()
+                                val ship = response.body() as ShipModel
+                                loginViewModel.saveShip(ShipModel(ship.token,true))
+                                Toast.makeText(this@LoginActivity,"success", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@LoginActivity,"error", Toast.LENGTH_SHORT).show()
+                                Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                            Toast.makeText(this@LoginActivity,t.message, Toast.LENGTH_SHORT).show()
+                            Log.e(ContentValues.TAG, "onFailure: ${t.message}")
+                        }
+                    })
+                }
             }
         }
-    }
-
-    private fun login() {
-        val username= binding.edLoginUsername.text.toString().trim()
-        val password = binding.edLoginPassword.text.toString().trim()
-        ApiConfig
-            .getApiService()
-            .login(username, password)
-            .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.apply {
-                            validateLogin(data.toString())
-                        }
-                        Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT)
-                            .show()
-                        val mainIntent = Intent(this@LoginActivity, InputDataActivity::class.java)
-                        startActivity(mainIntent)
-                        finish()
-                    }else{
-                        Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
-
-                    }
-                }
-
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Toast.makeText(this@LoginActivity, "Data Invalid", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }
-
-
-
-    private fun validateLogin(token: String) {
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(TOKEN, token)
-        editor.putBoolean(ISLOGGEDIN, true)
-        editor.apply()
     }
 }

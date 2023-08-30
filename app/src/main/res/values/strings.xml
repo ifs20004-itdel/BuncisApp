@@ -28,4 +28,5 @@
     <string name="hitung">Hitung</string>
     <string name="nomor_surat">No. Surat</string>
     <string name="nama_kapal">Nama Kapal</string>
+    <string name="kondisi_kapal">Kondisi Kapal</string>
 </resources>

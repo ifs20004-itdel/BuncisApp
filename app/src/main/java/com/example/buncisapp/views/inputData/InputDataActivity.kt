@@ -2,32 +2,34 @@ package com.example.buncisapp.views.inputData
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
+import android.content.ContentValues
 import android.content.Intent
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
 import com.example.buncisapp.data.DataDummy
-import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.databinding.ActivityInputDataBinding
-import com.example.buncisapp.views.ViewModelFactory
-import com.example.buncisapp.views.auth.LoginActivity
+import com.example.buncisapp.network.ApiConfig
+import com.example.buncisapp.network.ApiService
+import com.example.buncisapp.response.DataFuelType
+import com.example.buncisapp.response.FuelTypeResponse
+import com.example.buncisapp.response.ShipConditionResponse
 import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.example.buncisapp.views.history.HistoryActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import retrofit2.Call
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.security.auth.callback.Callback
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class InputDataActivity : AppCompatActivity() {
 
-    private lateinit var inputDataViewModel : InputDataViewModel
+    private lateinit var inputDataViewModel: InputDataViewModel
     private lateinit var binding : ActivityInputDataBinding
     private val calendar = Calendar.getInstance()
 
@@ -36,21 +38,9 @@ class InputDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        inputDataViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
-        )[InputDataViewModel::class.java]
-
-        inputDataViewModel.getShip().observe(this, { ship ->
-            if (ship.isLogin){
-                val adapter = ArrayAdapter(this, R.layout.dropdown_items, DataDummy.bahanBakar)
-                binding.edBahanBakar.setAdapter(adapter)
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-        })
-
+        inputDataViewModel = ViewModelProvider(this).get(InputDataViewModel::class.java)
+        fetchFuelTypes()
+        fetchShipCondition()
         binding.mvTimer.setOnClickListener {
             showTimePickerDialog()
         }
@@ -83,22 +73,54 @@ class InputDataActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchShipCondition() {
+        inputDataViewModel.getShip().observe(this) { type ->
+            val client = ApiConfig.getApiService().getShipCondition("Bearer ${type.token}")
+            client.enqueue(object : Callback<ShipConditionResponse> {
+                override fun onResponse(call: Call<ShipConditionResponse?>, response: Response<ShipConditionResponse?>) {
+                    if (response.isSuccessful) {
+                        val dataShipCondition = response.body()?.data
+                        val shipCondition = dataShipCondition?.shipCondition
 
-    private fun setupViewModel() {
-        inputDataViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
-        )[InputDataViewModel::class.java]
+                        if (shipCondition != null) {
+                            val adapter = ArrayAdapter(this@InputDataActivity, R.layout.dropdown_items, shipCondition)
+                            binding.edKondisiKapal.setAdapter(adapter)
+                        }
+                    } else {
+                        Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
+                    }
+                }
 
-        inputDataViewModel.getUser().observe(this, { ship ->
-            if (ship.isLogin){
-                binding.tvName.text = getString(R.string.greeting, user.name)
-                getData(user.token)
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-        })
+                override fun onFailure(call: Call<ShipConditionResponse?>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "onFailure: ${t.message}")
+                }
+            })
+        }
+    }
+    private fun fetchFuelTypes() {
+        inputDataViewModel.getShip().observe(this) { type ->
+            val client = ApiConfig.getApiService().getFuelType("Bearer ${type.token}")
+
+            client.enqueue(object : Callback<FuelTypeResponse> {
+                override fun onResponse(call: Call<FuelTypeResponse?>, response: Response<FuelTypeResponse?>) {
+                    if (response.isSuccessful) {
+                        val dataFuelType = response.body()?.data
+                        val fuelTypes = dataFuelType?.fuelType
+
+                        if (fuelTypes != null) {
+                            val adapter = ArrayAdapter(this@InputDataActivity, R.layout.dropdown_items, fuelTypes)
+                            binding.edBahanBakar.setAdapter(adapter)
+                        }
+                    } else {
+                        Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<FuelTypeResponse?>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "onFailure: ${t.message}")
+                }
+            })
+        }
     }
 
     private fun showTimePickerDialog(){

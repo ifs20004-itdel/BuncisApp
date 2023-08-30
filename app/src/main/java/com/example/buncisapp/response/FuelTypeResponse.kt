@@ -17,5 +17,5 @@ data class FuelTypeResponse(
 data class DataFuelType(
 
 	@field:SerializedName("fuel_type")
-	val fuelType: List<String?>? = null
+	val fuelType: List<String?>
 )

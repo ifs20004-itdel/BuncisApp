@@ -7,4 +7,541 @@
     tools:context=".views.record.RecordActivity"
     android:background="@color/blue"
     >
+
+    <RelativeLayout
+        android:id="@+id/surat"
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.603" >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/app_logo" />
+
+        <TextView
+            android:id="@+id/tv_pertamina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:text="PT Pertamina Trans Kontinental"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/alamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_pertamina"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:text="Cabang Surabaya\nJl. Perak Timur No.28 Surabaya - 60165\nT. 031 3551210, 3551216\nF. 031 3551213"
+            android:textSize="5dp" />
+
+        <TextView
+            android:id="@+id/ROB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alamat"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="75dp"
+            android:text="BUNKER REMAIN ON BOARD"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/ship_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ROB"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="146dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_name_of_vessel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ship_condition"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="42dp"
+            android:layout_toEndOf="@+id/list_symbol"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_name_of_vessel"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+        <TextView
+            android:id="@+id/rs_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_date"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_time"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_grade_of_bunker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_port"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_fore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/list_symbol2"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+        <TextView
+            android:id="@+id/rs_middle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_fore"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol2"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_aft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_middle"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol2"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_trim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/list_symbol4"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_heel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_trim"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol4"
+            android:text="0"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_isian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ship_condition"
+            android:layout_toEndOf="@id/list_isian"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="42dp"
+            android:text="NAME OF VESSEL\n\nDATE\n\nTIME\n\nPORT\n\nGRADE OF BUNKER\n\nDRAFT"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_isian4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_fuel_tank"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/list_isian"
+            android:text="DB (P)\n\nDB (S)\n\nAFT (P)\n\nAFT (S)\n\nAFT (C)\n\nDAILY (P)\n\nDAILY (S)"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_isian2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/list_isian"
+            android:text="- Fore (F)\n\n- Middle (M)\n\n- Aft (A)"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_isian3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian"
+            android:layout_marginStart="77dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/list_symbol2"
+            android:text="TRIM\n\nHEEL"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ship_condition"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="41dp"
+            android:layout_toEndOf="@+id/list_isian"
+            android:text=": \n\n: \n\n: \n\n: \n\n: \n\n: "
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_symbol3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_symbol2"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="48dp"
+            android:layout_toEndOf="@+id/list_isian"
+            android:text=": \n\n: \n\n: \n\n: \n\n: \n\n: \n\n:"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_symbol2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_symbol"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/list_isian"
+            android:text=": \n\n: \n\n: "
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/list_symbol4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_symbol"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/list_isian3"
+            android:text=": \n\n: "
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/tv_fuel_tank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian2"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            android:text="FUEL TANK"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/tv_representative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_keterangan"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="PT. Pertamina (Persero)\nRepresentative"
+            android:textSize="6dp" />
+
+        <TextView
+            android:id="@+id/tv_master"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_keterangan"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tv_representative"
+            android:gravity="center"
+            android:text="Master"
+            android:textSize="6dp" />
+
+        <TextView
+            android:id="@+id/tv_chiefEngineer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_keterangan"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tv_master"
+            android:gravity="center"
+            android:text="Chief Engineer"
+            android:textSize="6dp" />
+
+        <TextView
+            android:id="@+id/tv_sounding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian2"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="SOUNDING\n (mm)"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dbp_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_sounding"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dbs_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_dbp_sound"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_aftp_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_dbs_sound"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_afts_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_aftp_sound"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_aftc_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_afts_sound"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dailyp_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_aftc_sound"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dailys_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rs_dailyp_sound"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/list_symbol3"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dbp_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dbs_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rs_dbp_volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_aftp_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rs_dbs_volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_afts_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rs_aftp_volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+        <TextView
+            android:id="@+id/rs_aftc_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rs_afts_volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dailyp_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rs_aftc_volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/rs_dailys_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rs_dailyp_volume"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_dbs_sound"
+            android:gravity="center"
+            android:text="@string/kondisi_kapal"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/tv_keterangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian4"
+            android:layout_marginStart="-137dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/tv_sounding"
+            android:gravity="center"
+            android:text="All bunker Tanks has been inspected and calculated together between :"
+            android:textSize="5dp" />
+
+        <TextView
+            android:id="@+id/volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_isian2"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/tv_sounding"
+            android:gravity="center"
+            android:text="VOLUME\n (Liter)"
+            android:textSize="8dp" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/white"
+        android:padding="8dp"
+        android:text="download"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:icon="@drawable/baseline_download_24"
+        app:iconSize="28dp"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/surat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47" />
 </androidx.constraintlayout.widget.ConstraintLayout>

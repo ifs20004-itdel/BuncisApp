@@ -1,6 +1,7 @@
 package com.example.buncisapp.network
 
 import com.example.buncisapp.response.BunkerResponse
+import com.example.buncisapp.response.DataFuelType
 import com.example.buncisapp.response.FuelTankResponse
 import com.example.buncisapp.response.FuelTypeResponse
 import com.example.buncisapp.response.LoginResponse
