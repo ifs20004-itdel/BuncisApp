@@ -90,21 +90,17 @@ class InputDataActivity : AppCompatActivity() {
             var trim = 0.0
             if(binding.edDraftDepan.text != null && binding.edDraftBelakang.text != null ){
                 trim =  binding.edDraftBelakang.text.toString().toDouble() - binding.edDraftDepan.text.toString().toDouble()
+                binding.edDraftTengah.setText("0")
             }else if(binding.edDraftDepan.text ==null){
                 trim =  binding.edDraftBelakang.text.toString().toDouble() - binding.edDraftTengah.text.toString().toDouble()
+                binding.edDraftDepan.setText("0")
             }else if(binding.edDraftBelakang.text ==null){
                 trim =  binding.edDraftTengah.text.toString().toDouble() - binding.edDraftDepan.text.toString().toDouble()
+                binding.edDraftBelakang.setText("0")
             }
-            var depan = binding.edDraftDepan.toString()
-            var tengah = binding.edDraftTengah.toString()
-            var belakang = binding.edDraftBelakang.toString()
-            if (depan == null ){
-                depan = 0.toString()
-            }else if (tengah == null){
-                tengah = 0.toString()
-            }else if (belakang == null){
-                belakang = 0.toString()
-            }
+            val depan = binding.edDraftDepan.toString()
+            val tengah = binding.edDraftTengah.toString()
+            val belakang = binding.edDraftBelakang.toString()
             val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString(), depan, tengah,belakang)
             MaterialAlertDialogBuilder(this@InputDataActivity)
                 .setTitle("Yakin untuk melanjutkan?")
