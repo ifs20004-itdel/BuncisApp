@@ -6,9 +6,11 @@ import com.example.buncisapp.data.response.FuelTypeResponse
 import com.example.buncisapp.data.response.LoginResponse
 import com.example.buncisapp.data.response.PortResponse
 import com.example.buncisapp.data.response.ShipConditionResponse
+import com.example.buncisapp.data.response.SoundingItem
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -41,7 +43,18 @@ interface ApiService {
 
     @GET("api/bunker")
     fun getBunker(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Field("pelabuhan") pelabuhan: String,
+        @Field("tanggal_sounding") tanggal: String,
+        @Field("waktu_sounding") waktu: String,
+        @Field("jenis_BBM") bbm: String,
+        @Field("draft_depan") depan: String,
+        @Field("draft_tengah") tengah: String,
+        @Field("ship_condition") kondisi: String,
+        @Field("draft_belakang") belakang: String,
+        @Field("heel_correction") heel: String,
+        @Field("trim") trim: String,
+        @Field("sounding") sounding: List<SoundingItem>
     ): Call<BunkerResponse>
 
 }
