@@ -11,7 +11,7 @@ data class Biodata (
     val bahanBakar: String,
     val waktu: String,
     val draft: String,
-    val depan: String,
-    val tengah: String,
-    val belakang:String
+    val depan: Double,
+    val tengah: Double,
+    val belakang:Double
     ): Parcelable

@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -87,33 +89,58 @@ class InputDataActivity : AppCompatActivity() {
         }
 
         binding.btnNext.setOnClickListener{
+
+            var depan = 0.0
+            var tengah = 0.0
+            var belakang  =0.0
+
+            // cek draft kosong
+            if(binding.edDraftDepan.text.toString().isNotEmpty()){
+                depan =  binding.edDraftDepan.text.toString().toDouble()
+            }
+            if (binding.edDraftTengah.text.toString().isNotEmpty()){
+                tengah = binding.edDraftTengah.text.toString().toDouble()
+            }
+            if (binding.edDraftBelakang.text.toString().isNotEmpty()){
+                belakang = binding.edDraftBelakang.text.toString().toDouble()
+            }
+
+            // penghitungan trim
             var trim = 0.0
             if(binding.edDraftDepan.text != null && binding.edDraftBelakang.text != null ){
-                trim =  binding.edDraftBelakang.text.toString().toDouble() - binding.edDraftDepan.text.toString().toDouble()
-                binding.edDraftTengah.setText("0")
+                trim =  belakang - depan
             }else if(binding.edDraftDepan.text ==null){
-                trim =  binding.edDraftBelakang.text.toString().toDouble() - binding.edDraftTengah.text.toString().toDouble()
-                binding.edDraftDepan.setText("0")
+                trim =  belakang - tengah
             }else if(binding.edDraftBelakang.text ==null){
-                trim =  binding.edDraftTengah.text.toString().toDouble() - binding.edDraftDepan.text.toString().toDouble()
-                binding.edDraftBelakang.setText("0")
+                trim =  tengah - depan
             }
-            val depan = binding.edDraftDepan.toString()
-            val tengah = binding.edDraftTengah.toString()
-            val belakang = binding.edDraftBelakang.toString()
-            val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString(), depan, tengah, belakang)
-            MaterialAlertDialogBuilder(this@InputDataActivity)
-                .setTitle("Yakin untuk melanjutkan?")
-                .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
-                .setPositiveButton("Ya") { _, _ ->
-                    val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
-                    intent.putExtra("data", data )
-                    startActivity(intent)
-                }
-                .setNegativeButton("Batal") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+
+            // cek data kosong
+            if(binding.edNamaPelabuhan.text.toString().isEmpty()){
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.edNamaPelabuhan.hint),Toast.LENGTH_SHORT).show()
+            }else if(binding.edKondisiKapal.text.toString().isEmpty()){
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlKondisiKapal.hint),Toast.LENGTH_SHORT).show()
+            }else if(binding.edTanggal.text.toString().isEmpty()){
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.edTanggal.hint ), Toast.LENGTH_SHORT).show()
+            }else if(binding.edBahanBakar.text.toString().isEmpty()){
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlBahanBakar.hint), Toast.LENGTH_SHORT).show()
+            }else if(binding.tvTime.text.toString().isEmpty()){
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tvTime.hint), Toast.LENGTH_SHORT).show()
+            }else {
+                val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString(), depan, tengah, belakang)
+                MaterialAlertDialogBuilder(this@InputDataActivity)
+                    .setTitle("Yakin untuk melanjutkan?")
+                    .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
+                    .setPositiveButton("Ya") { _, _ ->
+                        val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
+                        intent.putExtra("data", data )
+                        startActivity(intent)
+                    }
+                    .setNegativeButton("Batal") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
         }
     }
 

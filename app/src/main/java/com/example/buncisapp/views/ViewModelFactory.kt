@@ -13,9 +13,6 @@ class ViewModelFactory(private val pref: ShipPreference, private val context: Co
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-//            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-//                MainMenuViewModel(pref, Injection.provideRepository(context)) as T
-//            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
             }

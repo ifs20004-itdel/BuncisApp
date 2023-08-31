@@ -1,7 +1,6 @@
 package com.example.buncisapp.data.model
 
 import android.os.Parcelable
-import com.example.buncisapp.data.response.SoundingItem
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 

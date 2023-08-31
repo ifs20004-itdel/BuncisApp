@@ -1,15 +1,11 @@
 package com.example.buncisapp.views.calculator
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -17,8 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.Biodata
-import com.example.buncisapp.data.model.Request
-import com.example.buncisapp.data.response.SoundingItem
+import com.example.buncisapp.data.model.SoundingItem
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.history.HistoryActivity
@@ -34,7 +29,7 @@ class CalculatorActivity : AppCompatActivity() {
 
     private var listOfTank = mutableSetOf<SoundingItem>()
     private var listNoTanki = mutableListOf<String>()
-    private var selectedItem = ""
+//    private var selectedItem = ""
 
     private lateinit var binding : ActivityCalculatorBinding
 
@@ -49,6 +44,7 @@ class CalculatorActivity : AppCompatActivity() {
         }
 
         val data = intent.getParcelableExtra<Biodata>("data")
+
         binding.lvToolbar.btnHistory.setOnClickListener {
             val intent = Intent(this@CalculatorActivity, HistoryActivity::class.java)
             startActivity(intent)
@@ -57,55 +53,55 @@ class CalculatorActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, R.layout.dropdown_items, getNoTanki())
         binding.edNomorTangki.setAdapter(adapter)
 
-        binding.edNomorTangki.setOnItemClickListener { adapterView, _, i, _ ->
-            selectedItem = adapterView.getItemAtPosition(i) as String
-        }
         if (data != null) {
             binding.edTrim.setText(data.draft)
-            if(data.draft.toDouble() > 2.0){
-                binding.edSounding4.isEnabled
-                binding.edSounding5.isEnabled
-            }
         }
 
-        binding.btnCalculate.setOnClickListener {
-            val sounding1 = binding.edSounding1.text.toString().toDouble()
-            val sounding2 = binding.edSounding1.text.toString().toDouble()
-            val sounding3 = binding.edSounding1.text.toString().toDouble()
-            val sounding4 = binding.edSounding1.text.toString().toDouble()
-            val sounding5 = binding.edSounding1.text.toString().toDouble()
-            val average : Double
+//        binding.edNomorTangki.setOnItemClickListener { adapterView, _, i, _ ->
+//            selectedItem = adapterView.getItemAtPosition(i) as String
+//        }
 
-            if (data != null) {
-                if(data.draft.toDouble() < 2.0){
-                    val sum = sounding1 + sounding2 + sounding3
-                    average = sum/3
-                    if (selectedItem.isNotEmpty()){
-                        val soundingLevel = SoundingItem(average.toInt(),selectedItem)
-                        binding.tvResult.text = average.toString()
-                        listOfTank.add(soundingLevel)
-                    }
-                }else{
-                    val sum = sounding1 + sounding2 + sounding3 + sounding4 + sounding4 + sounding5
-                    average = sum/5
-                    if (selectedItem.isNotEmpty()){
-                        val soundingLevel = SoundingItem(average.toInt(),selectedItem)
-                        binding.tvResult.text = average.toString()
-                        listOfTank.add(soundingLevel)
-                    }
+        binding.btnCalculate.setOnClickListener {
+            var n = 3
+            val average : Int
+            var sum = 0
+
+            val sounding1 = binding.edSounding1.text.toString().toInt()
+            val sounding2 = binding.edSounding2.text.toString().toInt()
+            val sounding3 = binding.edSounding3.text.toString().toInt()
+            val sounding4 = binding.edSounding4
+            val sounding5 = binding.edSounding5
+
+            if(delta(sounding1, sounding2)>3 || delta(sounding1, sounding3)>3 || delta(sounding2, sounding3)>3){
+                sounding4.isEnabled
+                sounding5.isEnabled
+                n += 2
+                Toast.makeText(this@CalculatorActivity, "Silahkan tambahkan data sounding!", Toast.LENGTH_SHORT).show()
+            }
+
+            sum = if(n ==3){
+                sounding1 + sounding2 + sounding3
+            }else{
+                sounding1 + sounding2 + sounding3 + sounding4.text.toString().toInt() + sounding5.text.toString().toInt()
+            }
+            sum/n
+            calculatorViewModel.getShip().observe(this){
+                user ->
+
+                if (data != null) {
+                    calculatorViewModel.postResult(
+                        user.token, data.nama, data.kondisiKapal, data.waktu,data.bahanBakar,data.depan,data.tengah,data.kondisiKapal,data.belakang,"0",data.draft.toDouble(),listOfTank
+                    )
                 }
             }
-            Toast.makeText(this@CalculatorActivity, listOfTank.toString(), Toast.LENGTH_SHORT).show()
         }
 
         binding.btnNext.setOnClickListener {
             if (data != null) {
-                calculatorViewModel.getShip().observe(this){ ini ->
-                    calculatorViewModel.postResult(ini.token,data.nama, data.tanggal, data.waktu,data.bahanBakar,data.depan,data.tengah,data.kondisiKapal,data.belakang,"0",data.draft,listOfTank)
+                calculatorViewModel.getShip().observe(this){
                     val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
                     intent.putExtra("data", data )
                 }
-
             }
         }
     }
@@ -117,6 +113,7 @@ class CalculatorActivity : AppCompatActivity() {
         )[CalculatorViewModel::class.java]
     }
 
+
     private fun getNoTanki(): List<String>{
         calculatorViewModel.noTanki.observe(this){ items ->
             for(i in items){
@@ -126,6 +123,14 @@ class CalculatorActivity : AppCompatActivity() {
             }
         }
         return listNoTanki
+    }
+
+    private fun delta(param1: Int, param2: Int): Int {
+        return if(param2>param1){
+            param2-param1
+        }else{
+            param1-param2
+        }
     }
 
     private fun showDialog(data: ArrayList<String>){
@@ -156,17 +161,4 @@ class CalculatorActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun checkPermission(permission: String):Boolean{
-        return ContextCompat.checkSelfPermission(
-            this, permission
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun requestRuntimePermission(){
-        if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE) && checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            Toast.makeText(this@CalculatorActivity, "Already permitted",Toast.LENGTH_SHORT).show()
-        }else{
-
-        }
-    }
 }
