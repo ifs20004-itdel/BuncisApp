@@ -54,7 +54,7 @@ interface ApiService {
         @Field("draft_belakang") belakang: String,
         @Field("heel_correction") heel: String,
         @Field("trim") trim: String,
-        @Field("sounding") sounding: List<SoundingItem>
+        @Field("sounding") sounding: MutableSet<SoundingItem>
     ): Call<BunkerResponse>
 
 }

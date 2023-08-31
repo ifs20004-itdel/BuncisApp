@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,16 +15,15 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
-import com.example.buncisapp.data.DataDummy
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.Biodata
+import com.example.buncisapp.data.model.Request
 import com.example.buncisapp.data.response.SoundingItem
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.history.HistoryActivity
 import com.example.buncisapp.views.record.RecordActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.util.function.DoubleUnaryOperator
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -44,6 +44,10 @@ class CalculatorActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupViewModel()
 
+        calculatorViewModel.getShip().observe(this) { ship ->
+            calculatorViewModel.noTanki(ship.token)
+        }
+
         val data = intent.getParcelableExtra<Biodata>("data")
         binding.lvToolbar.btnHistory.setOnClickListener {
             val intent = Intent(this@CalculatorActivity, HistoryActivity::class.java)
@@ -56,9 +60,9 @@ class CalculatorActivity : AppCompatActivity() {
         binding.edNomorTangki.setOnItemClickListener { adapterView, _, i, _ ->
             selectedItem = adapterView.getItemAtPosition(i) as String
         }
-
         if (data != null) {
-            if(data.draft.toInt() > 2){
+            binding.edTrim.setText(data.draft)
+            if(data.draft.toDouble() > 2.0){
                 binding.edSounding4.isEnabled
                 binding.edSounding5.isEnabled
             }
@@ -73,11 +77,12 @@ class CalculatorActivity : AppCompatActivity() {
             val average : Double
 
             if (data != null) {
-                if(data.draft.toInt() < 2){
+                if(data.draft.toDouble() < 2.0){
                     val sum = sounding1 + sounding2 + sounding3
                     average = sum/3
                     if (selectedItem.isNotEmpty()){
                         val soundingLevel = SoundingItem(average.toInt(),selectedItem)
+                        binding.tvResult.text = average.toString()
                         listOfTank.add(soundingLevel)
                     }
                 }else{
@@ -85,6 +90,7 @@ class CalculatorActivity : AppCompatActivity() {
                     average = sum/5
                     if (selectedItem.isNotEmpty()){
                         val soundingLevel = SoundingItem(average.toInt(),selectedItem)
+                        binding.tvResult.text = average.toString()
                         listOfTank.add(soundingLevel)
                     }
                 }
@@ -94,7 +100,12 @@ class CalculatorActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if (data != null) {
-                calculatorViewModel.postResult(data.nama, data.kondisiKapal, data.tanggal, data.bahanBakar,data.waktu,data.draft)
+                calculatorViewModel.getShip().observe(this){ ini ->
+                    calculatorViewModel.postResult(ini.token,data.nama, data.tanggal, data.waktu,data.bahanBakar,data.depan,data.tengah,data.kondisiKapal,data.belakang,"0",data.draft,listOfTank)
+                    val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
+                    intent.putExtra("data", data )
+                }
+
             }
         }
     }

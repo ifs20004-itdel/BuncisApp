@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.buncisapp.R
+import com.example.buncisapp.data.model.Biodata
+import com.example.buncisapp.data.model.Request
 import com.example.buncisapp.databinding.ActivityRecordBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -27,6 +29,22 @@ class RecordActivity : AppCompatActivity() {
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val data = intent.getParcelableExtra<Request>("data")
+        if (data != null) {
+            binding.shipCondition.setText(data.kondisi)
+            binding.rsNameOfVessel.setText(data.pelabuhan)
+            binding.rsDate.setText(data.tanggal)
+            binding.rsTime.setText(data.waktu)
+            binding.rsPort.setText(data.pelabuhan)
+            binding.rsGradeOfBunker.setText(data.bbm)
+            binding.rsFore.setText(data.depan)
+            binding.rsMiddle.setText(data.tengah)
+            binding.rsAft.setText(data.belakang)
+            binding.rsTrim.setText(data.trim)
+//            if(data.sounding[0]){
+//
+//            }
+        }
         binding.btnUpload.setOnClickListener {
             if (arePermissionsGranted()) {
                 printPDF()

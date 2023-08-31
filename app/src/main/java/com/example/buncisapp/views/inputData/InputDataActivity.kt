@@ -101,7 +101,7 @@ class InputDataActivity : AppCompatActivity() {
             val depan = binding.edDraftDepan.toString()
             val tengah = binding.edDraftTengah.toString()
             val belakang = binding.edDraftBelakang.toString()
-            val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString(), depan, tengah,belakang)
+            val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString(), depan, tengah, belakang)
             MaterialAlertDialogBuilder(this@InputDataActivity)
                 .setTitle("Yakin untuk melanjutkan?")
                 .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
