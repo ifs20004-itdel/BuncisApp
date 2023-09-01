@@ -1,20 +1,23 @@
 package com.example.buncisapp.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 import retrofit2.http.FormUrlEncoded
 
-
+@Parcelize
 data class BunkerResponse(
 
 	@field:SerializedName("data")
-	val data: Data,
+	val data: @RawValue Data,
 
 	@field:SerializedName("message")
 	val message: String,
 
 	@field:SerializedName("status")
 	val status: Int
-)
+): Parcelable
 
 data class Data(
 

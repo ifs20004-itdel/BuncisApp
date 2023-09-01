@@ -2,18 +2,19 @@ package com.example.buncisapp.views.calculator
 
 import android.content.ContentValues
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.ShipModel
-import com.example.buncisapp.data.model.SoundingItem
+import com.example.buncisapp.data.model.SoundingItems
 import com.example.buncisapp.data.response.BunkerResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
-import kotlinx.parcelize.RawValue
+import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,20 +52,45 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         waktu: String, bbm: String,
         depan:Double, tengah:Double,
         kondisi:String, belakang:Double,
-        heel:String, trim:Double, listOfTank: @RawValue MutableSet<SoundingItem>
+        heel:Int, trim:Double, listOfTank: MutableSet<SoundingItems>
     ){
         val apiService = ApiConfig.getApiService()
-        val client = apiService.getBunker("Bearer $token",pelabuhan,tanggal,waktu,bbm, depan,tengah,kondisi,belakang,heel,trim,listOfTank )
+        val listOfTankJsonArray = mutableListOf<String>()
+        for (item in listOfTank) {
+            val gson = Gson()
+            val itemJson = gson.toJson(item)
+            listOfTankJsonArray.add(itemJson)
+        }
+
+        val listOfTankJson = listOfTankJsonArray.joinToString(", ")
+        val json = """
+            {
+              "pelabuhan": "Ketapang",
+              "tanggal_sounding": "2023-08-13",
+              "waktu_sounding": "15:01:02",
+              "jenis_BBM": "Pertamax Racing",
+              "draft_depan": 3,
+              "draft_tengah": 3,
+              "ship_condition": "REDELIVERY",
+              "draft_belakang": 3,
+              "heel_correction": 0,
+              "trim": -2.5,
+              "sounding": [$listOfTankJson]
+            }
+        """.trimIndent()
+        val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        Log.e("Ini cuyy",json)
+        val client = apiService.getBunker("Bearer $token",body )
         client.enqueue(object: Callback<BunkerResponse> {
             override fun onResponse(call: Call<BunkerResponse>, response: Response<BunkerResponse>) {
                 val responseBody = response.body()
+                Log.e("iniii",response.errorBody().toString())
                 if(response.isSuccessful){
                     if(responseBody != null ){
                         _data.value = response.body()
                     }
                 }else{
-                    val errorMessage = "Silahkan isi ulang data"
-                    Log.e(ContentValues.TAG, "OnFailure: $errorMessage")
+                    Log.e("iniii",response.errorBody().toString())
                 }
             }
             override fun onFailure(call: Call<BunkerResponse>, t: Throwable) {
