@@ -22,9 +22,6 @@
             android:name=".views.record.RecordActivity"
             android:exported="false" />
         <activity
-            android:name=".views.history.HistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".views.inputData.InputDataActivity"
             android:exported="false" />
         <activity

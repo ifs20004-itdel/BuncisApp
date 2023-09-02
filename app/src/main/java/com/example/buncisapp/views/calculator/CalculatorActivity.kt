@@ -19,7 +19,6 @@ import com.example.buncisapp.data.model.SoundingItems
 import com.example.buncisapp.data.response.BunkerResponse
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.ViewModelFactory
-import com.example.buncisapp.views.history.HistoryActivity
 import com.example.buncisapp.views.record.RecordActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -48,11 +47,6 @@ class CalculatorActivity : AppCompatActivity() {
         }
 
         val data = intent.getParcelableExtra<Biodata>("data")
-
-        binding.lvToolbar.btnHistory.setOnClickListener {
-            val intent = Intent(this@CalculatorActivity, HistoryActivity::class.java)
-            startActivity(intent)
-        }
 
         val adapter = ArrayAdapter(this, R.layout.dropdown_items, getNoTanki())
         binding.edNomorTangki.setAdapter(adapter)

@@ -24,18 +24,6 @@
             android:gravity="end"
             android:layout_marginEnd="16dp"
             >
-
-            <ImageButton
-                android:id="@+id/btn_history"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_history_24"
-                android:background="@drawable/btn_rounded_corner"
-                android:contentDescription="@string/button_history_description"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
-                />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_account"
                 android:layout_width="wrap_content"

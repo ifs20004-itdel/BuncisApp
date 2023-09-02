@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ import com.example.buncisapp.databinding.ActivityInputDataBinding
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.auth.LoginActivity
 import com.example.buncisapp.views.calculator.CalculatorActivity
-import com.example.buncisapp.views.history.HistoryActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -64,11 +62,6 @@ class InputDataActivity : AppCompatActivity() {
                 view.clearFocus()
                 showDatePickerDialog()
             }
-        }
-
-        binding.lvToolbar.btnHistory.setOnClickListener {
-            val intent = Intent(this@InputDataActivity, HistoryActivity::class.java)
-            startActivity(intent)
         }
 
         binding.lvToolbar.btnAccount.setOnClickListener {
