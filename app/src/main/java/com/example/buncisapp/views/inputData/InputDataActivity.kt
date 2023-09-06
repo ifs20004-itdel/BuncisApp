@@ -33,6 +33,7 @@ class InputDataActivity : AppCompatActivity() {
     private val calendar = Calendar.getInstance()
     private var fuelTypeItems = mutableListOf<String>()
     private var shipConditionItems = mutableListOf<String>()
+    private var portItems = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInputDataBinding.inflate(layoutInflater)
@@ -44,7 +45,11 @@ class InputDataActivity : AppCompatActivity() {
             binding.lvToolbar.btnAccount.text = intent.getStringExtra("username")
             inputDataViewModel.fuelType(ship.token)
             inputDataViewModel.shipCondition(ship.token)
+            inputDataViewModel.port(ship.token)
         }
+
+        val portAdapter = ArrayAdapter(this, R.layout.dropdown_items,getPort())
+        binding.edNamaPelabuhan.setAdapter(portAdapter)
 
         val fuelTypeAdapter = ArrayAdapter(this, R.layout.dropdown_items, getFuelTypes())
         binding.edBahanBakar.setAdapter(fuelTypeAdapter)
@@ -120,7 +125,7 @@ class InputDataActivity : AppCompatActivity() {
             }else if(binding.tvTime.text.toString().isEmpty()){
                 Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tvTime.hint), Toast.LENGTH_SHORT).show()
             }else {
-                val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim.toString(), depan, tengah, belakang)
+                val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim, depan, tengah, belakang)
                 MaterialAlertDialogBuilder(this@InputDataActivity)
                     .setTitle("Yakin untuk melanjutkan?")
                     .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
@@ -188,6 +193,16 @@ class InputDataActivity : AppCompatActivity() {
         binding.edTanggal.setText(sdf.format(calendar.time))
     }
 
+    private fun getPort(): List<String>{
+        inputDataViewModel.port.observe(this){items ->
+            for (i in items){
+                if(i!=null){
+                    portItems.add(i)
+                }
+            }
+        }
+        return portItems
+    }
     private fun getFuelTypes(): List<String> {
         inputDataViewModel.fuelType.observe(this){items ->
             for(i in items){

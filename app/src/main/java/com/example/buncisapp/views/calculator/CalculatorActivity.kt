@@ -17,6 +17,7 @@ import com.example.buncisapp.data.model.Biodata
 import com.example.buncisapp.data.model.SoundingItem
 import com.example.buncisapp.data.model.SoundingItems
 import com.example.buncisapp.data.response.BunkerResponse
+import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.record.RecordActivity
@@ -52,7 +53,7 @@ class CalculatorActivity : AppCompatActivity() {
         binding.edNomorTangki.setAdapter(adapter)
 
         if (data != null) {
-            binding.edTrim.setText(data.draft)
+            binding.edTrim.setText(data.draft.toString())
         }
 
 //        binding.edNomorTangki.setOnItemClickListener { adapterView, _, i, _ ->
@@ -85,36 +86,53 @@ class CalculatorActivity : AppCompatActivity() {
             sum = sounding1 + sounding2 + sounding3
             val average = sum / 3
 
-            binding.tvResult.text = average.toString()
-
             val newItem = SoundingItems(
                 levelSounding = average,
                 nomorTanki = binding.edNomorTangki.text.toString()
             )
             listOfTank.add(newItem)
 
-        }
 
-        binding.btnNext.setOnClickListener {
-            calculatorViewModel.getShip().observe(this){
-                    user ->
-                if (data != null) {
-                    calculatorViewModel.postResult(
-                        user.token, data.nama, data.kondisiKapal, data.waktu,data.bahanBakar,data.depan,data.tengah,data.kondisiKapal,data.belakang,0,data.draft.toDouble(),listOfTank
-                    )
+            binding.btnCalculate.setOnClickListener{
+                calculatorViewModel.getShip().observe(this){
+                        user ->
+                    if (data != null) {
+                        calculatorViewModel.calculation(
+                            user.token, data.draft,binding.edNomorTangki.text.toString(),average
+                        )
+                        calculatorViewModel.calculation.observe(this){data ->
+                            setHasil(data)
+                        }
+                    }
                 }
             }
 
-            if (data != null) {
-                calculatorViewModel.data.observe(this){bunker ->
-                    bunkerResponse.add(bunker)
-                    val data = Biodata("Ketapang", "REDELIVERY", "2023-08-13", "Pertamax Racing", "15:01:02", "-2.5", 3.0, 3.0, 3.0)
-                    val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
-                    intent.putExtra("data", data )
-                    startActivity(intent)
-                }
-            }
         }
+
+//        binding.btnNext.setOnClickListener {
+//            calculatorViewModel.getShip().observe(this){
+//                    user ->
+//                if (data != null) {
+//                    calculatorViewModel.postResult(
+//                        user.token, data.nama, data.kondisiKapal, data.waktu,data.bahanBakar,data.depan,data.tengah,data.kondisiKapal,data.belakang,0,data.draft.toDouble(),listOfTank
+//                    )
+//                }
+//            }
+//
+//            if (data != null) {
+//                calculatorViewModel.data.observe(this){bunker ->
+//                    bunkerResponse.add(bunker)
+//                    val data = Biodata("Ketapang", "REDELIVERY", "2023-08-13", "Pertamax Racing", "15:01:02", "-2.5", 3.0, 3.0, 3.0)
+//                    val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
+//                    intent.putExtra("data", data )
+//                    startActivity(intent)
+//                }
+//            }
+//        }
+    }
+
+    private fun setHasil(result: CalculationResponse) {
+        binding.tvResult.text = result.data?.volume.toString()
     }
 
     private fun setupViewModel(){
@@ -165,7 +183,7 @@ class CalculatorActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             .setNegativeButton("Kembali"){
-                dialog, _ ->
+                    dialog, _ ->
                 dialog.dismiss()
             }
             .create()

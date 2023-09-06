@@ -1,6 +1,7 @@
 package com.example.buncisapp.data.retrofit
 
 import com.example.buncisapp.data.response.BunkerResponse
+import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.response.FuelTypeResponse
 import com.example.buncisapp.data.response.LoginResponse
@@ -44,5 +45,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body getBunker: RequestBody
     ): Call<BunkerResponse>
+
+    @POST("api/calculation")
+    fun calculation(
+        @Header("Authorization") token: String,
+        @Body calculationBody: RequestBody
+    ): Call<CalculationResponse>
 
 }

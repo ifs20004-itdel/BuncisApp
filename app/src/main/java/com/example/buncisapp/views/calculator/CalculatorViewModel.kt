@@ -10,6 +10,7 @@ import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.ShipModel
 import com.example.buncisapp.data.model.SoundingItems
 import com.example.buncisapp.data.response.BunkerResponse
+import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.google.gson.Gson
@@ -26,6 +27,9 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
 
     private val _data = MutableLiveData<BunkerResponse>()
     val data : LiveData<BunkerResponse> = _data
+
+    private val _calculation = MutableLiveData<CalculationResponse>()
+    val calculation : LiveData<CalculationResponse> = _calculation
 
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
@@ -44,6 +48,44 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
             override fun onFailure(call: Call<FuelTankResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
             }
+        })
+    }
+
+    fun calculation(
+        token: String,
+        trim: Double,
+        nomor_tanki: String,
+        level_sounding: Double
+    ){
+        val apiService = ApiConfig.getApiService()
+        val json = """
+            {
+              "heel_correction": 0.0,
+              "trim": ${trim},
+              "nomor_tanki": "${nomor_tanki}",
+              "level_sounding":${level_sounding}
+            }
+        """.trimIndent()
+        val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        Log.e("Ini cuyy",json)
+        val client = apiService.calculation("Bearer $token",body )
+        client.enqueue(object: Callback<CalculationResponse> {
+            override fun onResponse(call: Call<CalculationResponse>, response: Response<CalculationResponse>) {
+                val responseBody = response.body()
+                Log.e("iniii",response.errorBody().toString())
+                if(response.isSuccessful){
+                    if(responseBody != null ){
+                        _calculation.value = response.body()
+                            Log.e("berhasil",response.body().toString())
+                    }
+                }else{
+                    Log.e("iniii",response.errorBody().toString())
+                }
+            }
+            override fun onFailure(call: Call<CalculationResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
+            }
+
         })
     }
     fun postResult(

@@ -10,7 +10,7 @@ data class Biodata (
     val tanggal : String,
     val bahanBakar: String,
     val waktu: String,
-    val draft: String,
+    val draft: Double,
     val depan: Double,
     val tengah: Double,
     val belakang:Double

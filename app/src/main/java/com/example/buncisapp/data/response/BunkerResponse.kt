@@ -19,7 +19,7 @@ data class BunkerResponse(
 	val status: Int
 ): Parcelable
 
-data class Data(
+data class DataBunker(
 
 	@field:SerializedName("sounding_levels")
 	val soundingLevels: List<SoundingLevelsItem>,
