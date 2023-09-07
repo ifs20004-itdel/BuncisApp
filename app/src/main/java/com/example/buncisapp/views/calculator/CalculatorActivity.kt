@@ -3,10 +3,11 @@ package com.example.buncisapp.views.calculator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -14,9 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.buncisapp.R
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.Biodata
-import com.example.buncisapp.data.model.SoundingItem
 import com.example.buncisapp.data.model.SoundingItems
-import com.example.buncisapp.data.response.BunkerResponse
 import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.ViewModelFactory
@@ -27,15 +26,11 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class CalculatorActivity : AppCompatActivity() {
 
-    // Mock array
     private lateinit var calculatorViewModel: CalculatorViewModel
-
     private var listOfTank = mutableSetOf<SoundingItems>()
     private var listNoTanki = mutableListOf<String>()
-    private var bunkerResponse = mutableListOf<BunkerResponse>()
-//    private var selectedItem = ""
 
-    private lateinit var binding : ActivityCalculatorBinding
+    private lateinit var binding: ActivityCalculatorBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +42,18 @@ class CalculatorActivity : AppCompatActivity() {
             calculatorViewModel.noTanki(ship.token)
         }
 
+        val switchButton = binding.switch1
+
+        switchButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.layoutSounding.visibility = View.GONE
+                binding.edVolume.visibility = View.VISIBLE
+            } else {
+                binding.layoutSounding.visibility = View.VISIBLE
+                binding.edVolume.visibility = View.GONE
+            }
+        }
+
         val data = intent.getParcelableExtra<Biodata>("data")
 
         val adapter = ArrayAdapter(this, R.layout.dropdown_items, getNoTanki())
@@ -56,97 +63,199 @@ class CalculatorActivity : AppCompatActivity() {
             binding.edTrim.setText(data.draft.toString())
         }
 
-//        binding.edNomorTangki.setOnItemClickListener { adapterView, _, i, _ ->
-//            selectedItem = adapterView.getItemAtPosition(i) as String
-//        }
-
         binding.btnCalculate.setOnClickListener {
-            var n = 3
-            var sum = 0.0
+            calculateAndDisplayResult()
+        }
 
-            val sounding1 = binding.edSounding1.text.toString().toDouble()
-            val sounding2 = binding.edSounding2.text.toString().toDouble()
-            val sounding3 = binding.edSounding3.text.toString().toDouble()
-            val sounding4 = binding.edSounding4
-            val sounding5 = binding.edSounding5
+        binding.btnTambah.setOnClickListener {
+            addNewItem()
+        }
 
-//            if(delta(sounding1, sounding2)>3 || delta(sounding1, sounding3)>3 || delta(sounding2, sounding3)>3){
-//                sounding4.isEnabled
-//                sounding5.isEnabled
-//                n += 2
-//                Toast.makeText(this@CalculatorActivity, "Silahkan tambahkan data sounding!", Toast.LENGTH_SHORT).show()
-//            }
+        binding.btnNext.setOnClickListener {
+            // Handle the next button click here if needed
+        }
+    }
 
-//            sum = if(n ==3){
-//                sounding1 + sounding2 + sounding3
-//            }else{
-//                sounding1 + sounding2 + sounding3 + sounding4.text.toString().toDouble() + sounding5.text.toString().toDouble()
-//            }
-//            sum/n
-            sum = sounding1 + sounding2 + sounding3
-            val average = sum / 3
+    private fun calculateAndDisplayResult() {
+        val switchButton = binding.switch1
 
-            val newItem = SoundingItems(
-                levelSounding = average,
-                nomorTanki = binding.edNomorTangki.text.toString()
-            )
-            listOfTank.add(newItem)
+        val sounding1: Double
+        val sounding2: Double
+        val sounding3: Double
 
+        if (switchButton.isChecked) {
+            // Jika switch dinyalakan, set nilai sounding ke 0
+            sounding1 = 0.0
+            sounding2 = 0.0
+            sounding3 = 0.0
+            // Sembunyikan tampilan untuk pengisian sounding
+            binding.layoutSounding.visibility = View.GONE
+        } else {
+            // Jika switch dimatikan, ambil nilai dari inputan
+            sounding1 = binding.edSounding1.text.toString().toDoubleOrNull() ?: 0.0
+            sounding2 = binding.edSounding2.text.toString().toDoubleOrNull() ?: 0.0
+            sounding3 = binding.edSounding3.text.toString().toDoubleOrNull() ?: 0.0
+            // Tampilkan tampilan untuk pengisian sounding
+            binding.layoutSounding.visibility = View.VISIBLE
+        }
 
-            binding.btnCalculate.setOnClickListener{
-                calculatorViewModel.getShip().observe(this){
-                        user ->
-                    if (data != null) {
-                        calculatorViewModel.calculation(
-                            user.token, data.draft,binding.edNomorTangki.text.toString(),average
-                        )
-                        calculatorViewModel.calculation.observe(this){data ->
-                            setHasil(data)
-                        }
+        // Lanjutkan dengan menghitung hasil sesuai dengan nilai sounding yang sudah diatur
+        val volume: Double = if (switchButton.isChecked) {
+            binding.edVolume.text.toString().toDoubleOrNull() ?: 0.0
+        } else {
+            0.0
+        }
+
+        val sum = sounding1 + sounding2 + sounding3
+        val average = sum / 3
+
+        // Validasi tambahan untuk memeriksa selisih sounding
+        val soundingDifference = delta(sounding1, sounding2) + delta(sounding2, sounding3) + delta(sounding1, sounding3)
+
+        if (soundingDifference > 3) {
+            // Selisih lebih dari 3, memerlukan pengisian sounding4 dan sounding5
+            val sounding4 = binding.edSounding4.text.toString().toDoubleOrNull() ?: 0.0
+            val sounding5 = binding.edSounding5.text.toString().toDoubleOrNull() ?: 0.0
+
+            // Validasi jika sounding4 atau sounding5 tidak diisi
+            if (sounding4 == 0.0 || sounding5 == 0.0) {
+                Toast.makeText(this, "Sounding 4 dan Sounding 5 harus diisi", Toast.LENGTH_SHORT).show()
+                return // Keluar dari fungsi jika validasi tidak terpenuhi
+            }
+
+            // Menghitung rata-rata dengan 5 nilai sounding
+            val sumWith5Soundings = sum + sounding4 + sounding5
+            val averageWith5Soundings = sumWith5Soundings / 5
+
+            calculatorViewModel.getShip().observe(this) { user ->
+                val data = intent.getParcelableExtra<Biodata>("data")
+                if (data != null) {
+                    calculatorViewModel.calculation(
+                        user.token,
+                        data.draft,
+                        binding.edNomorTangki.text.toString(),
+                        averageWith5Soundings, // Menggunakan rata-rata dengan 5 sounding
+                        volume
+                    )
+                    calculatorViewModel.calculation.observe(this) { result ->
+                        setHasil(result) // Gunakan averageWith5Soundings
                     }
                 }
             }
+        } else {
+            // Menghitung rata-rata dengan 3 nilai sounding
+            calculatorViewModel.getShip().observe(this) { user ->
+                val data = intent.getParcelableExtra<Biodata>("data")
+                if (data != null) {
+                    calculatorViewModel.calculation(
+                        user.token,
+                        data.draft,
+                        binding.edNomorTangki.text.toString(),
+                        average, // Menggunakan rata-rata dengan 3 sounding
+                        volume
+                    )
+                    calculatorViewModel.calculation.observe(this) { result ->
+                        setHasil(result) // Gunakan average
+                    }
+                }
+            }
+        }
+    }
 
+
+    private fun addNewItem() {
+        val switchButton = binding.switch1
+
+        val sounding1: Double
+        val sounding2: Double
+        val sounding3: Double
+
+        if (switchButton.isChecked) {
+            // Jika switch dinyalakan, set nilai sounding ke 0
+            sounding1 = 0.0
+            sounding2 = 0.0
+            sounding3 = 0.0
+            // Sembunyikan tampilan untuk pengisian sounding
+            binding.layoutSounding.visibility = View.GONE
+        } else {
+            // Jika switch dimatikan, ambil nilai dari inputan
+            sounding1 = binding.edSounding1.text.toString().toDoubleOrNull() ?: 0.0
+            sounding2 = binding.edSounding2.text.toString().toDoubleOrNull() ?: 0.0
+            sounding3 = binding.edSounding3.text.toString().toDoubleOrNull() ?: 0.0
+            // Tampilkan tampilan untuk pengisian sounding
+            binding.layoutSounding.visibility = View.VISIBLE
         }
 
-//        binding.btnNext.setOnClickListener {
-//            calculatorViewModel.getShip().observe(this){
-//                    user ->
-//                if (data != null) {
-//                    calculatorViewModel.postResult(
-//                        user.token, data.nama, data.kondisiKapal, data.waktu,data.bahanBakar,data.depan,data.tengah,data.kondisiKapal,data.belakang,0,data.draft.toDouble(),listOfTank
-//                    )
-//                }
-//            }
-//
-//            if (data != null) {
-//                calculatorViewModel.data.observe(this){bunker ->
-//                    bunkerResponse.add(bunker)
-//                    val data = Biodata("Ketapang", "REDELIVERY", "2023-08-13", "Pertamax Racing", "15:01:02", "-2.5", 3.0, 3.0, 3.0)
-//                    val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
-//                    intent.putExtra("data", data )
-//                    startActivity(intent)
-//                }
-//            }
-//        }
+        // Lanjutkan dengan menghitung hasil sesuai dengan nilai sounding yang sudah diatur
+        val volume: Double = if (switchButton.isChecked) {
+            binding.edVolume.text.toString().toDoubleOrNull() ?: 0.0
+        } else {
+            0.0
+        }
+
+        val sum = sounding1 + sounding2 + sounding3
+        val average = sum / 3
+
+        // Validasi tambahan untuk memeriksa selisih sounding
+        val soundingDifference = delta(sounding1, sounding2) + delta(sounding2, sounding3) + delta(sounding1, sounding3)
+        if (soundingDifference > 3) {
+            // Selisih lebih dari 3, memerlukan pengisian sounding4 dan sounding5
+            val sounding4 = binding.edSounding4.text.toString().toDoubleOrNull() ?: 0.0
+            val sounding5 = binding.edSounding5.text.toString().toDoubleOrNull() ?: 0.0
+
+            // Validasi jika sounding4 atau sounding5 tidak diisi
+            if (sounding4 == 0.0 || sounding5 == 0.0) {
+                Toast.makeText(this, "Sounding 4 dan Sounding 5 harus diisi", Toast.LENGTH_SHORT).show()
+                return // Keluar dari fungsi jika validasi tidak terpenuhi
+            }
+
+            // Menghitung rata-rata dengan 5 nilai sounding
+            val sumWith5Soundings = sum + sounding4 + sounding5
+            val averageWith5Soundings = sumWith5Soundings / 5
+
+            val newItem = SoundingItems(
+                levelSounding = averageWith5Soundings, // Gunakan rata-rata dengan 5 sounding
+                nomorTanki = binding.edNomorTangki.text.toString(),
+                volume = volume
+            )
+            listOfTank.add(newItem)
+        } else {
+            // Menghitung rata-rata dengan 3 nilai sounding
+            val newItem = SoundingItems(
+                levelSounding = average, // Gunakan rata-rata dengan 3 sounding
+                nomorTanki = binding.edNomorTangki.text.toString(),
+                volume = volume
+            )
+            listOfTank.add(newItem)
+        }
+
+        // Membersihkan inputan setelah item baru ditambahkan
+        binding.edSounding1.text?.clear()
+        binding.edSounding2.text?.clear()
+        binding.edSounding3.text?.clear()
+        binding.edSounding4.text?.clear()
+        binding.edSounding5.text?.clear()
+        binding.edVolume.text?.clear()
+
+        Toast.makeText(this@CalculatorActivity, "Data Berhasil Ditambahkan!", Toast.LENGTH_SHORT).show()
     }
+
 
     private fun setHasil(result: CalculationResponse) {
         binding.tvResult.text = result.data?.volume.toString()
     }
 
-    private fun setupViewModel(){
+    private fun setupViewModel() {
         calculatorViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(ShipPreference.getInstance(dataStore),this)
+            ViewModelFactory(ShipPreference.getInstance(dataStore), this)
         )[CalculatorViewModel::class.java]
     }
 
-
-    private fun getNoTanki(): List<String>{
-        calculatorViewModel.noTanki.observe(this){ items ->
-            for(i in items){
-                if(i != null){
+    private fun getNoTanki(): List<String> {
+        calculatorViewModel.noTanki.observe(this) { items ->
+            for (i in items) {
+                if (i != null) {
                     listNoTanki.add(i)
                 }
             }
@@ -155,18 +264,17 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     private fun delta(param1: Double, param2: Double): Double {
-        return if(param2>param1){
-            param2-param1
-        }else{
-            param1-param2
+        return if (param2 > param1) {
+            param2 - param1
+        } else {
+            param1 - param2
         }
     }
 
-    private fun showDialog(data: ArrayList<String>){
-
+    private fun showDialog(data: ArrayList<String>) {
         // Mock method
         var stringFormat = ""
-        for (i in data){
+        for (i in data) {
             stringFormat += "$i \n"
         }
 
@@ -174,20 +282,17 @@ class CalculatorActivity : AppCompatActivity() {
         builder
             .setTitle("Peringatan!")
             .setMessage("List Tangki yang belum terisi: \n$stringFormat ")
-            .setPositiveButton("Lanjut"){
-                    _,_->
+            .setPositiveButton("Lanjut") { _, _ ->
                 val intent = Intent(
                     this@CalculatorActivity,
                     RecordActivity::class.java
                 )
                 startActivity(intent)
             }
-            .setNegativeButton("Kembali"){
-                    dialog, _ ->
+            .setNegativeButton("Kembali") { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
         builder.show()
     }
-
 }

@@ -9,7 +9,10 @@ data class SoundingItem(
 	val nomorTanki: String? = null,
 
 	@field:SerializedName("level_sounding")
-	val levelSounding: Double? = null
+	val levelSounding: Double? = null,
+
+	@field:SerializedName("volume")
+	val volume: Double? = null
 )
 
 data class SoundingItems(
@@ -18,5 +21,8 @@ data class SoundingItems(
 	val nomorTanki: String,
 
 	@SerializedName("level_sounding")
-	val levelSounding: Double
+	val levelSounding: Double,
+
+	@field:SerializedName("volume")
+	val volume: Double? = null
 )

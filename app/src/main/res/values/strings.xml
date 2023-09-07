@@ -30,4 +30,6 @@
     <string name="nama_kapal">Nama Kapal</string>
     <string name="kondisi_kapal">Kondisi Kapal</string>
     <string name="empty_data">%1s tidak boleh kosong!</string>
+    <string name="volume">Volume</string>
+    <string name="tambah">Tambah</string>
 </resources>

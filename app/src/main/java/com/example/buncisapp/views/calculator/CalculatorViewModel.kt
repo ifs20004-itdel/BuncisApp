@@ -55,7 +55,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         token: String,
         trim: Double,
         nomor_tanki: String,
-        level_sounding: Double
+        level_sounding: Double,
+        volume: Double
     ){
         val apiService = ApiConfig.getApiService()
         val json = """
@@ -63,7 +64,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
               "heel_correction": 0.0,
               "trim": ${trim},
               "nomor_tanki": "${nomor_tanki}",
-              "level_sounding":${level_sounding}
+              "level_sounding":${level_sounding},
+              "volume":${volume}
             }
         """.trimIndent()
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())

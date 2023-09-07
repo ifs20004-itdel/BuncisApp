@@ -12,18 +12,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/lv_toolbar">
+        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginVertical="12dp">
 
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/nomor_tanki"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:scrollHorizontally="true" />
-
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/ed_nomor_tangki"
+            android:layout_width="310dp"
+            android:layout_height="40dp"/>
 
         <ImageView
             android:id="@+id/image_remove"
@@ -151,6 +149,5 @@
             android:layout_marginLeft="5dp"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
-
 
 </LinearLayout>
