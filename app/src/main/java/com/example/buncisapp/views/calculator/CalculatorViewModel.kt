@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.ShipModel
 import com.example.buncisapp.data.model.SoundingItems
@@ -14,6 +15,7 @@ import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -55,7 +57,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         token: String,
         trim: Double,
         nomor_tanki: String,
-        level_sounding: Double,
+        level_sounding: Int,
         volume: Double
     ){
         val apiService = ApiConfig.getApiService()
@@ -69,16 +71,13 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
             }
         """.trimIndent()
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        Log.e("Ini cuyy",json)
         val client = apiService.calculation("Bearer $token",body )
         client.enqueue(object: Callback<CalculationResponse> {
             override fun onResponse(call: Call<CalculationResponse>, response: Response<CalculationResponse>) {
                 val responseBody = response.body()
-                Log.e("iniii",response.errorBody().toString())
                 if(response.isSuccessful){
                     if(responseBody != null ){
                         _calculation.value = response.body()
-                            Log.e("berhasil",response.body().toString())
                     }
                 }else{
                     Log.e("iniii",response.errorBody().toString())
@@ -90,13 +89,14 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
 
         })
     }
+
     fun postResult(
         token: String,
         pelabuhan: String, tanggal:String,
-        waktu: String, bbm: String,
+        waktu: String, jenisBBM: String,
         depan:Double, tengah:Double,
         kondisi:String, belakang:Double,
-        heel:Int, trim:Double, listOfTank: MutableSet<SoundingItems>
+        heel:Double, trim:Double, listOfTank: MutableList<SoundingItems>
     ){
         val apiService = ApiConfig.getApiService()
         val listOfTankJsonArray = mutableListOf<String>()
@@ -109,21 +109,20 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         val listOfTankJson = listOfTankJsonArray.joinToString(", ")
         val json = """
             {
-              "pelabuhan": "Ketapang",
-              "tanggal_sounding": "2023-08-13",
-              "waktu_sounding": "15:01:02",
-              "jenis_BBM": "Pertamax Racing",
-              "draft_depan": 3,
-              "draft_tengah": 3,
-              "ship_condition": "REDELIVERY",
-              "draft_belakang": 3,
-              "heel_correction": 0,
-              "trim": -2.5,
-              "sounding": [$listOfTankJson]
+              "pelabuhan": "$pelabuhan",
+              "tanggal_sounding": "$tanggal",
+              "waktu_sounding": "$waktu",
+              "jenis_BBM": "$jenisBBM",
+              "draft_depan": ${depan},
+              "draft_tengah": ${tengah},
+              "ship_condition": "$kondisi",
+              "draft_belakang": ${belakang},
+              "heel_correction": ${heel},
+              "trim": ${trim},
+              "sounding": [$listOfTank]
             }
         """.trimIndent()
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        Log.e("Ini cuyy",json)
         val client = apiService.getBunker("Bearer $token",body )
         client.enqueue(object: Callback<BunkerResponse> {
             override fun onResponse(call: Call<BunkerResponse>, response: Response<BunkerResponse>) {
@@ -142,5 +141,11 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
             }
 
         })
+    }
+
+    fun logout(){
+        viewModelScope.launch {
+            pref.logout()
+        }
     }
 }

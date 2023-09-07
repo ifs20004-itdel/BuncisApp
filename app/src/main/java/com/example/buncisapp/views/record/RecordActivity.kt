@@ -13,10 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.buncisapp.R
 import com.example.buncisapp.data.model.Biodata
-import com.example.buncisapp.data.model.Request
-import com.example.buncisapp.data.response.BunkerResponse
 import com.example.buncisapp.databinding.ActivityRecordBinding
-import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -30,7 +27,8 @@ class RecordActivity : AppCompatActivity() {
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = intent.getParcelableExtra<Biodata>("data")
+        val data = intent.getParcelableExtra<Biodata>("bunker")
+        Log.e("test", data.toString())
         if (data != null) {
             binding.shipCondition.setText(data.kondisiKapal)
             binding.rsNameOfVessel.setText(data.nama)
