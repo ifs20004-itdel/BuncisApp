@@ -1,131 +1,163 @@
 package com.example.buncisapp.views.record
 
 import android.Manifest
-import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.buncisapp.R
-import com.example.buncisapp.data.model.Biodata
+import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.databinding.ActivityRecordBinding
+import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class RecordActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRecordBinding
-    private val REQUEST_CODE_PERMISSIONS = 1001
-    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val REQUEST_CODE_PERMISSIONS = 1232
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        askPermission()
 
-        val data = intent.getParcelableExtra<Biodata>("bunker")
-        Log.e("test", data.toString())
+        Log.e("INI WOIIII", "MASUK")
+        val data = intent.getParcelableExtra<RobResponse>("bunkerData")
+        Log.e("INI WOIIII", data.toString())
         if (data != null) {
-            binding.shipCondition.setText(data.kondisiKapal)
-            binding.rsNameOfVessel.setText(data.nama)
-            binding.rsDate.setText(data.tanggal)
-            binding.rsTime.setText(data.waktu)
-            binding.rsPort.setText(data.nama)
-            binding.rsGradeOfBunker.setText(data.bahanBakar)
-            binding.rsFore.setText(data.depan.toString())
-            binding.rsMiddle.setText(data.tengah.toString())
-            binding.rsAft.setText(data.belakang.toString())
-//            binding.rsTrim.setText(data.)
-//            if(data.sounding[0]){
-//
-//            }
-        }
-        binding.btnUpload.setOnClickListener {
-            if (arePermissionsGranted()) {
-                printPDF()
-            } else {
-                requestPermissions()
+            binding.shipCondition.text = data.data?.shipCondition
+            binding.rsNameOfVessel.text = data.data?.vessel?.name
+            binding.rsDate.text = data.data?.soundingDatetime
+            binding.rsTime.text = data.data?.soundingDatetime
+            binding.rsPort.text = data.data?.port
+            binding.rsGradeOfBunker.text = data.data?.fuelType
+            binding.rsFore.text = data.data?.frontDraft.toString()
+            binding.rsMiddle.text = data.data?.middleDraft.toString()
+            binding.rsAft.text = data.data?.backDraft.toString()
+            binding.rsTrim.text = data.data?.trim.toString()
+            binding.representativeName.text = data.data?.firstSignerName
+            binding.masterName.text = data.data?.secondSignerName
+            binding.ceName.text = data.data?.thirdSignerName
+            val fuelTankStringBuilder = StringBuilder()
+            val levelStringBuilder = StringBuilder()
+            val volumeStringBuilder = StringBuilder()
+
+            for (soundingLevel in data.data?.soundingLevels!!) {
+                if (soundingLevel != null && !soundingLevel.fuelTank.isNullOrBlank()) {
+                    // Tambahkan fuelTank ke string dengan tanda koma sebagai pemisah
+                    fuelTankStringBuilder.append(soundingLevel.fuelTank)
+                    fuelTankStringBuilder.append("\n")
+                    levelStringBuilder.append(soundingLevel.level)
+                    levelStringBuilder.append("\n")
+                    levelStringBuilder.append(soundingLevel.volume)
+                    levelStringBuilder.append("\n")
+                }
+                // Hapus tanda koma ekstra di akhir string jika ada
+                if (fuelTankStringBuilder.isNotEmpty()) {
+                    fuelTankStringBuilder.deleteCharAt(fuelTankStringBuilder.length - 1)
+                } else if (levelStringBuilder.isNotEmpty()) {
+                    levelStringBuilder.deleteCharAt(levelStringBuilder.length - 2)
+                } else if (volumeStringBuilder.isNotEmpty()) {
+                    volumeStringBuilder.deleteCharAt(volumeStringBuilder.length - 2)
+                }
+
+                // Set nilai fuelTankName dengan string yang berisi fuelTank yang dipisahkan oleh koma
+                binding.fuelTankName.text = fuelTankStringBuilder.toString()
+                binding.sounding.text = levelStringBuilder.toString()
+                binding.volume.text = volumeStringBuilder.toString()
             }
-        }
-        printPDF()
-    }
-
-    private fun arePermissionsGranted(): Boolean {
-        for (permission in REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false
-            }
-        }
-        return true
-    }
-
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (arePermissionsGranted()) {
-                printPDF()
-            } else {
-                Toast.makeText(this, "Permissions are required to save the PDF.", Toast.LENGTH_SHORT).show()
+            binding.btnUpload.setOnClickListener {
+                convertXMLtoPDF()
             }
         }
     }
 
 
-    private fun printPDF() {
-        val view = findViewById<View>(R.id.surat)
-        view.measure(View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(1920, View.MeasureSpec.EXACTLY))
-        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+    private fun askPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE_PERMISSIONS)
+    }
 
+    private fun createPDF() {
         val document = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(1080, 1920, 1).create()
         val page = document.startPage(pageInfo)
-        val canvas = page.canvas
-        view.draw(canvas)
-        document.finishPage(page)
 
-        val downloadDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        val canvas = page.canvas
+
+        val paint = Paint()
+        paint.color = Color.RED
+        paint.textSize = 42f
+
+        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val fileName = "example.pdf"
-//        val numberOfFilesToCreate = 1000
-//
-//        for (i in 1..numberOfFilesToCreate) {
-//            val fileName = "doc_$i.pdf"
-//            val file = File(downloadDir, fileName)
-//
-//            try {
-//                val fos = FileOutputStream(file)
-//                document.writeTo(fos)
-//                document.close()
-//                fos.close()
-//                Log.e("iniii","$downloadDir")
-//                Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
-//            } catch (e: IOException) {
-//                throw RuntimeException(e)
-//            }
-//        }
+        val file = File(downloadDir, fileName)
+
         try {
-            val fos = FileOutputStream(fileName)
+            val fos = FileOutputStream(file)
             document.writeTo(fos)
             document.close()
             fos.close()
-            Log.e("iniii","$downloadDir")
+            Log.e("iniii", "$downloadDir")
             Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
             throw RuntimeException(e)
         }
+    }
+
+    private fun convertXMLtoPDF() {
+        val view = findViewById<View>(R.id.surat)
+        val displayMetrics = DisplayMetrics()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            display?.getRealMetrics(displayMetrics)
+        } else {
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+        }
+
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(displayMetrics.widthPixels, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(displayMetrics.heightPixels, View.MeasureSpec.EXACTLY)
+        )
+
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels)
+        val document = PdfDocument()
 
 
+        val pageInfo = PdfDocument.PageInfo.Builder(1080, 1920, 1).create()
+        val page = document.startPage(pageInfo)
+
+        val canvas = page.canvas
+        view.draw(canvas)
+
+        document.finishPage(page)
+
+        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val currentDateTime = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
+        val fileName = "ROB_$currentDateTime.pdf"
+        val file = File(downloadDir, fileName)
+
+        try {
+            val fos = FileOutputStream(file)
+            document.writeTo(fos)
+            document.close()
+            fos.close()
+            Log.e("iniii", "$downloadDir")
+            Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            throw RuntimeException(e)
+        }
     }
 }

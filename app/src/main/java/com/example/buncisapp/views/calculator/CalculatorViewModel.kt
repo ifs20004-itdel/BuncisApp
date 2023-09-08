@@ -10,9 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.ShipModel
 import com.example.buncisapp.data.model.SoundingItems
-import com.example.buncisapp.data.response.BunkerResponse
 import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
+import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
@@ -27,8 +27,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
     private val _noTanki = MutableLiveData<List<String?>>()
     val noTanki: LiveData<List<String?>> = _noTanki
 
-    private val _data = MutableLiveData<BunkerResponse>()
-    val data : LiveData<BunkerResponse> = _data
+    private val _data = MutableLiveData<RobResponse>()
+    val data : LiveData<RobResponse> = _data
 
     private val _calculation = MutableLiveData<CalculationResponse>()
     val calculation : LiveData<CalculationResponse> = _calculation
@@ -80,7 +80,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
                         _calculation.value = response.body()
                     }
                 }else{
-                    Log.e("iniii",response.errorBody().toString())
+                    Log.e("test",response.errorBody().toString())
                 }
             }
             override fun onFailure(call: Call<CalculationResponse>, t: Throwable) {
@@ -105,7 +105,6 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
             val itemJson = gson.toJson(item)
             listOfTankJsonArray.add(itemJson)
         }
-
         val listOfTankJson = listOfTankJsonArray.joinToString(", ")
         val json = """
             {
@@ -119,24 +118,26 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
               "draft_belakang": ${belakang},
               "heel_correction": ${heel},
               "trim": ${trim},
-              "sounding": [$listOfTank]
+              "sounding": [$listOfTankJson]
             }
         """.trimIndent()
+
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        val client = apiService.getBunker("Bearer $token",body )
-        client.enqueue(object: Callback<BunkerResponse> {
-            override fun onResponse(call: Call<BunkerResponse>, response: Response<BunkerResponse>) {
+        val client = apiService.rob("Bearer $token",body )
+        client.enqueue(object: Callback<RobResponse> {
+            override fun onResponse(call: Call<RobResponse>, response: Response<RobResponse>) {
                 val responseBody = response.body()
-                Log.e("iniii",response.errorBody().toString())
+                Log.e("request",json)
                 if(response.isSuccessful){
                     if(responseBody != null ){
                         _data.value = response.body()
+                        Log.e("RESULT",response.body().toString())
                     }
                 }else{
-                    Log.e("iniii",response.errorBody().toString())
+                    Log.e("error request rob",response.errorBody().toString())
                 }
             }
-            override fun onFailure(call: Call<BunkerResponse>, t: Throwable) {
+            override fun onFailure(call: Call<RobResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
             }
 

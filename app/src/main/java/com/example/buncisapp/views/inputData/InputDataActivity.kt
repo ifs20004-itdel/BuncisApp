@@ -153,6 +153,7 @@ class InputDataActivity : AppCompatActivity() {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             calendar.set(Calendar.HOUR_OF_DAY, hour)
             calendar.set(Calendar.MINUTE, minute)
+            calendar.set(Calendar.SECOND, 0) // Set seconds to 0
             updateTimer()
         }
         TimePickerDialog(
@@ -182,13 +183,13 @@ class InputDataActivity : AppCompatActivity() {
     }
 
     private fun updateTimer(){
-        val format = "HH : mm"
+        val format = "HH:mm:ss"
         val dateFormat = SimpleDateFormat(format, Locale.getDefault())
         binding.tvTime.text = dateFormat.format(calendar.time)
     }
 
     private fun updateEditText(){
-        val format = "dd/MM/yyyy"
+        val format = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(format, Locale.US)
         binding.edTanggal.setText(sdf.format(calendar.time))
     }

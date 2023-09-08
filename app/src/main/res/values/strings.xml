@@ -32,4 +32,8 @@
     <string name="empty_data">%1s tidak boleh kosong!</string>
     <string name="volume">Volume</string>
     <string name="tambah">Tambah</string>
+    <string name="chief_engineer">Chief Engineer</string>
+    <string name="master">Master</string>
+    <string name="representative">Representative</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -19,6 +19,7 @@ import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.data.model.Biodata
 import com.example.buncisapp.data.model.SoundingItems
 import com.example.buncisapp.data.response.CalculationResponse
+import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.auth.LoginActivity
@@ -41,6 +42,7 @@ class CalculatorActivity : AppCompatActivity() {
         binding = ActivityCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupViewModel()
+
 
         calculatorViewModel.getShip().observe(this) { ship ->
             calculatorViewModel.noTanki(ship.token)
@@ -96,11 +98,16 @@ class CalculatorActivity : AppCompatActivity() {
                     listOfTank)
             }
 
+            var dataHasil: RobResponse
             val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
-            calculatorViewModel.data.observe(this){
-                intent.putExtra("bunkerData",it)
+            Log.e("test", "masukkk")
+            calculatorViewModel.data.observe(this) { it ->
+                Log.e("data response", it.toString())
+                dataHasil = it
+                // Now that dataHasil is set, you can start the activity here
+                intent.putExtra("bunkerData", dataHasil)
+                startActivity(intent)
             }
-            startActivity(intent)
 
 
 
@@ -238,9 +245,9 @@ class CalculatorActivity : AppCompatActivity() {
 
         // Lanjutkan dengan menghitung hasil sesuai dengan nilai sounding yang sudah diatur
         val volume: Double = if (switchButton.isChecked) {
-            binding.edVolume.text.toString().toDoubleOrNull() ?: 0.0
+            binding.edVolume.text.toString().toDoubleOrNull() ?:0.0
         } else {
-            0.0
+            binding.tvResult.text.toString().toDoubleOrNull() ?: 0.0
         }
 
         val sum = sounding1 + sounding2 + sounding3
@@ -319,30 +326,5 @@ class CalculatorActivity : AppCompatActivity() {
         } else {
             param1 - param2
         }
-    }
-
-    private fun showDialog(data: ArrayList<String>) {
-        // Mock method
-        var stringFormat = ""
-        for (i in data) {
-            stringFormat += "$i\n"
-        }
-
-        val builder = MaterialAlertDialogBuilder(this@CalculatorActivity)
-        builder
-            .setTitle("Peringatan!")
-            .setMessage("List Tangki yang belum terisi: \n$stringFormat ")
-            .setPositiveButton("Lanjut") { _, _ ->
-                val intent = Intent(
-                    this@CalculatorActivity,
-                    RecordActivity::class.java
-                )
-                startActivity(intent)
-            }
-            .setNegativeButton("Kembali") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-        builder.show()
     }
 }

@@ -1,11 +1,11 @@
 package com.example.buncisapp.data.retrofit
 
-import com.example.buncisapp.data.response.BunkerResponse
 import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.response.FuelTypeResponse
 import com.example.buncisapp.data.response.LoginResponse
 import com.example.buncisapp.data.response.PortResponse
+import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.data.response.ShipConditionResponse
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -40,16 +40,17 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<ShipConditionResponse>
 
-    @POST("api/bunker")
-    fun getBunker(
-        @Header("Authorization") token: String,
-        @Body getBunker: RequestBody
-    ): Call<BunkerResponse>
 
     @POST("api/calculation")
     fun calculation(
         @Header("Authorization") token: String,
         @Body calculationBody: RequestBody
     ): Call<CalculationResponse>
+
+    @POST("api/remaining-on-board")
+    fun rob(
+        @Header("Authorization") token: String,
+        @Body calculationBody: RequestBody
+    ): Call<RobResponse>
 
 }
