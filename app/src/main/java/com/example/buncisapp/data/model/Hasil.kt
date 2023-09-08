@@ -3,7 +3,6 @@ package com.example.buncisapp.data.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
-import retrofit2.http.FormUrlEncoded
 
 @Parcelize
 data class Hasil (
