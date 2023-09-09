@@ -37,8 +37,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="23dp"
-            android:text="PT Pertamina Trans Kontinental"
-            android:textSize="8dp" />
+            android:text="@string/company_name"
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/alamat"
@@ -47,8 +47,8 @@
             android:layout_below="@+id/tv_pertamina"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
-            android:text="Cabang Surabaya\nJl. Perak Timur No.28 Surabaya - 60165\nT. 031 3551210, 3551216\nF. 031 3551213"
-            android:textSize="5dp" />
+            android:text="@string/company_address"
+            android:textSize="5sp" />
 
         <TextView
             android:id="@+id/ROB"
@@ -59,8 +59,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="105dp"
             android:layout_marginTop="75dp"
-            android:text="BUNKER REMAIN ON BOARD"
-            android:textSize="10dp" />
+            android:text="@string/rob_title"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/ship_condition"
@@ -71,7 +71,7 @@
             android:layout_marginStart="146dp"
             android:layout_marginTop="5dp"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_name_of_vessel"
@@ -82,7 +82,7 @@
             android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/list_symbol"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_date"
@@ -93,7 +93,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
         <TextView
             android:id="@+id/rs_time"
             android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_port"
@@ -114,7 +114,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_grade_of_bunker"
@@ -125,7 +125,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_fore"
@@ -136,7 +136,8 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_symbol2"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
+
         <TextView
             android:id="@+id/rs_middle"
             android:layout_width="wrap_content"
@@ -146,7 +147,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol2"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_aft"
@@ -157,7 +158,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol2"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_trim"
@@ -168,7 +169,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_symbol4"
             android:text="@string/kondisi_kapal"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_heel"
@@ -179,7 +180,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol4"
             android:text="0"
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/list_isian"
@@ -190,8 +191,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="24dp"
             android:layout_marginTop="25dp"
-            android:text="NAME OF VESSEL\n\nDATE\n\nTIME\n\nPORT\n\nGRADE OF BUNKER\n\nDRAFT"
-            android:textSize="8dp" />
+            android:text="@string/rob_field"
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/list_isian2"
@@ -202,8 +203,8 @@
             android:layout_marginStart="35dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/list_isian"
-            android:text="- Fore (F)\n\n- Middle (M)\n\n- Aft (A)"
-            android:textSize="8dp" />
+            android:text="@string/rob_draft"
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/list_isian3"
@@ -213,8 +214,8 @@
             android:layout_marginStart="77dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_symbol2"
-            android:text="TRIM\n\nHEEL"
-            android:textSize="8dp" />
+            android:text="@string/trim_n_nheel"
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/list_symbol"
@@ -224,8 +225,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="41dp"
             android:layout_toEndOf="@+id/list_isian"
-            android:text=": \n\n: \n\n: \n\n: \n\n: \n\n: "
-            android:textSize="8dp" />
+            android:text="@string/rob_titik_dua"
+            android:textSize="8sp" />
 
         <LinearLayout
             android:id="@+id/tabel_sounding"
@@ -248,27 +249,27 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#000"
-                        android:text="FUEL TANK"
+                        android:text="@string/tv_fuel_tank"
                         android:textColor="#fff"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#000"
                         android:textColor="#fff"
-                        android:text="SOUNDING (mm)"
+                        android:text="@string/sounding_mm"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#000"
                         android:textColor="#fff"
-                        android:text="VOLUME (Liter)"
+                        android:text="@string/volume_liter"
                         android:textStyle="bold"/>
                 </TableRow>
 
@@ -281,24 +282,24 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Fuel Tank Name"
-                        android:textSize="10dp" />
+                        android:text="@string/tv_fuel_tank_name"
+                        android:textSize="10sp" />
                     <TextView
                         android:id="@+id/sounding"
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Sounding (mm)"/>
+                        android:text="@string/sounding_mm"/>
                     <TextView
                         android:id="@+id/volume"
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Volume (Liter)"/>
+                        android:text="@string/volume_liter"/>
                 </TableRow>
 
                 <!-- Loop through the data rows using a ListView or RecyclerView -->
@@ -311,8 +312,8 @@
                         android:layout_weight="2"
                         android:background="#000"
                         android:textColor="#fff"
-                        android:text="TOTAL ROB BUNKER"
-                        android:textSize="10dp"
+                        android:text="@string/total_rob_bunker"
+                        android:textSize="10sp"
                         android:textStyle="bold"
                         android:gravity="center"/>
                     <TextView
@@ -320,8 +321,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="10dp"
-                        android:text="Total Value Here"
+                        android:textSize="10sp"
+                        android:text="@string/total_value_here"
                         android:textStyle="bold"/>
                 </TableRow>
             </TableLayout>
@@ -351,12 +352,12 @@
                         android:text="@string/representative"
                         android:textColor="#000000"
                         android:gravity="center"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
                     <TextView
                         android:id="@+id/master"
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -367,7 +368,7 @@
                     <TextView
                         android:id="@+id/chief_engineer"
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -385,20 +386,20 @@
                         android:layout_height="30dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="10dp" />
+                        android:textSize="10sp" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
 
                         android:gravity="center"
-                        android:textSize="10dp" />
+                        android:textSize="10sp" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="10dp" />
+                        android:textSize="10sp" />
                 </TableRow>
 
                 <TableRow>
@@ -410,11 +411,11 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/representative"
-                        android:textSize="10dp" />
+                        android:textSize="10sp" />
                     <TextView
                         android:id="@+id/masterName"
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -422,7 +423,7 @@
                     <TextView
                         android:id="@+id/ceName"
                         android:layout_width="0dp"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -443,7 +444,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_isian"
             android:text=": \n\n: \n\n: "
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/list_symbol4"
@@ -454,7 +455,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_isian3"
             android:text=": \n\n: "
-            android:textSize="8dp" />
+            android:textSize="8sp" />
 
     </RelativeLayout>
 
@@ -466,7 +467,7 @@
         android:layout_margin="8dp"
         android:backgroundTint="@color/white"
         android:padding="8dp"
-        android:text="download"
+        android:text="@string/download"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:icon="@drawable/baseline_download_24"

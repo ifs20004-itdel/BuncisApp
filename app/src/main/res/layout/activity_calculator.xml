@@ -80,6 +80,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_sounding_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sounding"
@@ -169,7 +170,8 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    app:hintEnabled="false">
+                    app:hintEnabled="false"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ed_sounding_4"
@@ -177,7 +179,9 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_rounded_corner"
                         android:hint="@string/zero"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:enabled="false"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -194,6 +198,7 @@
                         android:inputType="numberDecimal"
                         android:hint="@string/zero"
                         android:background="@drawable/btn_rounded_corner"
+                        android:enabled="false"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -259,5 +264,17 @@
         tools:listitem="@layout/sounding_item"
         />
 
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:id="@+id/pb_loading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"
+        android:visibility="gone"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

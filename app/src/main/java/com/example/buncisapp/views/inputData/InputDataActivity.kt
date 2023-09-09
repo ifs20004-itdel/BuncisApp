@@ -115,7 +115,7 @@ class InputDataActivity : AppCompatActivity() {
 
             // cek data kosong
             if(binding.edNamaPelabuhan.text.toString().isEmpty()){
-                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.edNamaPelabuhan.hint),Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlNamaPelabuhan.hint),Toast.LENGTH_SHORT).show()
             }else if(binding.edKondisiKapal.text.toString().isEmpty()){
                 Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlKondisiKapal.hint),Toast.LENGTH_SHORT).show()
             }else if(binding.edTanggal.text.toString().isEmpty()){
@@ -128,7 +128,7 @@ class InputDataActivity : AppCompatActivity() {
                 val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim, depan, tengah, belakang)
                 MaterialAlertDialogBuilder(this@InputDataActivity)
                     .setTitle("Yakin untuk melanjutkan?")
-                    .setMessage("Anda yakin ingin melanjutkan ke CalculatorActivity?")
+                    .setMessage("Anda yakin ingin melanjutkan ke kalkulator?")
                     .setPositiveButton("Ya") { _, _ ->
                         val intent = Intent(this@InputDataActivity, CalculatorActivity::class.java)
                         intent.putExtra("data", data )
