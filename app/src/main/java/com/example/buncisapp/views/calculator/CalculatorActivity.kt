@@ -266,7 +266,7 @@ class CalculatorActivity : AppCompatActivity() {
 
             // Validasi jika sounding4 atau sounding5 tidak diisi
             if (sounding4 == 0.0 || sounding5 == 0.0) {
-                Toast.makeText(this, "Sounding 4 dan Sounding 5 harus diisi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Delta sounding >3", Toast.LENGTH_SHORT).show()
                 return // Keluar dari fungsi jika validasi tidak terpenuhi
             }
 

@@ -24,9 +24,9 @@ class CalculatorAdapter(private val data: List<SoundingItems>): RecyclerView.Ada
 
     class ViewHolder(private val binding: SoundingItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: SoundingItems){
-            binding.tvNomorTangki.text = data.nomorTanki
+            binding.tvNomorTangkiValue.text = data.nomorTanki
             binding.tvLevelSounding.text = data.levelSounding.toString()
-            binding.tvVolume.text = data.volume.toString()
+            binding.tvVolumeValue.text = data.volume.toString()
         }
     }
 }
