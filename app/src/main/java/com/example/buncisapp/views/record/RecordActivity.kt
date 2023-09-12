@@ -40,8 +40,12 @@ class RecordActivity : AppCompatActivity() {
         if (data != null) {
             binding.shipCondition.text = data.data?.shipCondition
             binding.rsNameOfVessel.text = data.data?.vessel?.name
-            binding.rsDate.text = data.data?.soundingDatetime
-            binding.rsTime.text = data.data?.soundingDatetime
+
+            val date = data.data?.soundingDatetime?.substring(0,10)
+            val time = data.data?.soundingDatetime?.substring(11,19)
+
+            binding.rsDate.text = date
+            binding.rsTime.text = time
             binding.rsPort.text = data.data?.port
             binding.rsGradeOfBunker.text = data.data?.fuelType
             binding.rsFore.text = data.data?.frontDraft.toString()
@@ -110,7 +114,6 @@ class RecordActivity : AppCompatActivity() {
             document.writeTo(fos)
             document.close()
             fos.close()
-            Log.e("iniii", "$downloadDir")
             Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
             throw RuntimeException(e)
@@ -154,7 +157,6 @@ class RecordActivity : AppCompatActivity() {
             document.writeTo(fos)
             document.close()
             fos.close()
-            Log.e("iniii", "$downloadDir")
             Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
             throw RuntimeException(e)

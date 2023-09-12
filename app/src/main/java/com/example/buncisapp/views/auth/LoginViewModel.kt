@@ -3,6 +3,7 @@ package com.example.buncisapp.views.auth
 import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -19,6 +20,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
+
+
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
     }
@@ -35,6 +41,7 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
         }
     }
     fun validateShip(bunkerCode: String, password: String, stateCallback: AuthenticationCallback){
+        _loading.value = true
         val apiService = ApiConfig.getApiService()
         val json = """
             {
@@ -47,6 +54,7 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
         val login = apiService.login(body)
         login.enqueue(object: Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                _loading.value = false
                 val responseBody = response.body()
                 if(response.isSuccessful){
                     if(responseBody != null && responseBody.status == 1 ){

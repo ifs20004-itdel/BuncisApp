@@ -33,6 +33,9 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
     private val _calculation = MutableLiveData<CalculationResponse>()
     val calculation : LiveData<CalculationResponse> = _calculation
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
     }
@@ -60,6 +63,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         level_sounding: Int,
         volume: Double
     ){
+        _loading.value =true
         val apiService = ApiConfig.getApiService()
         val json = """
             {
@@ -74,6 +78,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         val client = apiService.calculation("Bearer $token",body )
         client.enqueue(object: Callback<CalculationResponse> {
             override fun onResponse(call: Call<CalculationResponse>, response: Response<CalculationResponse>) {
+                _loading.value = false
                 val responseBody = response.body()
                 if(response.isSuccessful){
                     if(responseBody != null ){
@@ -98,6 +103,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         kondisi:String, belakang:Double,
         heel:Double, trim:Double, listOfTank: MutableList<SoundingItems>
     ){
+        _loading.value =true
         val apiService = ApiConfig.getApiService()
         val listOfTankJsonArray = mutableListOf<String>()
         for (item in listOfTank) {
@@ -126,6 +132,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         val client = apiService.rob("Bearer $token",body )
         client.enqueue(object: Callback<RobResponse> {
             override fun onResponse(call: Call<RobResponse>, response: Response<RobResponse>) {
+                _loading.value = false
                 val responseBody = response.body()
                 Log.e("request",json)
                 if(response.isSuccessful){

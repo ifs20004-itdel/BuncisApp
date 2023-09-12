@@ -17,37 +17,51 @@
         android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingVertical="10dp">
 
         <TextView
-            android:id="@+id/tvNomorTangki"
+            android:id="@+id/tv_no_tangki"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
+            android:text="@string/nomor_tangki"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@id/tvVolume"
+            card_view:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_nomor_tangki_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textStyle="bold"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintStart_toEndOf="@id/tv_no_tangki"
             tools:text="@string/nomor_tangki" />
 
+
         <TextView
-            android:id="@+id/tvLevelSounding"
+            android:id="@+id/tv_level_sounding"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/sounding"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_no_tangki"
+            card_view:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_level_sounding_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
+            card_view:layout_constraintStart_toEndOf="@id/tv_level_sounding"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/tvNomorTangki"
             tools:text="@string/zero" />
 
         <TextView
-            android:id="@+id/tvVolume"
+            android:id="@+id/tv_volume_value"
             android:layout_width="159dp"
             android:layout_height="16dp"
             android:layout_marginStart="8dp"
@@ -57,7 +71,7 @@
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@id/tvNomorTangki"
+            card_view:layout_constraintStart_toEndOf="@id/tv_nomor_tangki_value"
             tools:text="@string/volume"
             android:gravity="end"
             />

@@ -3,6 +3,7 @@ package com.example.buncisapp.views.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -40,9 +41,24 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
         loginViewModel.getShip().observe(this) { user ->
             if(user.isLogin == 1){
                 val intent = Intent(this@LoginActivity, InputDataActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.putExtra("username", USERNAME)
                 startActivity(intent)
             }
+        }
+
+        loginViewModel.loading.observe(this){ isLoading ->
+            showLoading(isLoading)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean){
+        if(isLoading){
+            binding.pbLoading.visibility  = View.VISIBLE
+            binding.pbLoading.progress = 0
+            binding.pbLoading.max = 100
+        }else{
+            binding.pbLoading.visibility = View.GONE
         }
     }
 
