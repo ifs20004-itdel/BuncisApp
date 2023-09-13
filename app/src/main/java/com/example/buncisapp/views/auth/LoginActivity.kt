@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.example.buncisapp.R
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.databinding.ActivityLoginBinding
 import com.example.buncisapp.utils.AuthenticationCallback
@@ -27,9 +29,10 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupViewModel()
         setupAction()
+
+
     }
 
     private fun setupViewModel() {

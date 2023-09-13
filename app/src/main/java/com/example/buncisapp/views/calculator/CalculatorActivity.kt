@@ -20,6 +20,8 @@ import com.example.buncisapp.data.model.SoundingItems
 import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.databinding.ActivityCalculatorBinding
+import com.example.buncisapp.utils.AuthenticationCallback
+import com.example.buncisapp.utils.CalculatorCallback
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.auth.LoginActivity
 import com.example.buncisapp.views.record.RecordActivity
@@ -27,7 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class CalculatorActivity : AppCompatActivity() {
+class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
 
     private lateinit var calculatorViewModel: CalculatorViewModel
     private var listOfTank = mutableListOf<SoundingItems>()
@@ -130,6 +132,10 @@ class CalculatorActivity : AppCompatActivity() {
         }
     }
 
+    override fun onErrorCalculator(message: String?) {
+        Toast.makeText(this@CalculatorActivity, message.toString(), Toast.LENGTH_SHORT).show()
+    }
+
     private fun showLoading(isLoading: Boolean){
         if(isLoading){
             binding.pbLoading.visibility  = View.VISIBLE
@@ -199,7 +205,7 @@ class CalculatorActivity : AppCompatActivity() {
                         data.draft,
                         binding.edNomorTangki.text.toString(),
                         averageWith5Soundings.toInt(),
-                        volume
+                        volume,this
                     )
                     calculatorViewModel.calculation.observe(this) { result ->
                         setHasil(result)
@@ -215,7 +221,7 @@ class CalculatorActivity : AppCompatActivity() {
                         data.draft,
                         binding.edNomorTangki.text.toString(),
                         average.toInt(),
-                        volume
+                        volume,this
                     )
                     calculatorViewModel.calculation.observe(this) { result ->
                         setHasil(result)
@@ -224,6 +230,7 @@ class CalculatorActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
     private fun addNewItem() {
