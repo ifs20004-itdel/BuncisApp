@@ -50,4 +50,14 @@
     <string name="total_rob_bunker">TOTAL ROB BUNKER</string>
     <string name="total_value_here">Total Value Here</string>
     <string name="download">download</string>
+    <string-array name="dummy_data">
+        <item>Kapal A</item>
+        <item>Kapal B</item>
+        <item>Kapal C</item>
+        <item>Python</item>
+        <item>Scala</item>
+        <item>Perl</item>
+        <item>Javascript</item>
+        <item>Jquery</item>
+    </string-array>
 </resources>

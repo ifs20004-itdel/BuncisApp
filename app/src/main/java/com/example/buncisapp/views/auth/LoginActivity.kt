@@ -3,13 +3,17 @@ package com.example.buncisapp.views.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.example.buncisapp.R
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.databinding.ActivityLoginBinding
 import com.example.buncisapp.utils.AuthenticationCallback
@@ -28,8 +32,34 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val autoCompleteLoginField = binding.edLoginUsername
+        autoCompleteLoginField.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                return
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                return
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                updateSuggestion()
+            }
+        })
+
         setupViewModel()
         setupAction()
+    }
+
+    private fun updateSuggestion() {
+
+        loginViewModel.getVessel(){
+            success, data ->
+            if(success){
+                val adapter = ArrayAdapter(this, R.layout.dropdown_items, data)
+                binding.edLoginUsername.setAdapter(adapter)
+            }
+        }
     }
 
     private fun setupViewModel() {

@@ -66,16 +66,19 @@
                 android:textColorHint="@color/black_50"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/ed_login_username"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/enter_username"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="20dp"
                     android:drawableStart="@drawable/ic_account_24"
+                    android:paddingHorizontal="15dp"
                     android:drawableTint="@color/black_50"
                     android:maxLines="1"
                     android:scrollHorizontally="true"
+                    android:paddingVertical="16dp"
+                    android:completionThreshold="2"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -7,6 +7,7 @@ import com.example.buncisapp.data.response.LoginResponse
 import com.example.buncisapp.data.response.PortResponse
 import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.data.response.ShipConditionResponse
+import com.example.buncisapp.data.response.VesselResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -24,6 +25,11 @@ interface ApiService {
     fun getFuelType(
         @Header("Authorization") token: String
     ): Call<FuelTypeResponse>
+
+    @GET("api/vessel")
+    fun getVessel(
+
+    ): Call<VesselResponse>
 
     @GET("api/port")
     fun getPort(
