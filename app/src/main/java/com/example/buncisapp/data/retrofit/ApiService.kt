@@ -28,7 +28,6 @@ interface ApiService {
 
     @GET("api/vessel")
     fun getVessel(
-
     ): Call<VesselResponse>
 
     @GET("api/port")
