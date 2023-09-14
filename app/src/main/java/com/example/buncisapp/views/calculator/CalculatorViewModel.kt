@@ -2,6 +2,7 @@ package com.example.buncisapp.views.calculator
 
 import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,8 @@ import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
+import com.example.buncisapp.utils.AuthenticationCallback
+import com.example.buncisapp.utils.CalculatorCallback
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -61,7 +64,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         trim: Double,
         nomor_tanki: String,
         level_sounding: Int,
-        volume: Double
+        volume: Double,
+        stateCallback: CalculatorCallback
     ){
         _loading.value =true
         val apiService = ApiConfig.getApiService()
@@ -81,15 +85,18 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
                 _loading.value = false
                 val responseBody = response.body()
                 if(response.isSuccessful){
+                    stateCallback.onErrorCalculator(response.body().toString())
                     if(responseBody != null ){
                         _calculation.value = response.body()
                     }
                 }else{
-                    Log.e("test",response.errorBody().toString())
+                    Log.e("test",response.raw().toString())
+                    stateCallback.onErrorCalculator(response.raw().toString())
                 }
             }
             override fun onFailure(call: Call<CalculationResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
+                stateCallback.onErrorCalculator(t.message.toString())
             }
 
         })

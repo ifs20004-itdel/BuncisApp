@@ -63,11 +63,11 @@ class RecordActivity : AppCompatActivity() {
                 if (soundingLevel != null && !soundingLevel.fuelTank.isNullOrBlank()) {
                     // Tambahkan fuelTank ke string dengan tanda koma sebagai pemisah
                     fuelTankStringBuilder.append(soundingLevel.fuelTank)
-                    fuelTankStringBuilder.append("\n")
+                    fuelTankStringBuilder.append("\n\n")
                     levelStringBuilder.append(soundingLevel.level)
                     levelStringBuilder.append("\n")
-                    levelStringBuilder.append(soundingLevel.volume)
-                    levelStringBuilder.append("\n")
+                    volumeStringBuilder.append(soundingLevel.volume)
+                    volumeStringBuilder.append("\n")
                 }
                 // Hapus tanda koma ekstra di akhir string jika ada
                 if (fuelTankStringBuilder.isNotEmpty()) {
