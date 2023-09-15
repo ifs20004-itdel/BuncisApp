@@ -20,15 +20,6 @@ import retrofit2.Response
 
 class InputDataViewModel(private val pref: ShipPreference): ViewModel() {
 
-    private val _fuelType = MutableLiveData<List<String?>>()
-    val fuelType: LiveData<List<String?>> = _fuelType
-
-    private val _shipCondition = MutableLiveData<List<String?>>()
-    val shipCondition: LiveData<List<String?>> = _shipCondition
-
-//    private val _port = MutableLiveData<List<String?>>()
-//    val port: LiveData<List<String?>> = _port
-
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
     }
@@ -46,24 +37,22 @@ class InputDataViewModel(private val pref: ShipPreference): ViewModel() {
             override fun onResponse(call: Call<PortResponse>, response: Response<PortResponse>) {
                 val responseBody = response.body()
                 if(responseBody != null){
-//                    _port.value = responseBody.dataPort?.port
                     responseBody.dataPort?.port?.let { callback(it) }
                 }
             }
-
             override fun onFailure(call: Call<PortResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
             }
         })
     }
-    fun fuelType(token: String) {
+    fun fuelType(token: String, callback: (List<String?>) -> Unit) {
         val service = ApiConfig.getApiService()
         val client = service.getFuelType("Bearer $token")
         client.enqueue(object: Callback<FuelTypeResponse> {
             override fun onResponse(call: Call<FuelTypeResponse>, response: Response<FuelTypeResponse>) {
                 val responseBody = response.body()
                 if(responseBody != null){
-                    _fuelType.value = responseBody.data?.fuelType
+                    responseBody.data?.fuelType?.let { callback(it) }
                 }
             }
             override fun onFailure(call: Call<FuelTypeResponse>, t: Throwable) {
@@ -72,7 +61,7 @@ class InputDataViewModel(private val pref: ShipPreference): ViewModel() {
         })
     }
 
-    fun shipCondition(token: String){
+    fun shipCondition(token: String, callback: (List<String?>) -> Unit){
         val service = ApiConfig.getApiService()
         val client = service.getShipCondition("Bearer $token")
         client.enqueue(object :Callback<ShipConditionResponse>{
@@ -82,14 +71,13 @@ class InputDataViewModel(private val pref: ShipPreference): ViewModel() {
             ) {
                 val responseBody = response.body()
                 if(responseBody != null){
-                    _shipCondition.value = responseBody.data?.shipCondition
+                    responseBody.data?.shipCondition?.let { callback(it) }
                 }
             }
 
             override fun onFailure(call: Call<ShipConditionResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
             }
-
         })
     }
 }

@@ -31,8 +31,6 @@ class InputDataActivity : AppCompatActivity() {
     private lateinit var inputDataViewModel: InputDataViewModel
     private lateinit var binding : ActivityInputDataBinding
     private val calendar = Calendar.getInstance()
-    private var fuelTypeItems = mutableListOf<String>()
-    private var shipConditionItems = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInputDataBinding.inflate(layoutInflater)
@@ -42,22 +40,22 @@ class InputDataActivity : AppCompatActivity() {
 
         inputDataViewModel.getShip().observe(this) { ship ->
             binding.lvToolbar.btnAccount.text = intent.getStringExtra("username")
-            inputDataViewModel.fuelType(ship.token)
-            inputDataViewModel.shipCondition(ship.token)
+            inputDataViewModel.fuelType(ship.token){
+                dataFuelType ->
+                val fuelTypeAdapter = ArrayAdapter(this, R.layout.dropdown_items, dataFuelType)
+                binding.edBahanBakar.setAdapter(fuelTypeAdapter)
+            }
+            inputDataViewModel.shipCondition(ship.token){
+                shipConditionData ->
+                val shipConditionAdapter = ArrayAdapter(this, R.layout.dropdown_items, shipConditionData)
+                binding.edKondisiKapal.setAdapter(shipConditionAdapter)
+            }
             inputDataViewModel.port(ship.token){
                 portData ->
                 val portAdapter = ArrayAdapter(this, R.layout.dropdown_items,portData)
                 binding.edNamaPelabuhan.setAdapter(portAdapter)
             }
         }
-
-
-
-        val fuelTypeAdapter = ArrayAdapter(this, R.layout.dropdown_items, getFuelTypes())
-        binding.edBahanBakar.setAdapter(fuelTypeAdapter)
-
-        val shipConditionAdapter = ArrayAdapter(this, R.layout.dropdown_items, getShipCondition())
-        binding.edKondisiKapal.setAdapter(shipConditionAdapter)
 
         binding.mvTimer.setOnClickListener {
             showTimePickerDialog()
@@ -194,27 +192,5 @@ class InputDataActivity : AppCompatActivity() {
         val format = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(format, Locale.US)
         binding.edTanggal.setText(sdf.format(calendar.time))
-    }
-
-    private fun getFuelTypes(): List<String> {
-        inputDataViewModel.fuelType.observe(this){items ->
-            for(i in items){
-                if(i != null){
-                    fuelTypeItems.add(i)
-                }
-            }
-        }
-        return fuelTypeItems
-    }
-
-    private fun getShipCondition(): List<String>{
-        inputDataViewModel.shipCondition.observe(this){ items ->
-            for(i in items){
-                if(i != null){
-                    shipConditionItems.add(i)
-                }
-            }
-        }
-        return shipConditionItems
     }
 }
