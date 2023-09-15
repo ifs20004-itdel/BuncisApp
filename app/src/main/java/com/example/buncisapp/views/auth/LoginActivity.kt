@@ -33,17 +33,15 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
         setupViewModel()
         setupAction()
 
-        val adapter = ArrayAdapter(this, R.layout.dropdown_items, getVessel())
-        binding.edLoginUsername.setAdapter(adapter)
-
+        getVessel()
     }
 
     private fun getVessel(): List<String> {
-        loginViewModel.vessel.observe(this) { items ->
-            for (i in items) {
-                if (i != null) {
-                    listVessel.add(i)
-                }
+        loginViewModel.getVessel{
+            success, data ->
+            if(success){
+                val adapter = ArrayAdapter(this, R.layout.dropdown_items, data)
+                binding.edLoginUsername.setAdapter(adapter)
             }
         }
         return listVessel

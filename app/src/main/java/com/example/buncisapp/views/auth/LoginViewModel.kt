@@ -22,12 +22,8 @@ import retrofit2.Response
 
 class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
 
-
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
-
-    private val _vessel = MutableLiveData<List<String?>>()
-    val vessel: LiveData<List<String?>> = _vessel
 
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
@@ -81,6 +77,8 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
 
         })
     }
+
+
 
     fun getVessel(callback: (Boolean, List<String?>)->Unit) {
         val apiService = ApiConfig.getApiService()
