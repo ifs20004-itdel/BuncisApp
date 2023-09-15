@@ -3,6 +3,7 @@ package com.example.buncisapp.views.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -37,8 +38,10 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
     }
 
     private fun getVessel(): List<String> {
+        Log.e("test", "sampaiiii")
         loginViewModel.getVessel{
             success, data ->
+            Log.e("test", data.toString())
             if(success){
                 val adapter = ArrayAdapter(this, R.layout.dropdown_items, data)
                 binding.edLoginUsername.setAdapter(adapter)

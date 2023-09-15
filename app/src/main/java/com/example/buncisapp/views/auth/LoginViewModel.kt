@@ -71,14 +71,13 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                _loading.value = false
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
                 stateCallback.onError(-1, t.message.toString())
             }
 
         })
     }
-
-
 
     fun getVessel(callback: (Boolean, List<String?>)->Unit) {
         val apiService = ApiConfig.getApiService()
