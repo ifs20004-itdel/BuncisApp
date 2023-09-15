@@ -45,6 +45,10 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<ShipConditionResponse>
 
+    @GET("api/username")
+    fun getUsername(
+    ): Call<ShipConditionResponse>
+
 
     @POST("api/calculation")
     fun calculation(

@@ -91,7 +91,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
                     }
                 }else{
                     Log.e("test",response.raw().toString())
-                    stateCallback.onErrorCalculator(response.raw().toString())
+                    stateCallback.onErrorCalculator(response.errorBody().toString())
                 }
             }
             override fun onFailure(call: Call<CalculationResponse>, t: Throwable) {

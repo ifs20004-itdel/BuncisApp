@@ -58,7 +58,7 @@
                 />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/CustomOutlinedTextField"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
@@ -93,7 +93,7 @@
                 app:passwordToggleEnabled="true"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/ed_login_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

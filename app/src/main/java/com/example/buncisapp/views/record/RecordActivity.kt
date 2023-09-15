@@ -1,6 +1,7 @@
 package com.example.buncisapp.views.record
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import com.example.buncisapp.R
 import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.databinding.ActivityRecordBinding
+import com.example.buncisapp.views.inputData.InputDataActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -87,6 +89,12 @@ class RecordActivity : AppCompatActivity() {
                 convertXMLtoPDF()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, InputDataActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
