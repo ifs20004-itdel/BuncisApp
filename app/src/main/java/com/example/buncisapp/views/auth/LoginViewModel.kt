@@ -89,7 +89,6 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
                 if(response.isSuccessful){
                     if(responseBody != null){
                         responseBody.data?.let { callback(true, it.fuelTank) }
-//                        _vessel.value = responseBody.data?.fuelTank
                     }
                 }
             }

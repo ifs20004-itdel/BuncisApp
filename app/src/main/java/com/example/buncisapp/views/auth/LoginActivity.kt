@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding : ActivityLoginBinding
-    private var listVessel = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,21 +32,17 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback{
         setContentView(binding.root)
         setupViewModel()
         setupAction()
-
         getVessel()
     }
 
-    private fun getVessel(): List<String> {
-        Log.e("test", "sampaiiii")
+    private fun getVessel(){
         loginViewModel.getVessel{
             success, data ->
-            Log.e("test", data.toString())
             if(success){
                 val adapter = ArrayAdapter(this, R.layout.dropdown_items, data)
                 binding.edLoginUsername.setAdapter(adapter)
             }
         }
-        return listVessel
     }
 
     private fun setupViewModel() {

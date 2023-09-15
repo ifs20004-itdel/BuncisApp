@@ -26,8 +26,8 @@ class InputDataViewModel(private val pref: ShipPreference): ViewModel() {
     private val _shipCondition = MutableLiveData<List<String?>>()
     val shipCondition: LiveData<List<String?>> = _shipCondition
 
-    private val _port = MutableLiveData<List<String?>>()
-    val port: LiveData<List<String?>> = _port
+//    private val _port = MutableLiveData<List<String?>>()
+//    val port: LiveData<List<String?>> = _port
 
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
@@ -39,14 +39,15 @@ class InputDataViewModel(private val pref: ShipPreference): ViewModel() {
         }
     }
 
-    fun port(token:String){
+    fun port(token:String,callback:(List<String?>)->Unit){
         val service = ApiConfig.getApiService()
         val client = service.getPort("Bearer $token")
         client.enqueue(object : Callback<PortResponse>{
             override fun onResponse(call: Call<PortResponse>, response: Response<PortResponse>) {
                 val responseBody = response.body()
                 if(responseBody != null){
-                    _port.value = responseBody.dataPort?.port
+//                    _port.value = responseBody.dataPort?.port
+                    responseBody.dataPort?.port?.let { callback(it) }
                 }
             }
 

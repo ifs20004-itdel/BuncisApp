@@ -33,7 +33,6 @@ class InputDataActivity : AppCompatActivity() {
     private val calendar = Calendar.getInstance()
     private var fuelTypeItems = mutableListOf<String>()
     private var shipConditionItems = mutableListOf<String>()
-    private var portItems = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInputDataBinding.inflate(layoutInflater)
@@ -45,11 +44,14 @@ class InputDataActivity : AppCompatActivity() {
             binding.lvToolbar.btnAccount.text = intent.getStringExtra("username")
             inputDataViewModel.fuelType(ship.token)
             inputDataViewModel.shipCondition(ship.token)
-            inputDataViewModel.port(ship.token)
+            inputDataViewModel.port(ship.token){
+                portData ->
+                val portAdapter = ArrayAdapter(this, R.layout.dropdown_items,portData)
+                binding.edNamaPelabuhan.setAdapter(portAdapter)
+            }
         }
 
-        val portAdapter = ArrayAdapter(this, R.layout.dropdown_items,getPort())
-        binding.edNamaPelabuhan.setAdapter(portAdapter)
+
 
         val fuelTypeAdapter = ArrayAdapter(this, R.layout.dropdown_items, getFuelTypes())
         binding.edBahanBakar.setAdapter(fuelTypeAdapter)
@@ -194,16 +196,6 @@ class InputDataActivity : AppCompatActivity() {
         binding.edTanggal.setText(sdf.format(calendar.time))
     }
 
-    private fun getPort(): List<String>{
-        inputDataViewModel.port.observe(this){items ->
-            for (i in items){
-                if(i!=null){
-                    portItems.add(i)
-                }
-            }
-        }
-        return portItems
-    }
     private fun getFuelTypes(): List<String> {
         inputDataViewModel.fuelType.observe(this){items ->
             for(i in items){
