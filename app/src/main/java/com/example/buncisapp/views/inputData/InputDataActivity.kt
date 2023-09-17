@@ -115,15 +115,15 @@ class InputDataActivity : AppCompatActivity() {
 
             // cek data kosong
             if(binding.edNamaPelabuhan.text.toString().isEmpty()){
-                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlNamaPelabuhan.hint),Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.warning_empty_data, binding.tlNamaPelabuhan.hint),Toast.LENGTH_SHORT).show()
             }else if(binding.edKondisiKapal.text.toString().isEmpty()){
-                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlKondisiKapal.hint),Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.warning_empty_data, binding.tlKondisiKapal.hint),Toast.LENGTH_SHORT).show()
             }else if(binding.edTanggal.text.toString().isEmpty()){
-                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.edTanggal.hint ), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.warning_empty_data, binding.edTanggal.hint ), Toast.LENGTH_SHORT).show()
             }else if(binding.edBahanBakar.text.toString().isEmpty()){
-                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tlBahanBakar.hint), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.warning_empty_data, binding.tlBahanBakar.hint), Toast.LENGTH_SHORT).show()
             }else if(binding.tvTime.text.toString().isEmpty()){
-                Toast.makeText(this@InputDataActivity, resources.getString(R.string.empty_data, binding.tvTime.hint), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@InputDataActivity, resources.getString(R.string.warning_empty_data, binding.tvTime.hint), Toast.LENGTH_SHORT).show()
             }else {
                 val data = Biodata(binding.edNamaPelabuhan.text.toString(), binding.edKondisiKapal.text.toString(), binding.edTanggal.text.toString(), binding.edBahanBakar.text.toString(), binding.tvTime.text.toString(), trim, depan, tengah, belakang)
                 MaterialAlertDialogBuilder(this@InputDataActivity)

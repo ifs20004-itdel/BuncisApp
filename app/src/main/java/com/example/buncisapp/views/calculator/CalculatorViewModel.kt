@@ -2,7 +2,6 @@ package com.example.buncisapp.views.calculator
 
 import android.content.ContentValues
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,6 @@ import com.example.buncisapp.data.response.CalculationResponse
 import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
-import com.example.buncisapp.utils.AuthenticationCallback
 import com.example.buncisapp.utils.CalculatorCallback
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
@@ -64,7 +62,7 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         trim: Double,
         nomor_tanki: String,
         level_sounding: Int,
-        volume: Double,
+//        volume: Double,
         stateCallback: CalculatorCallback
     ){
         _loading.value =true
@@ -73,9 +71,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
             {
               "heel_correction": 0.0,
               "trim": ${trim},
-              "nomor_tanki": "${nomor_tanki}",
-              "level_sounding":${level_sounding},
-              "volume":${volume}
+              "nomor_tanki": "$nomor_tanki",
+              "level_sounding":${level_sounding}
             }
         """.trimIndent()
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())

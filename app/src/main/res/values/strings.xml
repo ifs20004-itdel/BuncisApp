@@ -24,13 +24,14 @@
     <string name="trim">Trim</string>
     <string name="zero">0.0</string>
     <string name="sounding">Sounding</string>
+    <string name="sounding_">Sounding:</string>
     <string name="volume">Volume</string>
     <string name="hasil">Hasil</string>
     <string name="hitung">Hitung</string>
     <string name="nomor_surat">No. Surat</string>
     <string name="nama_kapal">Nama Kapal</string>
     <string name="kondisi_kapal">Kondisi Kapal</string>
-    <string name="empty_data">%1s tidak boleh kosong!</string>
+    <string name="warning_empty_data">%1s tidak boleh kosong!</string>
     <string name="tambah">Tambah</string>
     <string name="chief_engineer">Chief Engineer</string>
     <string name="master">Master</string>
@@ -50,14 +51,6 @@
     <string name="total_rob_bunker">TOTAL ROB BUNKER</string>
     <string name="total_value_here">Total Value Here</string>
     <string name="download">download</string>
-    <string-array name="dummy_data">
-        <item>Kapal A</item>
-        <item>Kapal B</item>
-        <item>Kapal C</item>
-        <item>Python</item>
-        <item>Scala</item>
-        <item>Perl</item>
-        <item>Javascript</item>
-        <item>Jquery</item>
-    </string-array>
+    <string name="filled_fuel_tank">Nomor Tangki Terisi:</string>
+    <string name="empty_data">Data Kosong!</string>
 </resources>
