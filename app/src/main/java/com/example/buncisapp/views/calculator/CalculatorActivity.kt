@@ -79,7 +79,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         binding.edTrim.isEnabled = false
 
         binding.btnCalculate.setOnClickListener {
-            calculateAndDisplayResult()
+            calculateAndDisplayResult(biodata)
         }
 
         binding.btnTambah.setOnClickListener {
@@ -118,7 +118,8 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
                     biodata.belakang,
                     0.0,
                     biodata.draft,
-                    listOfTank)
+                    listOfTank,
+                    this)
             }
 
             val intent = Intent(this@CalculatorActivity, RecordActivity::class.java)
@@ -133,16 +134,20 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         }
     }
 
-    override fun onErrorCalculator(message: String?) {
-        Toast.makeText(this@CalculatorActivity, message.toString(), Toast.LENGTH_SHORT).show()
-    }
-
     private fun setRecycleView() {
         rvSounding.layoutManager = LinearLayoutManager(this)
         binding.rvListTangki.adapter = calculatorAdapter
     }
 
-    private fun calculateAndDisplayResult() {
+    private fun setupViewModel() {
+        calculatorViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ShipPreference.getInstance(dataStore), this)
+        )[CalculatorViewModel::class.java]
+    }
+
+
+    private fun calculateAndDisplayResult(data: Biodata) {
         val decimalPlaces = DecimalFormat("#.##")
         decimalPlaces.roundingMode = RoundingMode.DOWN
 
@@ -150,50 +155,45 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         val sounding2 = binding.edSounding2.text.toString().toDoubleOrNull() ?: 0.0
         val sounding3 = binding.edSounding3.text.toString().toDoubleOrNull() ?: 0.0
 
-        val sum = sounding1 + sounding2 + sounding3
-        average = decimalPlaces.format(sum / 3).toDouble()
-
         if (delta(sounding1, sounding2) > 3 || delta(sounding2, sounding3) > 3 || delta(sounding1, sounding3)>3) {
             binding.edSounding4.isEnabled = true
             binding.edSounding5.isEnabled = true
             val sounding4 = binding.edSounding4.text.toString().toDoubleOrNull() ?: 0.0
             val sounding5 = binding.edSounding5.text.toString().toDoubleOrNull() ?: 0.0
+
             if (sounding4 == 0.0 || sounding5 == 0.0) {
                 Toast.makeText(this, "Isi sounding 4 dan 5!", Toast.LENGTH_SHORT).show()
                 return
             }
-            val sum5Sounding = sum + sounding4 + sounding5
+            val sum5Sounding = sounding1 + sounding2 + sounding3 + sounding4 + sounding5
             average = decimalPlaces.format(sum5Sounding/5).toDouble()
             calculatorViewModel.getShip().observe(this) { user ->
-                val data = intent.getParcelableExtra<Biodata>("data")
-                if (data != null) {
-                    calculatorViewModel.calculation(
-                        user.token,
-                        data.draft,
-                        binding.edNomorTangki.text.toString(),
-                        average.toInt(),
-                        this
-                    )
-                    calculatorViewModel.calculation.observe(this) { result ->
-                        binding.tvResult.text = result.data?.volume.toString()
-                    }
+                calculatorViewModel.calculation(
+                    user.token,
+                    data.draft,
+                    binding.edNomorTangki.text.toString(),
+                    average.toInt(),
+                    this
+                )
+                calculatorViewModel.calculation.observe(this) { result ->
+                    binding.tvResult.text = result.data?.volume.toString()
                 }
             }
         }
         else {
+            val sum = sounding1 + sounding2 + sounding3
+            average = decimalPlaces.format(sum / 3).toDouble()
+
             calculatorViewModel.getShip().observe(this) { user ->
-                val data = intent.getParcelableExtra<Biodata>("data")
-                if (data != null) {
-                    calculatorViewModel.calculation(
-                        user.token,
-                        data.draft,
-                        binding.edNomorTangki.text.toString(),
-                        average.toInt(),
-                        this
-                    )
-                    calculatorViewModel.calculation.observe(this) { result ->
-                        binding.tvResult.text = result.data?.volume.toString()
-                    }
+                calculatorViewModel.calculation(
+                    user.token,
+                    data.draft,
+                    binding.edNomorTangki.text.toString(),
+                    average.toInt(),
+                    this
+                )
+                calculatorViewModel.calculation.observe(this) { result ->
+                    binding.tvResult.text = result.data?.volume.toString()
                 }
             }
         }
@@ -227,13 +227,6 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         Toast.makeText(this@CalculatorActivity, "Data Berhasil Ditambahkan!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun setupViewModel() {
-        calculatorViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ShipPreference.getInstance(dataStore), this)
-        )[CalculatorViewModel::class.java]
-    }
-
     private fun getNoTangki(): List<String> {
         calculatorViewModel.noTanki.observe(this) { items ->
             for (i in items) {
@@ -261,5 +254,9 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         } else {
             param1 - param2
         }
+    }
+
+    override fun onErrorCalculator(message: String?) {
+        Toast.makeText(this@CalculatorActivity, message.toString(), Toast.LENGTH_SHORT).show()
     }
 }

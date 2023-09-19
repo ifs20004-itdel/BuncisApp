@@ -15,6 +15,7 @@ import com.example.buncisapp.data.response.FuelTankResponse
 import com.example.buncisapp.data.response.RobResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.example.buncisapp.utils.CalculatorCallback
+import com.example.buncisapp.utils.ExtractMessage
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -36,6 +37,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
+
+//    private lateinit var errorMessage : ErrorResponse
 
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
@@ -62,7 +65,6 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         trim: Double,
         nomor_tanki: String,
         level_sounding: Int,
-//        volume: Double,
         stateCallback: CalculatorCallback
     ){
         _loading.value =true
@@ -86,9 +88,12 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
                     if(responseBody != null ){
                         _calculation.value = response.body()
                     }
-                }else{
-                    Log.e("test",response.raw().toString())
-                    stateCallback.onErrorCalculator(response.errorBody().toString())
+                }else if(response.code() == 400){
+
+                    Log.e("test 3", response.errorBody()?.string().toString())
+                    val errorResponse = response.errorBody()?.string().toString()
+                    val errorMessage = ExtractMessage.extractMessage(errorResponse)
+                    stateCallback.onErrorCalculator(errorMessage)
                 }
             }
             override fun onFailure(call: Call<CalculationResponse>, t: Throwable) {
@@ -105,7 +110,8 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
         waktu: String, jenisBBM: String,
         depan:Double, tengah:Double,
         kondisi:String, belakang:Double,
-        heel:Double, trim:Double, listOfTank: MutableList<SoundingItems>
+        heel:Double, trim:Double, listOfTank: MutableList<SoundingItems>,
+        stateCallback : CalculatorCallback
     ){
         _loading.value =true
         val apiService = ApiConfig.getApiService()
@@ -146,6 +152,9 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
                     }
                 }else{
                     Log.e("error request rob",response.errorBody().toString())
+                    val errorResponse = response.errorBody()?.string().toString()
+                    val errorMessage = ExtractMessage.extractMessage(errorResponse)
+                    stateCallback.onErrorCalculator(errorMessage)
                 }
             }
             override fun onFailure(call: Call<RobResponse>, t: Throwable) {

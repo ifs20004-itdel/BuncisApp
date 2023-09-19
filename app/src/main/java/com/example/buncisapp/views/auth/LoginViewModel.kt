@@ -13,6 +13,7 @@ import com.example.buncisapp.data.response.LoginResponse
 import com.example.buncisapp.data.response.VesselResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.example.buncisapp.utils.AuthenticationCallback
+import com.example.buncisapp.utils.ExtractMessage
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -65,8 +66,9 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
                         }
                     }
                 }else{
-                    val errorMessage = "Username atau password salah"
-                    stateCallback.onError(-1, errorMessage)
+                    val errorResponse = response.errorBody()?.string().toString()
+                    val errorMessage = ExtractMessage.extractMessage(errorResponse)
+                    stateCallback.onError( -1, errorMessage)
                 }
             }
 
