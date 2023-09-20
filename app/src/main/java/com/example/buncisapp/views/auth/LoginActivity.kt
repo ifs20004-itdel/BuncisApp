@@ -11,12 +11,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.buncisapp.R
 import com.example.buncisapp.data.ShipPreference
 import com.example.buncisapp.databinding.ActivityLoginBinding
 import com.example.buncisapp.utils.AuthenticationCallback
 import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.inputData.InputDataActivity
+import kotlinx.coroutines.launch
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 

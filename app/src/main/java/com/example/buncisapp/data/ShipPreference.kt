@@ -38,7 +38,7 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[STATE_KEY] = -1
         }
         dataStore.edit { preferences ->
-            preferences [TOKEN_KEY] = ""
+            preferences.clear()
         }
     }
 
