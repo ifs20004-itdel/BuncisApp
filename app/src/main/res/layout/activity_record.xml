@@ -48,7 +48,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
             android:text="@string/company_address"
-            android:textSize="5sp" />
+            android:textSize="6sp" />
 
         <TextView
             android:id="@+id/ROB"
@@ -317,6 +317,7 @@
                         android:textStyle="bold"
                         android:gravity="center"/>
                     <TextView
+                        android:id="@+id/tv_total"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -329,6 +330,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tabel"
             android:layout_width="match_parent"
             android:layout_below="@id/tabel_sounding"
             android:layout_marginTop="20dp"
@@ -455,6 +457,17 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_isian3"
             android:text=": \n\n: "
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/tv_footnote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabel"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/created_by_buncis_2_0"
             android:textSize="8sp" />
 
     </RelativeLayout>

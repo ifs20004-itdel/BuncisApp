@@ -3,6 +3,7 @@ package com.example.buncisapp.views.calculator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -89,6 +90,9 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         }
 
         binding.lvToolbar.btnAccount.setOnClickListener {
+
+            binding.lvToolbar.btnAccount.isEnabled = false
+
             MaterialAlertDialogBuilder(this@CalculatorActivity)
                 .setTitle("Peringatan!")
                 .setMessage("Apakah anda yakin untuk keluar?")
@@ -100,6 +104,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
                 }
                 .setNegativeButton("Batal") { dialog, _ ->
                     dialog.dismiss()
+                    binding.lvToolbar.btnAccount.isEnabled = true
                 }
                 .show()
         }
@@ -146,10 +151,17 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         )[CalculatorViewModel::class.java]
     }
 
-
+    private fun isValidate(): Boolean{
+        return binding.edNomorTangki.text.toString().isNotEmpty()
+    }
     private fun calculateAndDisplayResult(data: Biodata) {
         val decimalPlaces = DecimalFormat("#.##")
         decimalPlaces.roundingMode = RoundingMode.DOWN
+
+        if(!isValidate()){
+            Toast.makeText(this@CalculatorActivity, resources.getString(R.string.warning_empty_data,"nomor tangki tidak boleh kosong!"), Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val sounding1 = binding.edSounding1.text.toString().toDoubleOrNull() ?: 0.0
         val sounding2 = binding.edSounding2.text.toString().toDoubleOrNull() ?: 0.0
@@ -165,8 +177,11 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
                 Toast.makeText(this, "Isi sounding 4 dan 5!", Toast.LENGTH_SHORT).show()
                 return
             }
+
             val sum5Sounding = sounding1 + sounding2 + sounding3 + sounding4 + sounding5
-            average = decimalPlaces.format(sum5Sounding/5).toDouble()
+            Log.e("test", (sum5Sounding/5).toString())
+            average = decimalPlaces.format(sum5Sounding / 5).toDouble()
+
             calculatorViewModel.getShip().observe(this) { user ->
                 calculatorViewModel.calculation(
                     user.token,

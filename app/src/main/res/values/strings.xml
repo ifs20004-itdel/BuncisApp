@@ -38,7 +38,7 @@
     <string name="representative">Representative</string>
     <string name="logout">Logout</string>
     <string name="company_name">PT Pertamina Trans Kontinental</string>
-    <string name="company_address">Cabang Surabaya\nJl. Perak Timur No.28 Surabaya - 60165\nT. 031 3551210, 3551216\nF. 031 3551213</string>
+    <string name="company_address">Marketing Bussiness &amp; Operation Region II\nJatimbalinus</string>
     <string name="rob_title">BUNKER REMAIN ON BOARD</string>
     <string name="rob_field">NAME OF VESSEL\n\nDATE\n\nTIME\n\nPORT\n\nGRADE OF BUNKER\n\nDRAFT</string>
     <string name="rob_draft">- Fore (F)\n\n- Middle (M)\n\n- Aft (A)</string>
@@ -53,4 +53,5 @@
     <string name="download">download</string>
     <string name="filled_fuel_tank">Nomor Tangki Terisi:</string>
     <string name="empty_data">Data Kosong!</string>
+    <string name="created_by_buncis_2_0">Created by BUNCIS 2.0</string>
 </resources>

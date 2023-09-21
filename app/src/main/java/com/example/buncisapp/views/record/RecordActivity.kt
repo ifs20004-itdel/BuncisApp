@@ -36,9 +36,7 @@ class RecordActivity : AppCompatActivity() {
         setContentView(binding.root)
         askPermission()
 
-        Log.e("INI WOIIII", "MASUK")
         val data = intent.getParcelableExtra<RobResponse>("bunkerData")
-        Log.e("INI WOIIII", data.toString())
         if (data != null) {
             binding.shipCondition.text = data.data?.shipCondition
             binding.rsNameOfVessel.text = data.data?.vessel?.name
