@@ -27,6 +27,10 @@ import com.example.buncisapp.views.record.RecordActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.util.Locale
+
+
+
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -47,6 +51,9 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         binding = ActivityCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupViewModel()
+
+        val locale = Locale.US
+        Locale.setDefault(locale)
 
         var dataBunker: RobResponse
         biodata = intent.getParcelableExtra("data")!!
