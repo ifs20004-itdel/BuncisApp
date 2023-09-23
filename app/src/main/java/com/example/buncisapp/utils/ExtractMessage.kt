@@ -1,15 +1,10 @@
 package com.example.buncisapp.utils
 
+import com.google.gson.JsonParser
+
 object ExtractMessage {
-    fun extractMessage(responseBody: String): String{
-        val inputText = """
-            $responseBody
-        """.trimIndent()
-        val messageIndex = inputText.indexOf("\"message\"")
-        if (messageIndex != -1) {
-            val messageText = inputText.substring(messageIndex + "\"message\":".length)
-            return messageText.trim().removePrefix(":").trim()
-        }
-        return ""
+    fun extractMessage(responseBody: String): String {
+        val jsonParser = JsonParser.parseString(responseBody).asJsonObject
+        return jsonParser.get("message").asString
     }
 }

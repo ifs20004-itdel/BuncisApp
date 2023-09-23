@@ -38,8 +38,6 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-//    private lateinit var errorMessage : ErrorResponse
-
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
     }
@@ -84,13 +82,12 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
                 _loading.value = false
                 val responseBody = response.body()
                 if(response.isSuccessful){
-                    stateCallback.onErrorCalculator(response.body().toString())
+                    stateCallback.onErrorCalculator("Volume: ${response.body()?.data?.volume}")
                     if(responseBody != null ){
                         _calculation.value = response.body()
                     }
                 }else if(response.code() == 400){
 
-                    Log.e("test 3", response.errorBody()?.string().toString())
                     val errorResponse = response.errorBody()?.string().toString()
                     val errorMessage = ExtractMessage.extractMessage(errorResponse)
                     stateCallback.onErrorCalculator(errorMessage)
@@ -160,7 +157,6 @@ class CalculatorViewModel(private val pref: ShipPreference): ViewModel() {
             override fun onFailure(call: Call<RobResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
             }
-
         })
     }
 

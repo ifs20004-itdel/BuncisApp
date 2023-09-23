@@ -3,11 +3,11 @@ package com.example.buncisapp.views.calculator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -25,6 +25,7 @@ import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.auth.LoginActivity
 import com.example.buncisapp.views.record.RecordActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.Locale
@@ -166,7 +167,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         decimalPlaces.roundingMode = RoundingMode.DOWN
 
         if(!isValidate()){
-            Toast.makeText(this@CalculatorActivity, resources.getString(R.string.warning_empty_data,"nomor tangki tidak boleh kosong!"), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@CalculatorActivity, resources.getString(R.string.warning_empty_data,"nomor tangki"), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -182,11 +183,12 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
 
             if (sounding4 == 0.0 || sounding5 == 0.0) {
                 Toast.makeText(this, "Isi sounding 4 dan 5!", Toast.LENGTH_SHORT).show()
+                binding.edSounding4.background = ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_white, theme)
+                binding.edSounding5.background = ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_white, theme)
                 return
             }
 
             val sum5Sounding = sounding1 + sounding2 + sounding3 + sounding4 + sounding5
-            Log.e("test", (sum5Sounding/5).toString())
             average = decimalPlaces.format(sum5Sounding / 5).toDouble()
 
             calculatorViewModel.getShip().observe(this) { user ->
@@ -226,6 +228,10 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
             average = 0.0
             binding.edVolume.text.toString().toDouble()
         }else{
+            if (binding.tvResult.text.isEmpty()){
+                Toast.makeText(this@CalculatorActivity, resources.getString(R.string.warning_empty_data,resources.getString(R.string.volume)), Toast.LENGTH_SHORT).show()
+                return
+            }
             binding.tvResult.text.toString().toDouble()
         }
         val newItem = SoundingItems(
@@ -244,9 +250,11 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
         binding.edSounding3.text?.clear()
         binding.edSounding4.text?.clear()
         binding.edSounding5.text?.clear()
+        binding.edSounding4.background = ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_gray,theme)
+        binding.edSounding5.background = ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_gray,theme)
         binding.edVolume.text?.clear()
 
-        Toast.makeText(this@CalculatorActivity, "Data Berhasil Ditambahkan!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@CalculatorActivity, "Data berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
     }
 
     private fun getNoTangki(): List<String> {

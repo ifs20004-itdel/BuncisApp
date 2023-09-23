@@ -2,10 +2,12 @@
     <string name="app_name">BUNCIS</string>
     <string name="logo_description">Buncis App Logo</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="enter_username">username</string>
     <string name="enter_password">password</string>
-    <string name="button_history_description">History Button</string>
     <string name="user">User</string>
+
+    <!--   InputDataActivity   -->
     <string name="biodata_kapal">Biodata Kapal</string>
     <string name="input">Input</string>
     <string name="nama_pelabuhan">Nama Pelabuhan</string>
@@ -19,6 +21,8 @@
     <string name="tengah">Tengah</string>
     <string name="belakang">Belakang</string>
     <string name="next">Selanjutnya</string>
+
+    <!--  CalculatorActivity  -->
     <string name="kalkulator">Kalkulator</string>
     <string name="nomor_tangki">Nomor Tangki:</string>
     <string name="trim">Trim</string>
@@ -28,17 +32,18 @@
     <string name="volume">Volume</string>
     <string name="hasil">Hasil</string>
     <string name="hitung">Hitung</string>
+    <string name="tambah">Tambah</string>
+
+
+    <!--  Form ROB  -->
     <string name="nomor_surat">No. Surat</string>
     <string name="nama_kapal">Nama Kapal</string>
     <string name="kondisi_kapal">Kondisi Kapal</string>
-    <string name="warning_empty_data">%1s tidak boleh kosong!</string>
-    <string name="tambah">Tambah</string>
     <string name="chief_engineer">Chief Engineer</string>
     <string name="master">Master</string>
     <string name="representative">Representative</string>
-    <string name="logout">Logout</string>
     <string name="company_name">PT Pertamina Trans Kontinental</string>
-    <string name="company_address">Marketing Bussiness &amp; Operation Region II\nJatimbalinus</string>
+    <string name="company_address">Marketing Business &amp; Operation Region II\nJatimbalinus</string>
     <string name="rob_title">BUNKER REMAIN ON BOARD</string>
     <string name="rob_field">NAME OF VESSEL\n\nDATE\n\nTIME\n\nPORT\n\nGRADE OF BUNKER\n\nDRAFT</string>
     <string name="rob_draft">- Fore (F)\n\n- Middle (M)\n\n- Aft (A)</string>
@@ -52,6 +57,10 @@
     <string name="total_value_here">Total Value Here</string>
     <string name="download">download</string>
     <string name="filled_fuel_tank">Nomor Tangki Terisi:</string>
-    <string name="empty_data">Data Kosong!</string>
     <string name="created_by_buncis_2_0">Created by BUNCIS 2.0</string>
+
+    <!--  Warning   -->
+    <string name="warning_empty_data">%1s tidak boleh kosong!</string>
+    <string name="empty_data">Data Kosong!</string>
+
 </resources>

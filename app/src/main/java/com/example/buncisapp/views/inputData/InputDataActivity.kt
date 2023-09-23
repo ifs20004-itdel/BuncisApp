@@ -21,6 +21,8 @@ import com.example.buncisapp.views.ViewModelFactory
 import com.example.buncisapp.views.auth.LoginActivity
 import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -106,11 +108,11 @@ class InputDataActivity : AppCompatActivity() {
             // penghitungan trim
             var trim = 0.0
             if(binding.edDraftDepan.text != null && binding.edDraftBelakang.text != null ){
-                trim =  belakang - depan
+                trim =  String.format("%.2f",(belakang - depan)).toDouble()
             }else if(binding.edDraftDepan.text ==null){
-                trim =  belakang - tengah
+                trim = String.format("%.2f",(belakang - tengah)).toDouble()
             }else if(binding.edDraftBelakang.text ==null){
-                trim =  tengah - depan
+                trim = String.format("%.2f",(tengah - depan)).toDouble()
             }
 
             // cek data kosong

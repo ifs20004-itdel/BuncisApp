@@ -14,6 +14,7 @@ import com.example.buncisapp.data.response.VesselResponse
 import com.example.buncisapp.data.retrofit.ApiConfig
 import com.example.buncisapp.utils.AuthenticationCallback
 import com.example.buncisapp.utils.ExtractMessage
+import com.google.gson.JsonParser
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -67,8 +68,8 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
                     }
                 }else{
                     val errorResponse = response.errorBody()?.string().toString()
-                    val errorMessage = ExtractMessage.extractMessage(errorResponse)
-                    stateCallback.onError( -1, errorMessage)
+                    val message = ExtractMessage.extractMessage(errorResponse)
+                    stateCallback.onError( -1, message)
                 }
             }
 
@@ -77,7 +78,6 @@ class LoginViewModel(private val pref: ShipPreference) : ViewModel() {
                 Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
                 stateCallback.onError(-1, t.message.toString())
             }
-
         })
     }
 
