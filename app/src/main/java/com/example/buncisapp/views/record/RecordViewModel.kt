@@ -17,10 +17,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RecordViewModel(private val pref: ShipPreference): ViewModel()  {
+class RecordViewModel(private val pref: ShipPreference) : ViewModel() {
 
     private val _rob = MutableLiveData<RobResponse>()
-    val rob : LiveData<RobResponse> = _rob
+    val rob: LiveData<RobResponse> = _rob
 
     fun getShip(): LiveData<ShipModel> {
         return pref.getShip().asLiveData()
@@ -29,17 +29,17 @@ class RecordViewModel(private val pref: ShipPreference): ViewModel()  {
     fun generate(
         token: String,
         pelabuhan: String,
-        tanggal:String,
+        tanggal: String,
         waktu: String,
         jenisBBM: String,
-        depan:Double,
-        tengah:Double,
+        depan: Double,
+        tengah: Double,
         kondisi: String,
-        belakang:Double,
-        heel:Double,
+        belakang: Double,
+        heel: Double,
         trim: Double,
         listOfTank: MutableSet<SoundingItems>
-    ){
+    ) {
         val apiService = ApiConfig.getApiService()
         val json = """
             {
@@ -57,23 +57,24 @@ class RecordViewModel(private val pref: ShipPreference): ViewModel()  {
             }
         """.trimIndent()
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        Log.e("Ini cuyy",json)
-        val client = apiService.rob("Bearer $token",body )
-        client.enqueue(object: Callback<RobResponse> {
+        Log.e("Ini cuyy", json)
+        val client = apiService.rob("Bearer $token", body)
+        client.enqueue(object : Callback<RobResponse> {
             override fun onResponse(call: Call<RobResponse>, response: Response<RobResponse>) {
                 val responseBody = response.body()
-                Log.e("iniii",response.errorBody().toString())
-                if(response.isSuccessful){
-                    if(responseBody != null ){
+                Log.e("iniii", response.errorBody().toString())
+                if (response.isSuccessful) {
+                    if (responseBody != null) {
                         _rob.value = response.body()
-                        Log.e("berhasil",response.body().toString())
+                        Log.e("berhasil", response.body().toString())
                     }
-                }else{
-                    Log.e("iniii",response.errorBody().toString())
+                } else {
+                    Log.e("iniii", response.errorBody().toString())
                 }
             }
+
             override fun onFailure(call: Call<RobResponse>, t: Throwable) {
-                Log.e(ContentValues.TAG,"OnFailure: ${t.message.toString()}")
+                Log.e(ContentValues.TAG, "OnFailure: ${t.message.toString()}")
             }
 
         })

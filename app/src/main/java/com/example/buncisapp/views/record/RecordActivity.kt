@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +26,7 @@ import java.util.Locale
 
 class RecordActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityRecordBinding
+    private lateinit var binding: ActivityRecordBinding
     private val REQUEST_CODE_PERMISSIONS = 1232
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +40,8 @@ class RecordActivity : AppCompatActivity() {
             binding.shipCondition.text = data.data?.shipCondition
             binding.rsNameOfVessel.text = data.data?.vessel?.name
 
-            val date = data.data?.soundingDatetime?.substring(0,10)
-            val time = data.data?.soundingDatetime?.substring(11,19)
+            val date = data.data?.soundingDatetime?.substring(0, 10)
+            val time = data.data?.soundingDatetime?.substring(11, 19)
 
             binding.rsDate.text = date
             binding.rsTime.text = time
@@ -97,7 +96,11 @@ class RecordActivity : AppCompatActivity() {
 
 
     private fun askPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE_PERMISSIONS)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            REQUEST_CODE_PERMISSIONS
+        )
     }
 
     private fun createPDF() {
@@ -111,7 +114,8 @@ class RecordActivity : AppCompatActivity() {
         paint.color = Color.RED
         paint.textSize = 42f
 
-        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val fileName = "example.pdf"
         val file = File(downloadDir, fileName)
 
@@ -120,7 +124,11 @@ class RecordActivity : AppCompatActivity() {
             document.writeTo(fos)
             document.close()
             fos.close()
-            Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Conversion successful. PDF saved in $downloadDir",
+                Toast.LENGTH_SHORT
+            ).show()
         } catch (e: IOException) {
             throw RuntimeException(e)
         }
@@ -153,7 +161,8 @@ class RecordActivity : AppCompatActivity() {
 
         document.finishPage(page)
 
-        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val currentDateTime = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
         val fileName = "ROB_$currentDateTime.pdf"
         val file = File(downloadDir, fileName)
@@ -163,7 +172,11 @@ class RecordActivity : AppCompatActivity() {
             document.writeTo(fos)
             document.close()
             fos.close()
-            Toast.makeText(this, "Conversion successful. PDF saved in $downloadDir", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Conversion successful. PDF saved in $downloadDir",
+                Toast.LENGTH_SHORT
+            ).show()
         } catch (e: IOException) {
             throw RuntimeException(e)
         }

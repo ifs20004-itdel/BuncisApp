@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.record.RecordActivity"
     android:background="@color/blue"
-    >
+    tools:context=".views.record.RecordActivity">
 
     <RelativeLayout
         android:id="@+id/surat"
@@ -18,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603" >
+        app:layout_constraintVertical_bias="0.603">
 
         <ImageView
             android:layout_width="100dp"
@@ -94,6 +93,7 @@
             android:layout_toEndOf="@+id/list_symbol"
             android:text="@string/kondisi_kapal"
             android:textSize="8sp" />
+
         <TextView
             android:id="@+id/rs_time"
             android:layout_width="wrap_content"
@@ -187,10 +187,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ship_condition"
-            android:layout_toEndOf="@id/list_isian"
             android:layout_alignParentStart="true"
             android:layout_marginStart="24dp"
             android:layout_marginTop="25dp"
+            android:layout_toEndOf="@id/list_isian"
             android:text="@string/rob_field"
             android:textSize="8sp" />
 
@@ -231,9 +231,9 @@
         <LinearLayout
             android:id="@+id/tabel_sounding"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/list_symbol2"
             android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TableLayout
@@ -253,24 +253,26 @@
                         android:textColor="#fff"
                         android:textSize="10sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#000"
-                        android:textColor="#fff"
                         android:text="@string/sounding_mm"
-                        android:textStyle="bold"/>
+                        android:textColor="#fff"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#000"
-                        android:textColor="#fff"
                         android:text="@string/volume_liter"
-                        android:textStyle="bold"/>
+                        android:textColor="#fff"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </TableRow>
 
                 <!-- Table Body -->
@@ -284,47 +286,51 @@
                         android:gravity="center"
                         android:text="@string/tv_fuel_tank_name"
                         android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/sounding"
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/sounding_mm"/>
+                        android:text="@string/sounding_mm"
+                        android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/volume"
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/volume_liter"/>
+                        android:text="@string/volume_liter"
+                        android:textSize="10sp" />
                 </TableRow>
 
                 <!-- Loop through the data rows using a ListView or RecyclerView -->
 
                 <!-- Total ROB BUNKER Row -->
                 <TableRow>
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:background="#000"
-                        android:textColor="#fff"
+                        android:gravity="center"
                         android:text="@string/total_rob_bunker"
+                        android:textColor="#fff"
                         android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tv_total"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="10sp"
                         android:text="@string/total_value_here"
-                        android:textStyle="bold"/>
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -332,9 +338,9 @@
         <LinearLayout
             android:id="@+id/tabel"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tabel_sounding"
             android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TableLayout
@@ -351,33 +357,35 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#FFFFFF"
+                        android:gravity="center"
                         android:text="@string/representative"
                         android:textColor="#000000"
-                        android:gravity="center"
                         android:textSize="10sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/master"
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:background="#FFFFFF"
-                        android:textColor="#000000"
+                        android:gravity="center"
                         android:text="@string/master"
-                        android:textStyle="bold"/>
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/chief_engineer"
                         android:layout_width="0dp"
-                        android:textSize="10sp"
-                        android:gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#FFFFFF"
-                        android:textColor="#000000"
+                        android:gravity="center"
                         android:text="@string/chief_engineer"
-                        android:textStyle="bold"/>
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </TableRow>
 
                 <!-- Table Body -->
@@ -389,6 +397,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textSize="10sp" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="30dp"
@@ -396,6 +405,7 @@
 
                         android:gravity="center"
                         android:textSize="10sp" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="30dp"
@@ -414,22 +424,24 @@
                         android:gravity="center"
                         android:text="@string/representative"
                         android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/masterName"
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/master"/>
+                        android:text="@string/master"
+                        android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/ceName"
                         android:layout_width="0dp"
-                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/chief_engineer"/>
+                        android:text="@string/chief_engineer"
+                        android:textSize="10sp" />
                 </TableRow>
                 <!-- Loop through the data rows using a ListView or RecyclerView -->
 

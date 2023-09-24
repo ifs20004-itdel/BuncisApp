@@ -18,7 +18,7 @@ import retrofit2.http.POST
 interface ApiService {
     @POST("api/login")
     fun login(
-            @Body loginUser: RequestBody
+        @Body loginUser: RequestBody
     ): Call<LoginResponse>
 
     @GET("api/fuel-type")
@@ -44,11 +44,6 @@ interface ApiService {
     fun getShipCondition(
         @Header("Authorization") token: String
     ): Call<ShipConditionResponse>
-
-    @GET("api/username")
-    fun getUsername(
-    ): Call<ShipConditionResponse>
-
 
     @POST("api/calculation")
     fun calculation(

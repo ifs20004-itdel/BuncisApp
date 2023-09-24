@@ -4,14 +4,14 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Biodata (
+data class Biodata(
     val nama: String,
-    val kondisiKapal : String,
-    val tanggal : String,
+    val kondisiKapal: String,
+    val tanggal: String,
     val bahanBakar: String,
     val waktu: String,
     val draft: Double,
     val depan: Double,
     val tengah: Double,
-    val belakang:Double
-    ): Parcelable
+    val belakang: Double
+) : Parcelable

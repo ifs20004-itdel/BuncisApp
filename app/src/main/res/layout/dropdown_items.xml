@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="14sp"
     android:background="@color/white"
-    android:paddingVertical="8dp"
     android:paddingHorizontal="12dp"
-    tools:text="@string/app_name"
-    />
+    android:paddingVertical="8dp"
+    android:textSize="14sp"
+    tools:text="@string/app_name" />
 

@@ -15,7 +15,8 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
         return dataStore.data.map { preferences ->
             ShipModel(
                 preferences[TOKEN_KEY] ?: "",
-                preferences[STATE_KEY] ?: -1
+                preferences[STATE_KEY] ?: -1,
+                preferences[USERNAME] ?: ""
             )
         }
     }
@@ -24,6 +25,7 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = ship.token
             preferences[STATE_KEY] = ship.isLogin
+            preferences[USERNAME]  = ship.username
         }
     }
 
@@ -48,6 +50,7 @@ class ShipPreference private constructor(private val dataStore: DataStore<Prefer
 
         private val STATE_KEY = intPreferencesKey("state")
         private val TOKEN_KEY = stringPreferencesKey("token")
+        private val USERNAME = stringPreferencesKey("username")
 
         fun getInstance(dataStore: DataStore<Preferences>): ShipPreference {
             return INSTANCE ?: synchronized(this) {

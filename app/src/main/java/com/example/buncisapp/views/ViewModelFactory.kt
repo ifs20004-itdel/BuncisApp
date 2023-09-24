@@ -8,7 +8,8 @@ import com.example.buncisapp.views.auth.LoginViewModel
 import com.example.buncisapp.views.calculator.CalculatorViewModel
 import com.example.buncisapp.views.inputData.InputDataViewModel
 
-class ViewModelFactory(private val pref: ShipPreference, private val context: Context) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val pref: ShipPreference, private val context: Context) :
+    ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -16,12 +17,15 @@ class ViewModelFactory(private val pref: ShipPreference, private val context: Co
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
             }
-            modelClass.isAssignableFrom(InputDataViewModel::class.java)->{
+
+            modelClass.isAssignableFrom(InputDataViewModel::class.java) -> {
                 InputDataViewModel(pref) as T
             }
-            modelClass.isAssignableFrom(CalculatorViewModel::class.java)->{
+
+            modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
                 CalculatorViewModel(pref) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 @Parcelize
-data class Request (
+data class Request(
     val token: String,
     val pelabuhan: String,
     val tanggal: String,
@@ -13,8 +13,8 @@ data class Request (
     val bbm: String,
     val depan: String,
     val tengah: String,
-    val  kondisi: String,
-    val  belakang: String,
-    val  trim: String,
-    val  sounding: @RawValue MutableSet<SoundingItem>
-): Parcelable
+    val kondisi: String,
+    val belakang: String,
+    val trim: String,
+    val sounding: @RawValue MutableSet<SoundingItem>
+) : Parcelable

@@ -12,6 +12,7 @@ data class VesselResponse(
     @field:SerializedName("status")
     val status: Int?
 )
+
 data class DataVessel(
     @field:SerializedName("vessel")
     val fuelTank: List<String?>
