@@ -89,6 +89,9 @@ data class RobData(
     @field:SerializedName("trim")
     val trim: @RawValue Any? = null,
 
+    @field:SerializedName("total_volume")
+    val total: @RawValue Any? = null,
+
     @field:SerializedName("port")
     val port: String? = null,
 

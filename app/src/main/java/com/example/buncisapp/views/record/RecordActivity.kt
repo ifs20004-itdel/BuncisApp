@@ -49,6 +49,7 @@ class RecordActivity : AppCompatActivity() {
             binding.rsGradeOfBunker.text = data.data?.fuelType
             binding.rsFore.text = data.data?.frontDraft.toString()
             binding.rsMiddle.text = data.data?.middleDraft.toString()
+            binding.tvTotal.text = data.data?.total.toString()
             binding.rsAft.text = data.data?.backDraft.toString()
             binding.rsTrim.text = data.data?.trim.toString()
             binding.representativeName.text = data.data?.firstSignerName

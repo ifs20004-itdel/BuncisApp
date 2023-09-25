@@ -38,6 +38,9 @@ class InputDataActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupViewModel()
 
+        val locale = Locale.US
+        Locale.setDefault(locale)
+
         inputDataViewModel.getShip().observe(this) { ship ->
             binding.lvToolbar.btnAccount.text = intent.getStringExtra("username")
             inputDataViewModel.fuelType(ship.token) { dataFuelType ->
