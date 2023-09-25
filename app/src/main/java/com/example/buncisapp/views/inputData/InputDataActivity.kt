@@ -41,8 +41,11 @@ class InputDataActivity : AppCompatActivity() {
         val locale = Locale.US
         Locale.setDefault(locale)
 
+
         inputDataViewModel.getShip().observe(this) { ship ->
-            binding.lvToolbar.btnAccount.text = intent.getStringExtra("username")
+
+            binding.lvToolbar.btnAccount.text = ship.username
+
             inputDataViewModel.fuelType(ship.token) { dataFuelType ->
                 val fuelTypeAdapter = ArrayAdapter(this, R.layout.dropdown_items, dataFuelType)
                 binding.edBahanBakar.setAdapter(fuelTypeAdapter)

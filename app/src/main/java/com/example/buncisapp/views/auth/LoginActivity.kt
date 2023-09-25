@@ -3,7 +3,6 @@ package com.example.buncisapp.views.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -39,7 +38,6 @@ class LoginActivity : AppCompatActivity(), AuthenticationCallback {
             if (user.isLogin == 1) {
                 val intent = Intent(this@LoginActivity, InputDataActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.putExtra("username", user.username)
                 startActivity(intent)
             }
         }

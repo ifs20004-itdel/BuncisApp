@@ -2,8 +2,6 @@ package com.example.buncisapp.views.record
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.os.Build
 import android.os.Bundle
@@ -61,7 +59,7 @@ class RecordActivity : AppCompatActivity() {
 
             for (soundingLevel in data.data?.soundingLevels!!) {
                 if (soundingLevel != null && !soundingLevel.fuelTank.isNullOrBlank()) {
-                    // Tambahkan fuelTank ke string dengan tanda koma sebagai pemisah
+
                     fuelTankStringBuilder.append(soundingLevel.fuelTank)
                     fuelTankStringBuilder.append("\n\n")
                     levelStringBuilder.append(soundingLevel.level)
@@ -69,7 +67,6 @@ class RecordActivity : AppCompatActivity() {
                     volumeStringBuilder.append(soundingLevel.volume)
                     volumeStringBuilder.append("\n")
                 }
-                // Hapus tanda koma ekstra di akhir string jika ada
                 if (fuelTankStringBuilder.isNotEmpty()) {
                     fuelTankStringBuilder.deleteCharAt(fuelTankStringBuilder.length - 1)
                 } else if (levelStringBuilder.isNotEmpty()) {
@@ -78,7 +75,6 @@ class RecordActivity : AppCompatActivity() {
                     volumeStringBuilder.deleteCharAt(volumeStringBuilder.length - 2)
                 }
 
-                // Set nilai fuelTankName dengan string yang berisi fuelTank yang dipisahkan oleh koma
                 binding.fuelTankName.text = fuelTankStringBuilder.toString()
                 binding.sounding.text = levelStringBuilder.toString()
                 binding.volume.text = volumeStringBuilder.toString()
@@ -102,37 +98,6 @@ class RecordActivity : AppCompatActivity() {
             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
             REQUEST_CODE_PERMISSIONS
         )
-    }
-
-    private fun createPDF() {
-        val document = PdfDocument()
-        val pageInfo = PdfDocument.PageInfo.Builder(1080, 1920, 1).create()
-        val page = document.startPage(pageInfo)
-
-        val canvas = page.canvas
-
-        val paint = Paint()
-        paint.color = Color.RED
-        paint.textSize = 42f
-
-        val downloadDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val fileName = "example.pdf"
-        val file = File(downloadDir, fileName)
-
-        try {
-            val fos = FileOutputStream(file)
-            document.writeTo(fos)
-            document.close()
-            fos.close()
-            Toast.makeText(
-                this,
-                "Conversion successful. PDF saved in $downloadDir",
-                Toast.LENGTH_SHORT
-            ).show()
-        } catch (e: IOException) {
-            throw RuntimeException(e)
-        }
     }
 
     private fun convertXMLtoPDF() {
