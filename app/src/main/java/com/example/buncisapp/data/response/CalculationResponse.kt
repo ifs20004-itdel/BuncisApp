@@ -20,7 +20,7 @@ data class Data(
     val volume: Any? = null,
 
     @field:SerializedName("level_sounding")
-    val levelSounding: Int? = null,
+    val levelSounding: Any? = null,
 
     @field:SerializedName("trim")
     val trim: Any? = null,

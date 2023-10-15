@@ -66,7 +66,7 @@ class CalculatorViewModel(private val pref: ShipPreference) : ViewModel() {
         token: String,
         trim: Double,
         nomor_tanki: String,
-        level_sounding: Int,
+        level_sounding: Double,
         stateCallback: CalculatorCallback
     ) {
         _loading.value = true
@@ -79,6 +79,7 @@ class CalculatorViewModel(private val pref: ShipPreference) : ViewModel() {
               "level_sounding":${level_sounding}
             }
         """.trimIndent()
+        Log.e("post", json)
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val client = apiService.calculation("Bearer $token", body)
         client.enqueue(object : Callback<CalculationResponse> {

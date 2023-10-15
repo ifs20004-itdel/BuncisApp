@@ -225,7 +225,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
                     user.token,
                     data.draft,
                     binding.edNomorTangki.text.toString(),
-                    average.toInt(),
+                    average,
                     this
                 )
                 calculatorViewModel.calculation.observe(this) { result ->
@@ -241,7 +241,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
                     user.token,
                     data.draft,
                     binding.edNomorTangki.text.toString(),
-                    average.toInt(),
+                    average,
                     this
                 )
                 calculatorViewModel.calculation.observe(this) { result ->

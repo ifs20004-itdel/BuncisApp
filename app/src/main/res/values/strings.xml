@@ -16,18 +16,18 @@
     <string name="bahan_bakar">Bahan Bakar</string>
     <string name="waktu">Waktu</string>
     <string name="timer">00 : 00</string>
-    <string name="draft">Draft</string>
+    <string name="draft">Draft (m)</string>
     <string name="depan">Depan</string>
     <string name="tengah">Tengah</string>
     <string name="belakang">Belakang</string>
     <string name="next">Selanjutnya</string>
 
     <!--  CalculatorActivity  -->
-    <string name="kalkulator">Kalkulator</string>
-    <string name="nomor_tangki">Nomor Tangki:</string>
-    <string name="trim">Trim</string>
+    <string name="kalkulator">Input Sounding</string>
+    <string name="nomor_tangki">Nomor Tanki:</string>
+    <string name="trim">Trim (m)</string>
     <string name="zero">0.0</string>
-    <string name="sounding">Sounding</string>
+    <string name="sounding">Sounding (mm)</string>
     <string name="sounding_">Sounding:</string>
     <string name="volume">Volume</string>
     <string name="hasil">Hasil</string>
@@ -62,5 +62,8 @@
     <!--  Warning   -->
     <string name="warning_empty_data">%1s tidak boleh kosong!</string>
     <string name="empty_data">Data Kosong!</string>
+    <string name="buncis">BUNCIS</string>
+    <string name="sounding_check">Sounding</string>
+    <string name="bunker_calculation_identification_system"><![CDATA[Bunker Calculation & Identification System]]></string>
 
 </resources>
