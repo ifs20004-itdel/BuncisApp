@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,12 +34,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
+                    android:textColor="@color/black_60"
                     android:fontFamily="@font/poppins_bold"
                     android:text="@string/kalkulator"
                     android:textSize="18sp" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/btn_switch"
+                    android:textColor="@color/black_60"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -51,10 +54,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="6dp"
+                android:textColor="@color/black_60"
                 android:hint="@string/nomor_tangki">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/ed_nomor_tangki"
+                    android:textColor="@color/black_60"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
@@ -64,11 +69,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="6dp"
+                android:textColor="@color/black_60"
                 android:hint="@string/trim">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_trim"
                     android:layout_width="match_parent"
+                    android:textColor="@color/black_60"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="180dp"
                     android:inputType="numberDecimal"
@@ -79,6 +86,7 @@
                 android:id="@+id/tv_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black_60"
                 android:text="@string/sounding"
                 android:textSize="18sp" />
 
@@ -88,12 +96,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 android:visibility="gone"
+                android:textColor="@color/black_60"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_volume"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black_60"
                     android:hint="@string/volume"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -114,6 +124,7 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
+                        android:textColor="@color/black_60"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -121,6 +132,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/zero"
+                            android:textColor="@color/black_60"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,6 +141,7 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="8dp"
+                        android:textColor="@color/black_60"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -136,11 +149,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/zero"
+                            android:textColor="@color/black_60"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="100dp"
+                        android:textColor="@color/black_60"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="8dp"
                         app:hintEnabled="false">
@@ -150,6 +165,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/zero"
+                            android:textColor="@color/black_60"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -165,6 +181,7 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
+                        android:textColor="@color/black_60"
                         app:boxBackgroundMode="outline"
                         app:hintEnabled="false">
 
@@ -174,6 +191,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_corner_gray"
                             android:enabled="false"
+                            android:textColor="@color/black_60"
                             android:hint="@string/zero"
                             android:inputType="numberDecimal" />
 
@@ -182,6 +200,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_sounding5"
                         android:layout_width="100dp"
+                        android:textColor="@color/black_60"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="8dp"
                         app:boxBackgroundMode="outline"
@@ -193,6 +212,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_corner_gray"
                             android:enabled="false"
+                            android:textColor="@color/black_60"
                             android:hint="@string/zero"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -202,20 +222,37 @@
                     android:id="@+id/btn_calculate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:layout_marginHorizontal="45dp"
                     android:layout_marginTop="18dp"
                     android:text="@string/hitung" />
 
-                <TextView
-                    android:id="@+id/tv_result"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="60dp"
-                    android:layout_marginVertical="18dp"
-                    android:background="@drawable/rounded_corner_gray"
-                    android:hint="@string/hasil"
-                    android:paddingVertical="12dp"
-                    android:textAlignment="center" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_result"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="60dp"
+                        android:layout_marginVertical="18dp"
+                        android:background="@drawable/rounded_corner_gray"
+                        android:hint="@string/hasil"
+                        android:textColor="@color/black_60"
+                        android:paddingVertical="12dp"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Liter"
+                        android:textColor="@color/black_60"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -230,6 +267,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
                     android:text="@string/tambah" />
 
                 <com.google.android.material.button.MaterialButton
@@ -239,6 +277,7 @@
                     android:layout_gravity="end"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
                     android:text="@string/next" />
             </LinearLayout>
 
@@ -251,6 +290,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginVertical="16dp"
+            android:textColor="@color/black_60"
             android:text="@string/filled_fuel_tank"
             app:layout_constraintTop_toBottomOf="@+id/lv_form_calculator" />
 
@@ -268,6 +308,7 @@
 
         <TextView
             android:id="@+id/tv_empty_data"
+            android:textColor="@color/black_60"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginStart="16dp"

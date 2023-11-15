@@ -36,6 +36,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="23dp"
+            android:textColor="@color/black_60"
             android:text="@string/company_name"
             android:textSize="8sp" />
 
@@ -46,6 +47,7 @@
             android:layout_below="@+id/tv_pertamina"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
+            android:textColor="@color/black_60"
             android:text="@string/company_address"
             android:textSize="6sp" />
 
@@ -56,6 +58,7 @@
             android:layout_below="@+id/alamat"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:textColor="@color/black_60"
             android:layout_marginStart="105dp"
             android:layout_marginTop="75dp"
             android:text="@string/rob_title"
@@ -65,6 +68,7 @@
             android:id="@+id/ship_condition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/ROB"
             android:layout_alignParentStart="true"
             android:layout_marginStart="146dp"
@@ -75,6 +79,7 @@
         <TextView
             android:id="@+id/rs_name_of_vessel"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ship_condition"
             android:layout_marginStart="13dp"
@@ -87,6 +92,7 @@
             android:id="@+id/rs_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/rs_name_of_vessel"
             android:layout_marginStart="13dp"
             android:layout_marginTop="8dp"
@@ -97,6 +103,7 @@
         <TextView
             android:id="@+id/rs_time"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rs_date"
             android:layout_marginStart="13dp"
@@ -108,6 +115,7 @@
         <TextView
             android:id="@+id/rs_port"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rs_time"
             android:layout_marginStart="13dp"
@@ -119,6 +127,7 @@
         <TextView
             android:id="@+id/rs_grade_of_bunker"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rs_port"
             android:layout_marginStart="13dp"
@@ -130,44 +139,105 @@
         <TextView
             android:id="@+id/rs_fore"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/list_isian"
             android:layout_marginStart="13dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_symbol2"
-            android:text="@string/kondisi_kapal"
+            android:text="@string/_000"
+            android:textSize="8sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
+            android:layout_below="@+id/list_isian"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/rs_fore"
+            android:text="@string/m"
             android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_middle"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rs_fore"
             android:layout_marginStart="13dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol2"
-            android:text="@string/kondisi_kapal"
+            android:text="@string/_000"
+            android:textSize="8sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
+            android:layout_below="@+id/rs_fore"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/rs_middle"
+            android:text="@string/m"
             android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_aft"
             android:layout_width="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rs_middle"
             android:layout_marginStart="13dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/list_symbol2"
-            android:text="@string/kondisi_kapal"
+            android:text="@string/_000"
+            android:textSize="8sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
+            android:layout_below="@+id/rs_middle"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/rs_aft"
+            android:text="@string/m"
             android:textSize="8sp" />
 
         <TextView
             android:id="@+id/rs_trim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/list_isian"
             android:layout_marginStart="13dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/list_symbol4"
+            android:text="@string/_000"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
+            android:layout_below="@+id/list_isian"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/rs_trim"
+            android:text="@string/m"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/rs_trim_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
+            android:layout_below="@+id/list_isian"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/m"
             android:text="@string/kondisi_kapal"
             android:textSize="8sp" />
 
@@ -175,6 +245,7 @@
             android:id="@+id/rs_heel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/rs_trim"
             android:layout_marginStart="13dp"
             android:layout_marginTop="8dp"
@@ -183,9 +254,22 @@
             android:textSize="8sp" />
 
         <TextView
+            android:id="@+id/rs_heel_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
+            android:layout_below="@+id/rs_trim"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/rs_trim"
+            android:text="0"
+            android:textSize="8sp" />
+
+        <TextView
             android:id="@+id/list_isian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/ship_condition"
             android:layout_alignParentStart="true"
             android:layout_marginStart="24dp"
@@ -198,6 +282,7 @@
             android:id="@+id/list_isian2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/list_isian"
             android:layout_alignParentStart="true"
             android:layout_marginStart="35dp"
@@ -210,6 +295,7 @@
             android:id="@+id/list_isian3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/list_isian"
             android:layout_marginStart="77dp"
             android:layout_marginTop="10dp"
@@ -221,6 +307,7 @@
             android:id="@+id/list_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@+id/ship_condition"
             android:layout_marginStart="5dp"
             android:layout_marginTop="25dp"
@@ -232,6 +319,7 @@
             android:id="@+id/tabel_sounding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black_60"
             android:layout_below="@id/list_symbol2"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
@@ -284,6 +372,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/tv_fuel_tank_name"
                         android:textSize="10sp" />
 
@@ -293,6 +382,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/sounding_mm"
                         android:textSize="10sp" />
 
@@ -302,6 +392,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/volume_liter"
                         android:textSize="10sp" />
                 </TableRow>
@@ -328,6 +419,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/total_value_here"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -422,6 +514,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/representative"
                         android:textSize="10sp" />
 
@@ -431,6 +524,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/master"
                         android:textSize="10sp" />
 
@@ -440,6 +534,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textColor="@color/black_60"
                         android:text="@string/chief_engineer"
                         android:textSize="10sp" />
                 </TableRow>
@@ -456,6 +551,7 @@
             android:layout_below="@+id/list_symbol"
             android:layout_marginStart="4dp"
             android:layout_marginTop="10dp"
+            android:textColor="@color/black_60"
             android:layout_toEndOf="@+id/list_isian"
             android:text=": \n\n: \n\n: "
             android:textSize="8sp" />
@@ -467,6 +563,7 @@
             android:layout_below="@+id/list_isian"
             android:layout_marginStart="4dp"
             android:layout_marginTop="10dp"
+            android:textColor="@color/black_60"
             android:layout_toEndOf="@+id/list_isian3"
             android:text=": \n\n: "
             android:textSize="8sp" />
@@ -478,6 +575,7 @@
             android:layout_below="@+id/tabel"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
+            android:textColor="@color/black_60"
             android:layout_marginEnd="15dp"
             android:text="@string/created_by_buncis_2_0"
             android:textSize="8sp" />

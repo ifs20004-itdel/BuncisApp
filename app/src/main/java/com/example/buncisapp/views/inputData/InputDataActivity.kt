@@ -23,6 +23,7 @@ import com.example.buncisapp.views.calculator.CalculatorActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -226,4 +227,6 @@ class InputDataActivity : AppCompatActivity() {
         val sdf = SimpleDateFormat(format, Locale.US)
         binding.edTanggal.setText(sdf.format(calendar.time))
     }
+
+
 }

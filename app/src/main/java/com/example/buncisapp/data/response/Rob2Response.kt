@@ -44,7 +44,7 @@ data class SoundingLevelsItem(
     val volume: @RawValue Any? = null,
 
     @field:SerializedName("level")
-    val level: Int? = null,
+    val level: @RawValue Any? = null,
 
     @field:SerializedName("fuel_tank")
     val fuelTank: String? = null

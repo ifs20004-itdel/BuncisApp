@@ -31,7 +31,7 @@
     <string name="sounding_">Sounding:</string>
     <string name="volume">Volume</string>
     <string name="hasil">Hasil</string>
-    <string name="hitung">Hitung</string>
+    <string name="hitung">Hitung Volume</string>
     <string name="tambah">Tambah</string>
 
 
@@ -65,5 +65,7 @@
     <string name="buncis">BUNCIS</string>
     <string name="sounding_check">Sounding</string>
     <string name="bunker_calculation_identification_system"><![CDATA[Bunker Calculation & Identification System]]></string>
+    <string name="_000">000</string>
+    <string name="m">m</string>
 
 </resources>

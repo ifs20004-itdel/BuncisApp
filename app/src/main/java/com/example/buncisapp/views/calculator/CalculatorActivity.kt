@@ -182,7 +182,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorCallback {
     }
 
     private fun calculateAndDisplayResult(data: Biodata) {
-        val decimalPlaces = DecimalFormat("#.##")
+        val decimalPlaces = DecimalFormat("#.###")
         decimalPlaces.roundingMode = RoundingMode.DOWN
 
         if (!isValidate()) {

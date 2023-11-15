@@ -21,9 +21,10 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class RecordActivity : AppCompatActivity() {
-
+ 
     private lateinit var binding: ActivityRecordBinding
     private val REQUEST_CODE_PERMISSIONS = 1232
 
@@ -41,30 +42,56 @@ class RecordActivity : AppCompatActivity() {
             val date = data.data?.soundingDatetime?.substring(0, 10)
             val time = data.data?.soundingDatetime?.substring(11, 19)
 
+            val timeIn= time?.let { convertUTCToLocalTime(it,"Asia/Jakarta") }
             binding.rsDate.text = date
-            binding.rsTime.text = time
+            binding.rsTime.text = timeIn
             binding.rsPort.text = data.data?.port
             binding.rsGradeOfBunker.text = data.data?.fuelType
             binding.rsFore.text = data.data?.frontDraft.toString()
             binding.rsMiddle.text = data.data?.middleDraft.toString()
-            binding.tvTotal.text = data.data?.total.toString()
+            binding.tvTotal.text = String.format("%.3f", data.data?.total)
             binding.rsAft.text = data.data?.backDraft.toString()
             binding.rsTrim.text = data.data?.trim.toString()
             binding.representativeName.text = data.data?.firstSignerName
             binding.masterName.text = data.data?.secondSignerName
             binding.ceName.text = data.data?.thirdSignerName
+            binding.rsHeelInfo.text = "(No Heel)"
             val fuelTankStringBuilder = StringBuilder()
             val levelStringBuilder = StringBuilder()
             val volumeStringBuilder = StringBuilder()
+            val trimInfo= data.data?.trim
+
+            if (trimInfo is Int || trimInfo is Double || trimInfo is Float) {
+                val trimValue = when (trimInfo) {
+                    is Int -> trimInfo.toDouble()
+                    is Double -> trimInfo
+                    is Float -> trimInfo.toDouble()
+                    else -> 0.0 // Handle other numerical types
+                }
+
+                if (trimValue < 0) {
+                    binding.rsTrimInfo.text = "(Trim by Head)"
+                } else if (trimValue > 0) {
+                    binding.rsTrimInfo.text = "(Trim by Stern)"
+                } else if (trimValue == 0.0) {
+                    binding.rsTrimInfo.text = "(Even Keel)"
+                }
+            } else {
+                // Handle the case where trimInfo is not a valid numerical type
+                binding.rsTrimInfo.text = "(Invalid TrimInfo)"
+            }
 
             for (soundingLevel in data.data?.soundingLevels!!) {
                 if (soundingLevel != null && !soundingLevel.fuelTank.isNullOrBlank()) {
+                    // Format sounding and volume with two decimal places
+                    val formattedSounding = String.format("%.2f", soundingLevel.level)
+                    val formattedVolume = String.format("%.3f", soundingLevel.volume)
 
                     fuelTankStringBuilder.append(soundingLevel.fuelTank)
                     fuelTankStringBuilder.append("\n\n")
-                    levelStringBuilder.append(soundingLevel.level)
+                    levelStringBuilder.append(formattedSounding)
                     levelStringBuilder.append("\n")
-                    volumeStringBuilder.append(soundingLevel.volume)
+                    volumeStringBuilder.append(formattedVolume)
                     volumeStringBuilder.append("\n")
                 }
                 if (fuelTankStringBuilder.isNotEmpty()) {
@@ -79,11 +106,24 @@ class RecordActivity : AppCompatActivity() {
                 binding.sounding.text = levelStringBuilder.toString()
                 binding.volume.text = volumeStringBuilder.toString()
             }
+
             binding.btnUpload.setOnClickListener {
                 convertXMLtoPDF()
             }
         }
     }
+
+    private fun convertUTCToLocalTime(utcTime: String, localTimeZoneId: String): String {
+        val utcFormat = SimpleDateFormat("HH:mm:ss")
+        utcFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+        val localFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        localFormat.timeZone = TimeZone.getTimeZone(localTimeZoneId)
+
+        val utcDateTime = utcFormat.parse(utcTime)
+        return localFormat.format(utcDateTime)
+    }
+
 
     override fun onBackPressed() {
         val intent = Intent(this, InputDataActivity::class.java)
@@ -127,10 +167,12 @@ class RecordActivity : AppCompatActivity() {
 
         document.finishPage(page)
 
+        val data = intent.getParcelableExtra<RobResponse>("bunkerData")
+        val nameVessel= data?.data?.vessel?.name
+        val dateSounding = data?.data?.soundingDatetime?.substring(0, 10)
         val downloadDir =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val currentDateTime = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
-        val fileName = "ROB_$currentDateTime.pdf"
+        val fileName = "ROB-$nameVessel-$dateSounding.pdf"
         val file = File(downloadDir, fileName)
 
         try {
@@ -148,3 +190,5 @@ class RecordActivity : AppCompatActivity() {
         }
     }
 }
+
+

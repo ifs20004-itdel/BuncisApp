@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    card_view:cardBackgroundColor="@color/white"
     android:layout_marginStart="8dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
@@ -17,6 +18,7 @@
         android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:layout_marginHorizontal="16dp"
         android:paddingVertical="10dp">
 
@@ -30,6 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_no_tangki"
+                android:textColor="@color/black_60"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/nomor_tangki" />
@@ -40,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:textStyle="bold"
+                android:textColor="@color/black_60"
                 tools:text="@string/nomor_tangki" />
         </LinearLayout>
 
@@ -55,6 +59,7 @@
                 android:id="@+id/tv_level_sounding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black_60"
                 android:text="@string/sounding_" />
 
             <TextView
@@ -64,6 +69,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:textSize="16sp"
+                android:textColor="@color/black_60"
                 android:textStyle="bold"
                 tools:text="@string/zero" />
         </LinearLayout>
@@ -75,6 +81,7 @@
             android:gravity="end"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textColor="@color/black_60"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@id/tv_nomor_tangki_value"
