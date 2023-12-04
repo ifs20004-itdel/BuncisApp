@@ -9,6 +9,7 @@ import android.os.Environment
 import android.util.DisplayMetrics
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.buncisapp.R
@@ -19,6 +20,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -28,6 +31,7 @@ class RecordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecordBinding
     private val REQUEST_CODE_PERMISSIONS = 1232
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordBinding.inflate(layoutInflater)
@@ -42,9 +46,16 @@ class RecordActivity : AppCompatActivity() {
             val date = data.data?.soundingDatetime?.substring(0, 10)
             val time = data.data?.soundingDatetime?.substring(11, 19)
 
-            val timeIn= time?.let { convertUTCToLocalTime(it,"Asia/Jakarta") }
-            binding.rsDate.text = date
-            binding.rsTime.text = timeIn
+//            val timeIn= time?.let { convertUTCToLocalTime(it,"Asia/Jakarta") }
+            val dateTimeString = "$date $time"
+
+            val timeIn = dateTimeString?.let { convertUTCToLocalTime(it, "Asia/Jakarta") }
+
+            val dateFix = timeIn?.substring(0, 10)
+            val timeFix = timeIn?.substring(11, 19)
+
+            binding.rsDate.text = dateFix
+            binding.rsTime.text = timeFix
             binding.rsPort.text = data.data?.port
             binding.rsGradeOfBunker.text = data.data?.fuelType
             binding.rsFore.text = data.data?.frontDraft.toString()
@@ -113,16 +124,29 @@ class RecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun convertUTCToLocalTime(utcTime: String, localTimeZoneId: String): String {
-        val utcFormat = SimpleDateFormat("HH:mm:ss")
-        utcFormat.timeZone = TimeZone.getTimeZone("UTC")
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun convertUTCToLocalTime(utcTime: String, timeZone: String): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val dateTime = LocalDateTime.parse(utcTime, formatter)
 
-        val localFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        localFormat.timeZone = TimeZone.getTimeZone(localTimeZoneId)
+        // Set the time zone to "Asia/Jakarta"
+        val jakartaTimeZone = TimeZone.getTimeZone(timeZone)
+        val offset = jakartaTimeZone.rawOffset + jakartaTimeZone.dstSavings
+        val localDateTime = dateTime.plusSeconds((offset / 1000).toLong())
 
-        val utcDateTime = utcFormat.parse(utcTime)
-        return localFormat.format(utcDateTime)
+        return localDateTime.format(formatter)
     }
+
+//    private fun convertUTCToLocalTime(utcTime: String, localTimeZoneId: String): String {
+//        val utcFormat = SimpleDateFormat("HH:mm:ss")
+//        utcFormat.timeZone = TimeZone.getTimeZone("UTC")
+//
+//        val localFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+//        localFormat.timeZone = TimeZone.getTimeZone(localTimeZoneId)
+//
+//        val utcDateTime = utcFormat.parse(utcTime)
+//        return localFormat.format(utcDateTime)
+//    }
 
 
     override fun onBackPressed() {
